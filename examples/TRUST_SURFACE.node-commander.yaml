@@ -1,0 +1,107 @@
+schema_version: "1.0"
+component: node-commander
+repo: SocioProphet/node-commander
+owner: SocioProphet
+runtime_classes:
+  - launch_agent
+  - container_runtime
+  - agent_orchestrator
+authority_summary: >-
+  Local user LaunchAgent starts a Podman container from a local image for node-commander bootstrap.
+  The observed baseline exposes no ports, mounts no host paths, and passes no explicit secrets.
+
+entrypoints:
+  - type: bash_launcher
+    path: ~/.local/bin/node-commander-launch
+    purpose: Start the Podman-backed node-commander container at user login.
+
+launch_services:
+  - platform: macos_launchd
+    label: org.socioprophet.node-commander
+    path: ~/Library/LaunchAgents/org.socioprophet.node-commander.plist
+    run_at_load: true
+    keep_alive: false
+
+containers:
+  - engine: podman
+    connection: podman-machine-default
+    image: localhost/socioprophet/node-commander:dev-boot
+    image_digest: c34052c4c0c513b8e7d5346ae9bd48abb17d96e23a2eb841135173d0472247c7
+    name: node-commander
+    pull_policy: never
+    ports: []
+    mounts: []
+
+network:
+  plaintext_non_loopback_allowed: false
+  listeners: []
+  egress: []
+
+filesystem:
+  host_mounts: []
+  writable_paths:
+    - ~/Library/Logs/SocioProphet/node-commander.log
+    - ~/Library/Logs/SocioProphet/node-commander.launchd.out.log
+    - ~/Library/Logs/SocioProphet/node-commander.launchd.err.log
+    - ~/.config/containers/empty-auth.json
+  cache_paths: []
+  log_paths:
+    - ~/Library/Logs/SocioProphet/node-commander.log
+    - ~/Library/Logs/SocioProphet/node-commander.launchd.out.log
+    - ~/Library/Logs/SocioProphet/node-commander.launchd.err.log
+
+credentials:
+  expected_secrets: []
+  secret_locations:
+    - type: podman_authfile
+      path_or_ref: ~/.config/containers/empty-auth.json
+      purpose: Empty authfile used to prevent ambient registry credential use.
+  inherits_ssh_agent: false
+  redaction_required: true
+
+policy:
+  filesystem: no_host_mounts
+  network: no_exposed_ports
+  execution: container_entrypoint_only
+  approval: not_applicable_for_bootstrap_heartbeat
+  workspace_scope: none
+
+model_providers: []
+browser_surfaces: []
+update_channels: []
+remote_config: []
+
+purge:
+  commands:
+    - launchctl bootout "gui/$(id -u)/org.socioprophet.node-commander" || true
+    - rm -f ~/Library/LaunchAgents/org.socioprophet.node-commander.plist
+    - rm -f ~/.local/bin/node-commander-launch
+    - podman rm -f node-commander || true
+  removes:
+    - macOS LaunchAgent
+    - launcher script
+    - running container
+    - optional logs under ~/Library/Logs/SocioProphet/
+
+prove_clean:
+  checks:
+    - test ! -e /Applications/Codex.app
+    - launchctl list | grep -v org.socioprophet.node-commander
+    - test ! -e ~/Library/LaunchAgents/org.socioprophet.node-commander.plist
+    - ps aux | grep -v grep | grep -v node-commander
+    - podman ps --all --filter name=node-commander | grep -v node-commander
+    - lsof -nP -iTCP -sTCP:LISTEN | grep -v node-commander
+
+known_risks:
+  - LaunchAgent inheritance may include SSH_AUTH_SOCK unless the launcher explicitly scrubs the environment.
+  - Local image tags are mutable unless image digest verification is enforced.
+  - Podman machine and gvproxy are part of the runtime trust boundary.
+  - Logs may reveal operational timing or lifecycle state.
+
+compensating_controls:
+  - Use --pull=never for local image only.
+  - Use empty authfile to avoid ambient registry credentials.
+  - Expose no ports by default.
+  - Mount no host paths by default.
+  - KeepAlive is false.
+  - Run as the user, not root.
