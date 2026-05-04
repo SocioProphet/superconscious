@@ -1,0 +1,291 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/SocioProphet/superconscious/schemas/trust-surface.schema.json",
+  "title": "SourceOS Trust Surface",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "schema_version",
+    "component",
+    "repo",
+    "runtime_classes",
+    "authority_summary",
+    "entrypoints",
+    "network",
+    "credentials",
+    "policy",
+    "purge",
+    "prove_clean"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "pattern": "^1\\.[0-9]+$"
+    },
+    "component": {
+      "type": "string",
+      "minLength": 1
+    },
+    "repo": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$"
+    },
+    "owner": {
+      "type": "string"
+    },
+    "runtime_classes": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "enum": [
+          "spec_only",
+          "library",
+          "cli",
+          "desktop_app",
+          "launch_agent",
+          "container_runtime",
+          "browser_control",
+          "terminal_control",
+          "model_gateway",
+          "sync_service",
+          "agent_orchestrator",
+          "credential_broker",
+          "policy_engine",
+          "memory_runtime",
+          "local_first_database"
+        ]
+      }
+    },
+    "authority_summary": {
+      "type": "string",
+      "minLength": 1
+    },
+    "entrypoints": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/entrypoint" }
+    },
+    "launch_services": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/launch_service" }
+    },
+    "containers": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/container" }
+    },
+    "network": {
+      "type": "object",
+      "required": ["listeners", "egress"],
+      "properties": {
+        "listeners": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/listener" }
+        },
+        "egress": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/egress" }
+        },
+        "plaintext_non_loopback_allowed": {
+          "type": "boolean",
+          "default": false
+        }
+      }
+    },
+    "filesystem": {
+      "type": "object",
+      "properties": {
+        "host_mounts": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/mount" }
+        },
+        "writable_paths": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "cache_paths": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "log_paths": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "credentials": {
+      "type": "object",
+      "required": ["expected_secrets", "secret_locations", "redaction_required"],
+      "properties": {
+        "expected_secrets": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "secret_locations": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/secret_location" }
+        },
+        "inherits_ssh_agent": {
+          "type": "boolean",
+          "default": false
+        },
+        "redaction_required": {
+          "type": "boolean",
+          "const": true
+        }
+      }
+    },
+    "policy": {
+      "type": "object",
+      "required": ["filesystem", "network", "execution", "approval"],
+      "properties": {
+        "filesystem": { "type": "string" },
+        "network": { "type": "string" },
+        "execution": { "type": "string" },
+        "approval": { "type": "string" },
+        "workspace_scope": { "type": "string" }
+      }
+    },
+    "model_providers": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "browser_surfaces": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/browser_surface" }
+    },
+    "update_channels": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/update_channel" }
+    },
+    "remote_config": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "purge": {
+      "type": "object",
+      "required": ["commands", "removes"],
+      "properties": {
+        "commands": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "removes": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "prove_clean": {
+      "type": "object",
+      "required": ["checks"],
+      "properties": {
+        "checks": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "known_risks": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "compensating_controls": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  },
+  "$defs": {
+    "entrypoint": {
+      "type": "object",
+      "required": ["type", "path"],
+      "properties": {
+        "type": { "type": "string" },
+        "path": { "type": "string" },
+        "purpose": { "type": "string" }
+      }
+    },
+    "launch_service": {
+      "type": "object",
+      "required": ["platform", "label", "path"],
+      "properties": {
+        "platform": { "type": "string" },
+        "label": { "type": "string" },
+        "path": { "type": "string" },
+        "run_at_load": { "type": "boolean" },
+        "keep_alive": { "type": "boolean" }
+      }
+    },
+    "container": {
+      "type": "object",
+      "required": ["engine", "image", "name"],
+      "properties": {
+        "engine": { "type": "string" },
+        "connection": { "type": "string" },
+        "image": { "type": "string" },
+        "image_digest": { "type": "string" },
+        "name": { "type": "string" },
+        "pull_policy": { "type": "string" },
+        "ports": { "type": "array", "items": { "type": "string" } },
+        "mounts": { "type": "array", "items": { "$ref": "#/$defs/mount" } }
+      }
+    },
+    "listener": {
+      "type": "object",
+      "required": ["protocol", "bind", "auth"],
+      "properties": {
+        "protocol": { "type": "string" },
+        "bind": { "type": "string" },
+        "port": { "type": ["integer", "string", "null"] },
+        "auth": { "type": "string" },
+        "purpose": { "type": "string" }
+      }
+    },
+    "egress": {
+      "type": "object",
+      "required": ["target", "purpose"],
+      "properties": {
+        "target": { "type": "string" },
+        "purpose": { "type": "string" }
+      }
+    },
+    "mount": {
+      "type": "object",
+      "required": ["source", "destination", "mode"],
+      "properties": {
+        "source": { "type": "string" },
+        "destination": { "type": "string" },
+        "mode": { "type": "string", "enum": ["ro", "rw", "none"] },
+        "purpose": { "type": "string" }
+      }
+    },
+    "secret_location": {
+      "type": "object",
+      "required": ["type", "path_or_ref"],
+      "properties": {
+        "type": { "type": "string" },
+        "path_or_ref": { "type": "string" },
+        "purpose": { "type": "string" }
+      }
+    },
+    "browser_surface": {
+      "type": "object",
+      "required": ["type", "enabled"],
+      "properties": {
+        "type": { "type": "string" },
+        "enabled": { "type": "boolean" },
+        "auth": { "type": "string" },
+        "bind": { "type": "string" }
+      }
+    },
+    "update_channel": {
+      "type": "object",
+      "required": ["type", "url_or_ref"],
+      "properties": {
+        "type": { "type": "string" },
+        "url_or_ref": { "type": "string" },
+        "signature_required": { "type": "boolean" }
+      }
+    }
+  }
+}
