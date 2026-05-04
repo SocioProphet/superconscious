@@ -1,0 +1,63 @@
+schema_version: "1.0"
+component: superconscious
+repo: SocioProphet/superconscious
+owner: SocioProphet
+runtime_classes:
+  - spec_only
+  - agent_orchestrator
+authority_summary: >-
+  Superconscious defines the visible governed cognition loop and trust-surface protocol for the SocioProphet and SourceOS estate.
+  The current repository is specification-first and should not start daemons, open sockets, persist credentials, or execute tools by default.
+
+entrypoints: []
+launch_services: []
+containers: []
+
+network:
+  plaintext_non_loopback_allowed: false
+  listeners: []
+  egress: []
+
+filesystem:
+  host_mounts: []
+  writable_paths: []
+  cache_paths: []
+  log_paths: []
+
+credentials:
+  expected_secrets: []
+  secret_locations: []
+  inherits_ssh_agent: false
+  redaction_required: true
+
+policy:
+  filesystem: no_host_access_by_default
+  network: no_network_by_default
+  execution: no_tool_execution_by_default
+  approval: approval_required_for_future_runtime_actions
+  workspace_scope: none
+
+model_providers: []
+browser_surfaces: []
+update_channels: []
+remote_config: []
+
+purge:
+  commands: []
+  removes: []
+
+prove_clean:
+  checks:
+    - no LaunchAgent or daemon owned by superconscious
+    - no listening socket owned by superconscious
+    - no credential store owned by superconscious
+    - no background process owned by superconscious
+
+known_risks:
+  - Future demo runners may introduce local execution and must update this file before landing.
+  - Future AgentPlane, model-router, memory, browser, terminal, or policy adapters must declare their delegated authority.
+
+compensating_controls:
+  - Keep M1 deterministic, no-network, no-model-call, and no-side-effect.
+  - Treat this repo as visible cognition governance, not canonical schema or runtime authority.
+  - Require pull requests that add runtime behavior to update TRUST_SURFACE.yaml.
