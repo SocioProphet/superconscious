@@ -1,0 +1,36 @@
+{
+  "taskId": "urn:srcos:reasoning-task:basic-demo",
+  "title": "Basic deterministic reasoning run",
+  "objective": "Demonstrate the Superconscious governed cognition loop without network, model calls, host mutation, or private reasoning exposure.",
+  "agent": {
+    "id": "urn:socioprophet:agent:superconscious-demo",
+    "role": "reference-loop-demo"
+  },
+  "workspace": {
+    "id": "urn:socioprophet:workspace:superconscious-m1",
+    "lockRef": "mock://sociosphere/workspace.lock.json"
+  },
+  "inputs": [
+    {
+      "kind": "text",
+      "label": "demo-input",
+      "value": "Summarize the purpose of Superconscious as a governed cognition loop."
+    }
+  ],
+  "policy": {
+    "network": "denied",
+    "modelCalls": "denied",
+    "hostMutation": "denied",
+    "memoryPromotion": "proposal-only"
+  },
+  "expected": {
+    "requiredArtifacts": [
+      "events.jsonl",
+      "reasoning-run.json",
+      "agentplane-evidence.json",
+      "replay-plan.json",
+      "benchmark-result.json"
+    ],
+    "replayClass": "exact"
+  }
+}
