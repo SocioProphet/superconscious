@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:socioprophet:superconscious:schema:adapter-decision:draft",
+  "title": "AdapterDecision Draft Schema",
+  "description": "Local draft schema for adapter decisions. Canonical ownership belongs in SourceOS-Linux/sourceos-spec.",
+  "type": "object",
+  "required": ["adapter", "decision", "summary", "evidence"],
+  "properties": {
+    "adapter": { "type": "string", "minLength": 1 },
+    "decision": { "type": "string", "minLength": 1 },
+    "summary": { "type": "string", "minLength": 1 },
+    "evidence": { "type": "object" }
+  },
+  "additionalProperties": false
+}
