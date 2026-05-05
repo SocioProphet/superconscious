@@ -1,0 +1,15 @@
+[project]
+name = "superconscious"
+version = "0.1.0"
+description = "Reference governed cognition loop for recursive agents across the SocioProphet and SourceOS stack."
+requires-python = ">=3.9"
+readme = "README.md"
+license = { text = "MIT" }
+
+[tool.pytest.ini_options]
+pythonpath = ["packages/superconscious-core"]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+src = ["packages/superconscious-core"]
