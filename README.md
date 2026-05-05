@@ -25,6 +25,25 @@ Task input
   -> run benchmark assertions
 ```
 
+## Trust Surface Protocol
+
+Superconscious now seeds the **SourceOS Trust Surface Protocol** for the estate.
+
+The principle is direct: **no invisible authority**. Any repo that starts a process, installs a service, opens a socket, controls a browser or terminal, launches a container, stores credentials, runs agents, or routes model/provider traffic must declare that authority in `TRUST_SURFACE.yaml`.
+
+This repo includes:
+
+```text
+TRUST_SURFACE.yaml
+schemas/trust-surface.schema.json
+docs/trust-surface-protocol.md
+examples/TRUST_SURFACE.node-commander.yaml
+scripts/validate-trust-surface.py
+.github/workflows/trust-surface.yml
+```
+
+The first target is not bureaucracy. The target is inspectability, purgeability, and provable cleanup across local agent runtimes.
+
 ## What this repo owns
 
 - Reference recursive reasoning loop implementation.
@@ -33,6 +52,7 @@ Task input
 - Adapter interfaces for AgentPlane, Agent Machine, Model Router, Guardrail Fabric, Agent Registry, Memory Mesh, SocioSphere, sourceosctl, BearBrowser, TurtleTerm, and Socios.
 - Example reasoning runs and benchmark fixtures.
 - Product-facing cognition-console semantics.
+- Trust-surface protocol seed, examples, and validation workflow until canonical schema ownership moves to `SourceOS-Linux/sourceos-spec`.
 
 ## What this repo does not own
 
@@ -57,7 +77,7 @@ M1 is a deterministic, no-network, no-model-call, no-side-effect reference loop 
 .runs/<run-id>/benchmark-result.json
 ```
 
-The first goal is not model quality. The first goal is lifecycle discipline, evidence compatibility, replay shape, and safe trace semantics.
+The first goal is not model quality. The first goal is lifecycle discipline, evidence compatibility, replay shape, safe trace semantics, and declared trust surfaces.
 
 ## Repository layout
 
@@ -68,8 +88,15 @@ superconscious/
   THREAT_MODEL.md
   ROADMAP.md
   AGENTS.md
+  TRUST_SURFACE.yaml
   docs/
+    trust-surface-protocol.md
+  schemas/
+    trust-surface.schema.json
   examples/
+    TRUST_SURFACE.node-commander.yaml
+  scripts/
+    validate-trust-surface.py
   packages/superconscious-core/
   tests/
 ```
@@ -82,3 +109,5 @@ Superconscious governs recursive agency.
 ```
 
 Superconscious does not claim machine sentience. It defines operational consciousness as explicit awareness of task state, tools, memory, models, policy, runtime, evidence, and feedback loops.
+
+The trust-surface layer extends that frame to local authority: a governed agent operating system must know what it can start, read, write, execute, expose, update, remember, and remove.
