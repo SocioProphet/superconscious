@@ -7,6 +7,7 @@ This ledger tracks absorption of the Superconscious governed cognition loop acro
 | Lane | Status | Authority repo | Notes |
 |---|---|---|---|
 | Reference cognition loop | Implemented M1 | `SocioProphet/superconscious` | Deterministic no-network/no-model/no-host-mutation runner emits safe operational trace artifacts. |
+| Canonical artifact emission | Implemented M1/M2 bridge | `SocioProphet/superconscious` | `canonicalize_artifacts.py` emits SourceOS-shaped artifacts alongside compatibility artifacts. |
 | Trust surface protocol | Seeded | `SocioProphet/superconscious` → future `SourceOS-Linux/sourceos-spec` | Superconscious carries seed schema/workflow until canonical trust-surface ownership is promoted. |
 | Canonical reasoning schemas | First tranche promoted | `SourceOS-Linux/sourceos-spec` | `ReasoningRun`, `ReasoningEvent`, `ReasoningReceipt`, `ReasoningReplayPlan`, and `ReasoningBenchmark` are promoted with examples and contract-addition docs. |
 | Adapter decision object | Deferred | `SourceOS-Linux/sourceos-spec` | Direct `AdapterDecision` promotion was blocked by connector filtering; use `ReasoningRun.adapterRecords` until a narrower future schema is agreed. |
@@ -23,6 +24,28 @@ This ledger tracks absorption of the Superconscious governed cognition loop acro
 | Web product surface | Work order open | `SocioProphet/socioprophet` | `SocioProphet/socioprophet#311`. |
 | Socios personalization | Work order open | `SociOS-Linux/socios` | `SociOS-Linux/socios#76`; must remain opt-in with signed intent and proof-of-life. |
 | Benchmarks beyond M1 | Not started | `SocioProphet/superconscious` + product/runtime repos | Browser, terminal, repo, office, MCP, memory, policy, model-route, and replay suites remain. |
+
+## Artifact sets
+
+Compatibility artifacts emitted by the M1 runner:
+
+```text
+events.jsonl
+reasoning-run.json
+agentplane-evidence.json
+replay-plan.json
+benchmark-result.json
+```
+
+Canonical SourceOS artifacts emitted by the canonicalization layer:
+
+```text
+reasoning-events.sourceos.jsonl
+reasoning-run.sourceos.json
+reasoning-receipt.json
+reasoning-replay-plan.json
+reasoning-benchmark.json
+```
 
 ## Open work orders
 
@@ -58,21 +81,19 @@ Promoted into `SourceOS-Linux/sourceos-spec`:
 
 ## Next absorption sequence
 
-1. Update Superconscious emitted artifact names/fields toward canonical `sourceos-spec` naming while preserving M1 compatibility.
-2. Add AgentPlane fixture translation for `ReasoningReceipt` and `ReasoningReplayPlan`.
-3. Add SocioSphere workspace/source-exposure validation over Superconscious run directories.
-4. Add `sourceosctl reasoning validate|inspect|replay-plan|events` commands.
-5. Add Agent Machine runtime-plan mock adapter.
-6. Replace mock policy/model/grant adapters with real client adapters behind deterministic test doubles.
-7. Add product rendering tasks for TurtleTerm, AgentTerm, BearBrowser, and web.
-8. Add opt-in Socios personalization dry-run fixtures and model-governance-ledger references.
-9. Expand benchmarks beyond M1: browser, terminal, repo, office, MCP, memory, policy, model-route, and replay suites.
+1. Add AgentPlane fixture translation for `ReasoningReceipt` and `ReasoningReplayPlan`.
+2. Add SocioSphere workspace/source-exposure validation over Superconscious run directories.
+3. Add `sourceosctl reasoning validate|inspect|replay-plan|events` commands.
+4. Add Agent Machine runtime-plan mock adapter.
+5. Replace mock policy/model/grant adapters with real client adapters behind deterministic test doubles.
+6. Add product rendering tasks for TurtleTerm, AgentTerm, BearBrowser, and web.
+7. Add opt-in Socios personalization dry-run fixtures and model-governance-ledger references.
+8. Expand benchmarks beyond M1: browser, terminal, repo, office, MCP, memory, policy, model-route, and replay suites.
 
 ## Turn estimate
 
-Estimated remaining turns to full bounded absorption: **5–7**.
+Estimated remaining turns to full bounded absorption: **4–6**.
 
-- **1 turn** for Superconscious canonical-name alignment against `sourceos-spec` contracts.
 - **1 turn** for AgentPlane evidence/replay fixture integration.
 - **1 turn** for SocioSphere/sourceosctl validation and inspection integration.
 - **1 turn** for Agent Machine/model-router/guardrail/registry real adapter stubs.
