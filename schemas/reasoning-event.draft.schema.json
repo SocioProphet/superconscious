@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:socioprophet:superconscious:schema:reasoning-event:draft",
+  "title": "ReasoningEvent Draft Schema",
+  "description": "Local draft schema for safe operational trace events. Canonical ownership belongs in SourceOS-Linux/sourceos-spec.",
+  "type": "object",
+  "required": [
+    "eventId",
+    "runId",
+    "type",
+    "occurredAt",
+    "summary",
+    "traceLevel",
+    "trustLevel"
+  ],
+  "properties": {
+    "eventId": { "type": "string", "pattern": "^urn:srcos:reasoning-event:" },
+    "runId": { "type": "string", "pattern": "^urn:srcos:reasoning-run:" },
+    "type": { "type": "string", "pattern": "^reasoning\\." },
+    "occurredAt": { "type": "string" },
+    "summary": { "type": "string", "minLength": 1 },
+    "traceLevel": {
+      "enum": ["public-safe", "workspace-safe", "operator-private", "restricted", "denied"]
+    },
+    "trustLevel": {
+      "enum": [
+        "trusted-control-input",
+        "trusted-workspace-source",
+        "semi-trusted-project-source",
+        "untrusted-observation",
+        "restricted-material"
+      ]
+    },
+    "evidenceRefs": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  },
+  "additionalProperties": true
+}
