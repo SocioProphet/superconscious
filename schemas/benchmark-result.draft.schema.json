@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:socioprophet:superconscious:schema:benchmark-result:draft",
+  "title": "BenchmarkResult Draft Schema",
+  "description": "Local draft schema for evidence-backed benchmark results. Canonical ownership belongs in SourceOS-Linux/sourceos-spec.",
+  "type": "object",
+  "required": ["kind", "specVersion", "runId", "suite", "passed", "assertions", "evaluatedAt"],
+  "properties": {
+    "kind": { "const": "BenchmarkResult" },
+    "specVersion": { "type": "string" },
+    "runId": { "type": "string", "pattern": "^urn:srcos:reasoning-run:" },
+    "suite": { "type": "string" },
+    "passed": { "type": "boolean" },
+    "assertions": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["name", "passed"],
+        "properties": {
+          "name": { "type": "string" },
+          "passed": { "type": "boolean" }
+        },
+        "additionalProperties": true
+      }
+    },
+    "evaluatedAt": { "type": "string" }
+  },
+  "additionalProperties": true
+}
