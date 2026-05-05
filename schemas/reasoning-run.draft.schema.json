@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:socioprophet:superconscious:schema:reasoning-run:draft",
+  "title": "ReasoningRun Draft Schema",
+  "description": "Local draft schema for Superconscious M1 reasoning run artifacts. Canonical ownership belongs in SourceOS-Linux/sourceos-spec.",
+  "type": "object",
+  "required": [
+    "kind",
+    "specVersion",
+    "runId",
+    "status",
+    "startedAt",
+    "completedAt",
+    "task",
+    "agent",
+    "workspace",
+    "safeTrace",
+    "adapterTrace",
+    "events",
+    "artifactRefs"
+  ],
+  "properties": {
+    "kind": { "const": "ReasoningRun" },
+    "specVersion": { "type": "string" },
+    "runId": { "type": "string", "pattern": "^urn:srcos:reasoning-run:" },
+    "status": { "enum": ["created", "validated", "admitted", "planned", "running", "blocked", "awaiting_approval", "resumed", "completed", "failed", "cancelled", "replayed", "reviewed", "promoted"] },
+    "startedAt": { "type": "string" },
+    "completedAt": { "type": "string" },
+    "task": {
+      "type": "object",
+      "required": ["taskId", "title", "objectiveHash"],
+      "properties": {
+        "taskId": { "type": "string" },
+        "title": { "type": "string" },
+        "objectiveHash": { "type": "string" }
+      },
+      "additionalProperties": true
+    },
+    "agent": { "type": "object" },
+    "workspace": { "type": "object" },
+    "safeTrace": {
+      "type": "object",
+      "required": ["mode", "rawChainOfThought", "eventCount"],
+      "properties": {
+        "mode": { "const": "operational-trace-only" },
+        "rawChainOfThought": { "const": "not-collected" },
+        "eventCount": { "type": "integer", "minimum": 1 }
+      },
+      "additionalProperties": false
+    },
+    "adapterTrace": { "type": "object" },
+    "events": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "urn:socioprophet:superconscious:schema:reasoning-event:draft" }
+    },
+    "artifactRefs": {
+      "type": "object",
+      "required": ["events", "agentplaneEvidence", "replayPlan", "benchmarkResult"],
+      "properties": {
+        "events": { "const": "events.jsonl" },
+        "agentplaneEvidence": { "const": "agentplane-evidence.json" },
+        "replayPlan": { "const": "replay-plan.json" },
+        "benchmarkResult": { "const": "benchmark-result.json" }
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}
