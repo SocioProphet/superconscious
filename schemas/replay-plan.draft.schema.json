@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:socioprophet:superconscious:schema:replay-plan:draft",
+  "title": "ReplayPlan Draft Schema",
+  "description": "Local draft schema for deterministic or evidence-backed replay plans. Canonical ownership belongs in SourceOS-Linux/sourceos-spec.",
+  "type": "object",
+  "required": ["kind", "specVersion", "runId", "replayClass", "inputs", "constraints", "adapterReplay", "command"],
+  "properties": {
+    "kind": { "const": "ReplayPlan" },
+    "specVersion": { "type": "string" },
+    "runId": { "type": "string", "pattern": "^urn:srcos:reasoning-run:" },
+    "replayClass": { "enum": ["exact", "best-effort", "evidence-only", "non-replayable-side-effect"] },
+    "inputs": {
+      "type": "object",
+      "required": ["taskPath", "taskHash", "mode"],
+      "properties": {
+        "taskPath": { "type": "string" },
+        "taskHash": { "type": "string" },
+        "mode": { "type": "string" }
+      },
+      "additionalProperties": true
+    },
+    "constraints": {
+      "type": "object",
+      "required": ["network", "modelCalls", "hostMutation"],
+      "properties": {
+        "network": { "type": "string" },
+        "modelCalls": { "type": "string" },
+        "hostMutation": { "type": "string" }
+      },
+      "additionalProperties": true
+    },
+    "adapterReplay": { "type": "object" },
+    "command": { "type": "string" }
+  },
+  "additionalProperties": true
+}
