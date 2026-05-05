@@ -1,0 +1,40 @@
+name: Superconscious CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  m1-deterministic-loop:
+    name: M1 deterministic loop
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install test dependency
+        run: python -m pip install --upgrade pip pytest
+
+      - name: Run tests
+        run: python -m pytest
+
+      - name: Run deterministic smoke loop
+        run: make smoke
+
+      - name: Assert required artifacts exist
+        run: |
+          test -n "$(find .runs -name events.jsonl -print -quit)"
+          test -n "$(find .runs -name reasoning-run.json -print -quit)"
+          test -n "$(find .runs -name agentplane-evidence.json -print -quit)"
+          test -n "$(find .runs -name replay-plan.json -print -quit)"
+          test -n "$(find .runs -name benchmark-result.json -print -quit)"
