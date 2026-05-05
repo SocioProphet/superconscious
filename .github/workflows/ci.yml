@@ -31,13 +31,21 @@ jobs:
       - name: Run tests
         run: python -m pytest
 
-      - name: Run semantic artifact validation
-        run: make artifact-validate
+      - name: Run complete validation
+        run: make validate
 
-      - name: Assert required artifacts exist
+      - name: Assert compatibility artifacts exist
         run: |
           test -n "$(find .runs -name events.jsonl -print -quit)"
           test -n "$(find .runs -name reasoning-run.json -print -quit)"
           test -n "$(find .runs -name agentplane-evidence.json -print -quit)"
           test -n "$(find .runs -name replay-plan.json -print -quit)"
           test -n "$(find .runs -name benchmark-result.json -print -quit)"
+
+      - name: Assert SourceOS canonical artifacts exist
+        run: |
+          test -n "$(find .runs -name reasoning-events.sourceos.jsonl -print -quit)"
+          test -n "$(find .runs -name reasoning-run.sourceos.json -print -quit)"
+          test -n "$(find .runs -name reasoning-receipt.json -print -quit)"
+          test -n "$(find .runs -name reasoning-replay-plan.json -print -quit)"
+          test -n "$(find .runs -name reasoning-benchmark.json -print -quit)"
