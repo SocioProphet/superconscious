@@ -23,6 +23,7 @@ from typing import Any, Dict, Iterable, List
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
 DEFAULT_RUNS_DIR = REPO_ROOT / ".runs"
+SELF_EMITTED_ARTIFACTS = {"benchmark-result.json"}
 
 
 def utc_now() -> str:
@@ -240,11 +241,23 @@ def build_replay_plan(ctx: RunContext, task: Dict[str, Any]) -> Dict[str, Any]:
 
 def build_benchmark_result(ctx: RunContext, task: Dict[str, Any], run_artifact: Dict[str, Any]) -> Dict[str, Any]:
     required = task.get("expected", {}).get("requiredArtifacts", [])
-    missing = [name for name in required if not (ctx.run_dir / name).exists()]
+    missing = [
+        name
+        for name in required
+        if name not in SELF_EMITTED_ARTIFACTS and not (ctx.run_dir / name).exists()
+    ]
     assertions = [
         {"name": "run-completed", "passed": run_artifact.get("status") == "completed"},
-        {"name": "safe-trace-only", "passed": run_artifact.get("safeTrace", {}).get("rawChainOfThought") == "not-collected"},
-        {"name": "required-artifacts-present", "passed": not missing, "missing": missing},
+        {
+            "name": "safe-trace-only",
+            "passed": run_artifact.get("safeTrace", {}).get("rawChainOfThought") == "not-collected",
+        },
+        {"name": "required-prior-artifacts-present", "passed": not missing, "missing": missing},
+        {
+            "name": "benchmark-result-self-emitted",
+            "passed": "benchmark-result.json" in required,
+            "note": "benchmark-result.json is validated by write/readback after emission",
+        },
     ]
     return {
         "kind": "BenchmarkResult",
@@ -264,7 +277,13 @@ def run(task_path: Path, out_dir: Path | None = None) -> Path:
     run_id = f"urn:srcos:reasoning-run:{task_hash[:24]}"
     run_dir = (out_dir or DEFAULT_RUNS_DIR) / task_hash[:24]
     started_at = utc_now()
-    ctx = RunContext(run_id=run_id, run_dir=run_dir, task_path=task_path, task_hash=task_hash, started_at=started_at)
+    ctx = RunContext(
+        run_id=run_id,
+        run_dir=run_dir,
+        task_path=task_path,
+        task_hash=task_hash,
+        started_at=started_at,
+    )
 
     events = build_events(ctx, task)
     write_jsonl(run_dir / "events.jsonl", events)
@@ -281,8 +300,9 @@ def run(task_path: Path, out_dir: Path | None = None) -> Path:
     benchmark_result = build_benchmark_result(ctx, task, reasoning_run)
     write_json(run_dir / "benchmark-result.json", benchmark_result)
 
-    if not benchmark_result["passed"]:
-        raise RuntimeError(f"benchmark failed for {ctx.run_id}: {benchmark_result}")
+    benchmark_result_readback = load_json(run_dir / "benchmark-result.json")
+    if not benchmark_result_readback["passed"]:
+        raise RuntimeError(f"benchmark failed for {ctx.run_id}: {benchmark_result_readback}")
 
     return run_dir
 
