@@ -25,11 +25,14 @@ jobs:
       - name: Install test dependency
         run: python -m pip install --upgrade pip pytest
 
+      - name: Validate trust surface declarations
+        run: make trust-surface
+
       - name: Run tests
         run: python -m pytest
 
-      - name: Run deterministic smoke loop
-        run: make smoke
+      - name: Run semantic artifact validation
+        run: make artifact-validate
 
       - name: Assert required artifacts exist
         run: |
