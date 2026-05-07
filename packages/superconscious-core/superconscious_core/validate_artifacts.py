@@ -31,6 +31,7 @@ REQUIRED_SCHEMAS = [
     "schemas/agentplane-reasoning-evidence.draft.schema.json",
     "schemas/replay-plan.draft.schema.json",
     "schemas/benchmark-result.draft.schema.json",
+    "schemas/cognition-operation.draft.schema.json",
 ]
 REQUIRED_EVENT_TYPES = {
     "reasoning.run.created",
