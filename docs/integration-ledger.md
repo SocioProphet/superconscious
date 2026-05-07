@@ -14,10 +14,10 @@ This ledger tracks absorption of the Superconscious governed cognition loop acro
 | AgentPlane evidence/replay | PR open | `SocioProphet/agentplane` | `SocioProphet/agentplane#123` adds read-only canonical artifact import validation; issue `#109` remains the work-order root. |
 | SocioSphere validation | PR open | `SocioProphet/sociosphere` | `SocioProphet/sociosphere#292` adds read-only workspace/source-exposure validation; issue `#274` remains the work-order root. |
 | sourceosctl inspection | PR open | `SourceOS-Linux/sourceos-devtools` | `SourceOS-Linux/sourceos-devtools#24` adds `sourceosctl reasoning validate|inspect|replay-plan|events`; issue `#22` remains the work-order root. |
-| Runtime planning | Work order open | `SourceOS-Linux/agent-machine` | `SourceOS-Linux/agent-machine#23`. |
-| Model routing | Work order open | `SocioProphet/model-router` | `SocioProphet/model-router#12`. |
-| Policy admission | Work order open | `SocioProphet/guardrail-fabric` | `SocioProphet/guardrail-fabric#17`. |
-| Agent grants | Work order open | `SocioProphet/agent-registry` | `SocioProphet/agent-registry#22`. |
+| Runtime planning | PR open | `SourceOS-Linux/agent-machine` | `SourceOS-Linux/agent-machine#27` adds deterministic no-activation runtime-plan fixture; issue `#23` remains the work-order root. |
+| Model routing | PR open | `SocioProphet/model-router` | `SocioProphet/model-router#14` adds deterministic task-class route fixture; issue `#12` remains the work-order root. |
+| Policy admission | PR open | `SocioProphet/guardrail-fabric` | `SocioProphet/guardrail-fabric#22` adds deterministic M1 policy-admission fixture; issue `#17` remains the work-order root. |
+| Agent grants | PR open | `SocioProphet/agent-registry` | `SocioProphet/agent-registry#28` adds deterministic grant fixture; issue `#22` remains the work-order root. |
 | Terminal product surface | Work order open | `SourceOS-Linux/TurtleTerm` | `SourceOS-Linux/TurtleTerm#6`. |
 | Browser product surface | Work order open | `SourceOS-Linux/BearBrowser` | `SourceOS-Linux/BearBrowser#23`. |
 | Operator console surface | Work order open | `SourceOS-Linux/agent-term` | `SourceOS-Linux/agent-term#38`. |
@@ -52,6 +52,10 @@ reasoning-benchmark.json
 - `SocioProphet/agentplane#123` — Import Superconscious ReasoningRun artifacts into AgentPlane validation.
 - `SourceOS-Linux/sourceos-devtools#24` — Add sourceosctl reasoning inspection and validation commands.
 - `SocioProphet/sociosphere#292` — Validate Superconscious ReasoningRun artifacts in SocioSphere.
+- `SourceOS-Linux/agent-machine#27` — Add Superconscious ReasoningRun runtime-plan fixture.
+- `SocioProphet/model-router#14` — Add Superconscious ReasoningRun task-class route fixture.
+- `SocioProphet/guardrail-fabric#22` — Add Superconscious ReasoningRun policy admission fixture.
+- `SocioProphet/agent-registry#28` — Add Superconscious ReasoningRun grant fixture.
 
 ## Open work orders
 
@@ -87,19 +91,16 @@ Promoted into `SourceOS-Linux/sourceos-spec`:
 
 ## Next absorption sequence
 
-1. Merge/validate the three active PRs: AgentPlane, sourceosctl, and SocioSphere.
-2. Add Agent Machine runtime-plan mock adapter.
-3. Replace mock policy/model/grant adapters with real client adapters behind deterministic test doubles.
-4. Add product rendering tasks for TurtleTerm, AgentTerm, BearBrowser, and web.
-5. Add opt-in Socios personalization dry-run fixtures and model-governance-ledger references.
-6. Expand benchmarks beyond M1: browser, terminal, repo, office, MCP, memory, policy, model-route, and replay suites.
+1. Merge/validate the seven active PRs: AgentPlane, sourceosctl, SocioSphere, Agent Machine, Model Router, Guardrail Fabric, and Agent Registry.
+2. Add product rendering fixtures for TurtleTerm, AgentTerm, BearBrowser, and web.
+3. Add opt-in Socios personalization dry-run fixtures and model-governance-ledger references.
+4. Expand benchmarks beyond M1: browser, terminal, repo, office, MCP, memory, policy, model-route, and replay suites.
 
 ## Turn estimate
 
-Estimated remaining turns to full bounded absorption: **3–5**.
+Estimated remaining turns to full bounded absorption: **2–4**.
 
-- **1 turn** for merge/readiness checks and follow-up fixes on the three active PRs.
-- **1 turn** for Agent Machine/model-router/guardrail/registry real adapter stubs.
+- **1 turn** for merge/readiness checks and follow-up fixes on the seven active PRs.
 - **1 turn** for TurtleTerm/BearBrowser/AgentTerm/web rendering fixtures.
 - **0–2 turns** for benchmark expansion and Socios personalization dry-run fixtures.
 
