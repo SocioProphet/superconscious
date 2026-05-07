@@ -30,6 +30,49 @@ emits:
 .runs/<run-id>/benchmark-result.json
 ```
 
+## M1.5 — Governed cognition loop over Workspace Operations
+
+Goal: integrate the six required cognition operation types that make Superconscious the
+governed cognition/reflection loop for recursive agents (SocioProphet/superconscious#1).
+
+Deliverables:
+
+- `cognition_loop.py` — governed cognition loop with read/reflect/propose posture;
+- six mock adapters: `WorkspaceOperationObserve`, `Reflection`, `RemediationProposal`,
+  `LearningLoop`, `RiskSignal`, `PolicyReview`;
+- eight typed artifacts per run: events, run, reflection, remediation proposal, risk signal,
+  policy review request, learning loop record, benchmark;
+- deterministic example task (`examples/workspace-operation-observe/task.json`);
+- `schemas/cognition-operation.draft.schema.json` local draft schema;
+- 20 new tests covering posture invariants, provenance, admission state, and adapter inertness.
+
+Exit criteria:
+
+```text
+python3 packages/superconscious-core/superconscious_core/cognition_loop.py examples/workspace-operation-observe/task.json
+```
+
+emits:
+
+```text
+.runs/<run-id>/cognition-events.jsonl
+.runs/<run-id>/cognition-run.json
+.runs/<run-id>/cognition-reflection.json
+.runs/<run-id>/cognition-remediation-proposal.json
+.runs/<run-id>/cognition-risk-signal.json
+.runs/<run-id>/cognition-policy-review-request.json
+.runs/<run-id>/cognition-learning-loop-record.json
+.runs/<run-id>/cognition-benchmark-result.json
+```
+
+Constraints maintained:
+
+- Loop is read/reflect/propose; `directMutation` is always `false`.
+- Remediation routes through AgentPlane / OperationContract only.
+- All artifacts carry provenance and `admissionState: proposed`.
+- Risk signals and remediation proposals are auditable (ledger-facing).
+- M1 posture: no network, no model calls, no host mutation.
+
 ## M2 — Contract promotion
 
 - Promote local draft artifact shapes into `SourceOS-Linux/sourceos-spec`.

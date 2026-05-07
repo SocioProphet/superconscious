@@ -1,0 +1,41 @@
+{
+  "taskId": "urn:srcos:cognition-task:workspace-operation-observe",
+  "title": "Governed cognition loop over workspace operation",
+  "objective": "Observe, reflect, and evaluate a WorkspaceOperation event without direct mutation. Demonstrate that the Superconscious cognition loop is read/reflect/propose by default.",
+  "agent": {
+    "id": "urn:socioprophet:agent:superconscious-cognition",
+    "role": "cognition-loop-demo"
+  },
+  "workspace": {
+    "id": "urn:socioprophet:workspace:superconscious-m1",
+    "lockRef": "mock://sociosphere/workspace.lock.json"
+  },
+  "workspaceOperation": {
+    "operationId": "urn:srcos:workspace-operation:demo-op-001",
+    "type": "workspace.file.write",
+    "status": "completed",
+    "agentRef": "urn:socioprophet:agent:worker-demo",
+    "sideEffectClass": "durable-write",
+    "occurredAt": "2026-05-07T06:00:00Z",
+    "summary": "Worker agent wrote a file to the workspace during a demo task."
+  },
+  "policy": {
+    "network": "denied",
+    "modelCalls": "denied",
+    "hostMutation": "denied",
+    "memoryPromotion": "proposal-only"
+  },
+  "expected": {
+    "requiredArtifacts": [
+      "cognition-events.jsonl",
+      "cognition-run.json",
+      "cognition-reflection.json",
+      "cognition-remediation-proposal.json",
+      "cognition-risk-signal.json",
+      "cognition-policy-review-request.json",
+      "cognition-learning-loop-record.json",
+      "cognition-benchmark-result.json"
+    ],
+    "replayClass": "exact"
+  }
+}

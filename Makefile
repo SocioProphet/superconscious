@@ -1,4 +1,4 @@
-.PHONY: test smoke trust-surface artifact-validate canonicalize inspect validate
+.PHONY: test smoke cognition-smoke trust-surface artifact-validate canonicalize inspect validate
 
 test:
 	python3 -m pytest
@@ -8,6 +8,9 @@ trust-surface:
 
 smoke:
 	python3 packages/superconscious-core/superconscious_core/runner.py examples/basic-reasoning-run/task.json
+
+cognition-smoke:
+	python3 packages/superconscious-core/superconscious_core/cognition_loop.py examples/workspace-operation-observe/task.json
 
 artifact-validate:
 	run_dir="$$(python3 packages/superconscious-core/superconscious_core/runner.py examples/basic-reasoning-run/task.json)"; \
