@@ -11,9 +11,9 @@ This ledger tracks absorption of the Superconscious governed cognition loop acro
 | Trust surface protocol | Seeded | `SocioProphet/superconscious` → future `SourceOS-Linux/sourceos-spec` | Superconscious carries seed schema/workflow until canonical trust-surface ownership is promoted. |
 | Canonical reasoning schemas | First tranche promoted | `SourceOS-Linux/sourceos-spec` | `ReasoningRun`, `ReasoningEvent`, `ReasoningReceipt`, `ReasoningReplayPlan`, and `ReasoningBenchmark` are promoted with examples and contract-addition docs. |
 | Adapter decision object | Deferred | `SourceOS-Linux/sourceos-spec` | Direct `AdapterDecision` promotion was blocked by connector filtering; use `ReasoningRun.adapterRecords` until a narrower future schema is agreed. |
-| AgentPlane evidence/replay | Work order open | `SocioProphet/agentplane` | `SocioProphet/agentplane#109`. |
-| SocioSphere validation | Work order open | `SocioProphet/sociosphere` | `SocioProphet/sociosphere#274`. |
-| sourceosctl inspection | Work order open | `SourceOS-Linux/sourceos-devtools` | `SourceOS-Linux/sourceos-devtools#22`. |
+| AgentPlane evidence/replay | PR open | `SocioProphet/agentplane` | `SocioProphet/agentplane#123` adds read-only canonical artifact import validation; issue `#109` remains the work-order root. |
+| SocioSphere validation | PR open | `SocioProphet/sociosphere` | `SocioProphet/sociosphere#292` adds read-only workspace/source-exposure validation; issue `#274` remains the work-order root. |
+| sourceosctl inspection | PR open | `SourceOS-Linux/sourceos-devtools` | `SourceOS-Linux/sourceos-devtools#24` adds `sourceosctl reasoning validate|inspect|replay-plan|events`; issue `#22` remains the work-order root. |
 | Runtime planning | Work order open | `SourceOS-Linux/agent-machine` | `SourceOS-Linux/agent-machine#23`. |
 | Model routing | Work order open | `SocioProphet/model-router` | `SocioProphet/model-router#12`. |
 | Policy admission | Work order open | `SocioProphet/guardrail-fabric` | `SocioProphet/guardrail-fabric#17`. |
@@ -46,6 +46,12 @@ reasoning-receipt.json
 reasoning-replay-plan.json
 reasoning-benchmark.json
 ```
+
+## Active pull requests
+
+- `SocioProphet/agentplane#123` — Import Superconscious ReasoningRun artifacts into AgentPlane validation.
+- `SourceOS-Linux/sourceos-devtools#24` — Add sourceosctl reasoning inspection and validation commands.
+- `SocioProphet/sociosphere#292` — Validate Superconscious ReasoningRun artifacts in SocioSphere.
 
 ## Open work orders
 
@@ -81,21 +87,18 @@ Promoted into `SourceOS-Linux/sourceos-spec`:
 
 ## Next absorption sequence
 
-1. Add AgentPlane fixture translation for `ReasoningReceipt` and `ReasoningReplayPlan`.
-2. Add SocioSphere workspace/source-exposure validation over Superconscious run directories.
-3. Add `sourceosctl reasoning validate|inspect|replay-plan|events` commands.
-4. Add Agent Machine runtime-plan mock adapter.
-5. Replace mock policy/model/grant adapters with real client adapters behind deterministic test doubles.
-6. Add product rendering tasks for TurtleTerm, AgentTerm, BearBrowser, and web.
-7. Add opt-in Socios personalization dry-run fixtures and model-governance-ledger references.
-8. Expand benchmarks beyond M1: browser, terminal, repo, office, MCP, memory, policy, model-route, and replay suites.
+1. Merge/validate the three active PRs: AgentPlane, sourceosctl, and SocioSphere.
+2. Add Agent Machine runtime-plan mock adapter.
+3. Replace mock policy/model/grant adapters with real client adapters behind deterministic test doubles.
+4. Add product rendering tasks for TurtleTerm, AgentTerm, BearBrowser, and web.
+5. Add opt-in Socios personalization dry-run fixtures and model-governance-ledger references.
+6. Expand benchmarks beyond M1: browser, terminal, repo, office, MCP, memory, policy, model-route, and replay suites.
 
 ## Turn estimate
 
-Estimated remaining turns to full bounded absorption: **4–6**.
+Estimated remaining turns to full bounded absorption: **3–5**.
 
-- **1 turn** for AgentPlane evidence/replay fixture integration.
-- **1 turn** for SocioSphere/sourceosctl validation and inspection integration.
+- **1 turn** for merge/readiness checks and follow-up fixes on the three active PRs.
 - **1 turn** for Agent Machine/model-router/guardrail/registry real adapter stubs.
 - **1 turn** for TurtleTerm/BearBrowser/AgentTerm/web rendering fixtures.
 - **0–2 turns** for benchmark expansion and Socios personalization dry-run fixtures.
