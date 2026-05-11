@@ -34,7 +34,7 @@ M1 does not prove implementability. M1 proves that one open-model steering effec
 ### SAE width
 
 - Primary width: `131k`
-- Rationale: enough granularity to separate refusal, redirect, harm-detection, and policy-meta features without the interpretation overhead of the 1M-width release.
+- Rationale: enough granularity to separate refusal, redirect, harm-detection, and policy-meta features while remaining within the public 9B-IT residual SAE release.
 
 ### L0 / sparsity
 
@@ -42,6 +42,35 @@ M1 does not prove implementability. M1 proves that one open-model steering effec
 - Path: `layer_20/width_131k/average_l0_81/params.npz`
 - Rationale: this is within the intended L0 70-100 range and is present in the public layer-20 / width-131k tree.
 - Fallback rule: do not change L0 mid-run. If `average_l0_81` is unavailable locally, stop and record the failure rather than silently using another L0.
+
+## Cross-width witness targets
+
+M1B Witness 4 uses cross-width behavioral-equivalence checks. The public 9B-IT residual release exposes 16k and 131k widths at layers 9, 20, and 31. It does **not** expose the 65k or 1M width family for 9B-IT; those widths belong to the 9B-PT residual release and are therefore outside the primary IT source lock.
+
+For M1B v1, cross-width comparison is restricted to the same model family and same layer:
+
+```text
+primary:  google/gemma-scope-9b-it-res/layer_20/width_131k/average_l0_81/params.npz
+witness:  google/gemma-scope-9b-it-res/layer_20/width_16k/average_l0_91/params.npz
+```
+
+Rationale:
+
+- both artifacts are instruction-tuned residual SAEs;
+- both target layer 20;
+- both have hidden dimension `d_in = 3584`;
+- `average_l0_91` is the Neuronpedia-demonstrated 16k layer-20 configuration;
+- the comparison is conservative: it tests whether a candidate survives a representation-size change without introducing PT-vs-IT distribution shift.
+
+Deferred cross-width / cross-release comparisons:
+
+```text
+9B-PT width_65k
+9B-PT width_1m
+9B-PT width_32k / 262k / 524k
+```
+
+These belong to M3 robustness, not M1B v1, because they change the model training regime from IT to PT and therefore require a separate compatibility argument.
 
 ## Source-lock command
 
@@ -61,7 +90,8 @@ The script must resolve:
 - SAE commit SHA;
 - SAE path;
 - SAE file metadata exposed by Hugging Face;
-- pilot layer, width, L0, and position classes.
+- pilot layer, width, L0, and position classes;
+- cross-width witness target path for M1B v1.
 
 The script does not download full model weights or SAE parameters by default. It records metadata and raises if the target path is not present.
 
@@ -77,6 +107,7 @@ Changing any of the following invalidates cross-run comparisons and requires a n
 - layer;
 - width;
 - average L0;
+- cross-width witness width/L0;
 - intervention site;
 - activation dtype;
 - chat template;
