@@ -1,0 +1,27 @@
+name: M1 Certificates
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  m1-static-and-smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Run M1 static and smoke checks
+        run: make m1-ci
+      - name: Upload M1 smoke artifacts
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: m1-ci-artifacts
+          path: outputs/m1/ci/
+          if-no-files-found: ignore
