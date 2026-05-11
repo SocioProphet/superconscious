@@ -81,9 +81,7 @@
         "family_classification": { "$ref": "#/$defs/familyClassificationWitness" }
       }
     },
-    "witnessStatus": {
-      "enum": ["not_collected", "collected", "failed", "not_applicable"]
-    },
+    "witnessStatus": { "enum": ["not_collected", "collected", "failed", "not_applicable"] },
     "topContextsWitness": {
       "type": "object",
       "additionalProperties": false,
@@ -98,10 +96,7 @@
             "source": { "type": "string" },
             "top_k": { "type": "integer", "minimum": 0 },
             "contexts_sha256": { "$ref": "#/$defs/sha256" },
-            "keyword_scores": {
-              "type": "object",
-              "additionalProperties": { "type": "integer", "minimum": 0 }
-            },
+            "keyword_scores": { "type": "object", "additionalProperties": { "type": "integer", "minimum": 0 } },
             "analyst_description": { "type": "string" },
             "sample_contexts": {
               "type": "array",
@@ -176,34 +171,66 @@
           "type": ["object", "null"],
           "additionalProperties": false,
           "required": [
-            "ablation_effect_vector_sha256",
-            "test_set_ref",
-            "cross_width_matches",
-            "robust_identification_score",
-            "robust_identification_threshold",
-            "passes"
+            "compute_pattern",
+            "directional_top_k",
+            "primary_sae",
+            "witness_sae",
+            "top_directional_matches",
+            "l0_regime_note",
+            "cross_width_agreement_score",
+            "noise_floor_threshold",
+            "score_above_noise_floor",
+            "advisory_only",
+            "deferred_widths",
+            "deferred_to_milestone"
           ],
           "properties": {
-            "ablation_effect_vector_sha256": { "$ref": "#/$defs/sha256" },
-            "test_set_ref": { "$ref": "#/$defs/datasetRef" },
-            "cross_width_matches": {
+            "compute_pattern": { "const": "option-c-gated-exhaustive" },
+            "directional_top_k": { "type": "integer", "minimum": 1 },
+            "primary_sae": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["width", "l0_directory", "feature_index", "ablation_effect_vector_sha256"],
+              "properties": {
+                "width": { "const": "131k" },
+                "l0_directory": { "const": "average_l0_81" },
+                "feature_index": { "type": ["integer", "null"], "minimum": 0 },
+                "ablation_effect_vector_sha256": { "$ref": "#/$defs/sha256" }
+              }
+            },
+            "witness_sae": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["width", "l0_directory", "matched_feature_index", "cosine_similarity", "ablation_effect_vector_sha256"],
+              "properties": {
+                "width": { "const": "16k" },
+                "l0_directory": { "const": "average_l0_91" },
+                "matched_feature_index": { "type": ["integer", "null"], "minimum": 0 },
+                "cosine_similarity": { "type": ["number", "null"] },
+                "ablation_effect_vector_sha256": { "type": ["string", "null"], "pattern": "^[a-f0-9]{64}$" }
+              }
+            },
+            "top_directional_matches": {
               "type": "array",
               "items": {
                 "type": "object",
                 "additionalProperties": false,
-                "required": ["width", "matched_feature_index", "cosine_similarity", "match_threshold", "match_passes_threshold"],
+                "required": ["rank", "matched_feature_index", "direction_cosine_similarity", "effect_cosine_similarity"],
                 "properties": {
-                  "width": { "type": "string" },
+                  "rank": { "type": "integer", "minimum": 1 },
                   "matched_feature_index": { "type": ["integer", "null"], "minimum": 0 },
-                  "cosine_similarity": { "type": ["number", "null"] },
-                  "match_threshold": { "type": "number" },
-                  "match_passes_threshold": { "type": "boolean" }
+                  "direction_cosine_similarity": { "type": ["number", "null"] },
+                  "effect_cosine_similarity": { "type": ["number", "null"] }
                 }
               }
             },
-            "robust_identification_score": { "type": "integer", "minimum": 0 },
-            "robust_identification_threshold": { "type": "integer", "minimum": 0 },
-            "passes": { "type": "boolean" }
+            "l0_regime_note": { "type": "string" },
+            "cross_width_agreement_score": { "type": ["number", "null"] },
+            "noise_floor_threshold": { "type": "number" },
+            "score_above_noise_floor": { "type": "boolean" },
+            "advisory_only": { "const": true },
+            "deferred_widths": { "type": "array", "items": { "type": "string" } },
+            "deferred_to_milestone": { "const": "M3" }
           }
         }
       }
@@ -288,7 +315,7 @@
         "selection_rule_evaluation": {
           "type": ["object", "null"],
           "additionalProperties": false,
-          "required": ["rule_version", "criteria", "all_criteria_pass", "promoted"],
+          "required": ["rule_version", "criteria", "advisory_scores", "all_hard_criteria_pass", "promoted"],
           "properties": {
             "rule_version": { "const": "m1b-selection-rule.v1" },
             "criteria": {
@@ -296,14 +323,16 @@
               "items": {
                 "type": "object",
                 "additionalProperties": true,
-                "required": ["name", "passes"],
+                "required": ["name", "passes", "hard_gate"],
                 "properties": {
                   "name": { "type": "string" },
-                  "passes": { "type": "boolean" }
+                  "passes": { "type": "boolean" },
+                  "hard_gate": { "type": "boolean" }
                 }
               }
             },
-            "all_criteria_pass": { "type": "boolean" },
+            "advisory_scores": { "type": "object", "additionalProperties": true },
+            "all_hard_criteria_pass": { "type": "boolean" },
             "promoted": { "type": "boolean" }
           }
         },
