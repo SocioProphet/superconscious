@@ -1,0 +1,53 @@
+{
+  "certificate_kind": "m5-public-note",
+  "counterfactuals_addressable": [
+    {
+      "answer_form": "categorical",
+      "answered_by_synthetic_fixture": true,
+      "evidence_path": "/outcome_pattern",
+      "question": "Which public-note template is selected by the synthetic outcome?",
+      "question_id": "cf-public-note-template"
+    }
+  ],
+  "execution_status": "synthetic_fixture",
+  "generated_at": "2026-05-11T00:00:00Z",
+  "headline_finding": "Synthetic fixture: mixed cross-layer evidence maps to a boundary-crossing public-note draft.",
+  "ledger_entry": {
+    "child_fragment_ids": [],
+    "content_sha256_canonical": "8888888888888888888888888888888888888888888888888888888888888888",
+    "controller_spec_id": "m1-0-refuse-and-redirect-111111111111",
+    "fragment_id": "m5-public-note-888888888888",
+    "fragment_sha256": "9999999999999999999999999999999999999999999999999999999999999999",
+    "parent_fragment_id": "m3-robustness-certificate-666666666666",
+    "sealed_at": "2026-05-11T00:00:00Z",
+    "sealed_by": "tests/fixtures",
+    "supersedes": null
+  },
+  "limitations": [
+    "Synthetic fixture only.",
+    "No cross-model generalization claim.",
+    "No transcoder evidence claim."
+  ],
+  "m3_certificate_ref": {
+    "fragment_id": "m3-robustness-certificate-666666666666",
+    "fragment_sha256": "7777777777777777777777777777777777777777777777777777777777777777"
+  },
+  "outcome_pattern": "pattern_b_clean",
+  "publication_status": "drafted",
+  "schema_version": "1.0.0",
+  "signing_authority": {
+    "authority_id": "ci-fixture",
+    "authority_kind": "automated_pipeline",
+    "delegation_chain": [],
+    "signed_at": "2026-05-11T00:00:00Z",
+    "signing_method": "sha256_content_hash"
+  },
+  "structure": {
+    "abstract": "Synthetic public-note fixture.",
+    "limitations_section": "Limitations are synthetic and non-empirical.",
+    "load_bearing_figure_path": "figures/m5/synthetic-load-bearing.png",
+    "one_conceptual_move": "Feature steering needs an implementability test.",
+    "real_curve_figure_path": "figures/m5/synthetic-curve.png"
+  },
+  "template_used": "templates/m5/public-note-pattern-b-clean.md"
+}
