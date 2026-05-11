@@ -1,4 +1,4 @@
-.PHONY: test smoke trust-surface artifact-validate canonicalize inspect validate m1-source-lock m1a-generate m1-verify-source-lock m1-verify-source-lock-strict m1-verify-weights m1-feature-stage1 m1-static m1-schema-fixtures m1b-cross-width-smoke m1-ci
+.PHONY: test smoke trust-surface artifact-validate canonicalize inspect validate m1-source-lock m1a-generate m1-verify-source-lock m1-verify-source-lock-strict m1-verify-weights m1-feature-stage1 m1-static m1-schema-fixtures m1b-cross-width-smoke m1-ci m2-static m2-schema-fixtures m2-ci certificate-ci
 
 test:
 	python3 -m pytest
@@ -49,6 +49,7 @@ m1-static:
 	python3 -m json.tool schemas/m1/causal-triad.v1.json >/dev/null
 	python3 -m json.tool schemas/m1/off-target-audit.v1.json >/dev/null
 	python3 -m json.tool schemas/m1/implementability-certificate.v1.json >/dev/null
+	python3 -m json.tool schemas/m1/common-certificate-additions.v1.1.json >/dev/null
 
 m1-schema-fixtures:
 	python3 -m src.m1.validate_schema_instance schemas/m1/causal-triad.v1.json tests/fixtures/m1/causal-triad.valid.json
@@ -65,3 +66,19 @@ m1b-cross-width-smoke:
 	python3 -m json.tool outputs/m1/ci/cross_width_equivalence.json >/dev/null
 
 m1-ci: m1-static m1-schema-fixtures m1b-cross-width-smoke
+
+m2-static:
+	python3 -m json.tool schemas/m2/activation-cache.v1.json >/dev/null
+	python3 -m json.tool schemas/m2/manifold-baseline.v1.json >/dev/null
+	python3 -m json.tool schemas/m2/implementability-curve.v1.json >/dev/null
+	python3 -m json.tool schemas/m2/implementability-certificate.v1.json >/dev/null
+
+m2-schema-fixtures:
+	python3 -m src.m1.validate_schema_instance schemas/m2/activation-cache.v1.json tests/fixtures/m2/activation-cache.synthetic.json
+	python3 -m src.m1.validate_schema_instance schemas/m2/manifold-baseline.v1.json tests/fixtures/m2/manifold-baseline.synthetic.json
+	python3 -m src.m1.validate_schema_instance schemas/m2/implementability-curve.v1.json tests/fixtures/m2/implementability-curve.synthetic.json
+	python3 -m src.m1.validate_schema_instance schemas/m2/implementability-certificate.v1.json tests/fixtures/m2/implementability-certificate.synthetic.json
+
+m2-ci: m2-static m2-schema-fixtures
+
+certificate-ci: m1-ci m2-ci
