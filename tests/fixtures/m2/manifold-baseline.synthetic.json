@@ -1,0 +1,71 @@
+{
+  "activation_cache_ref": {
+    "fragment_id": "m2-activation-cache-555555555555",
+    "fragment_sha256": "6666666666666666666666666666666666666666666666666666666666666666"
+  },
+  "calibration_split": {
+    "calibration_set_size": 1000,
+    "reference_set_size": 8000,
+    "split_method": "stratified_by_position",
+    "split_seed": 42,
+    "test_set_size": 1000
+  },
+  "certificate_kind": "m2-manifold-baseline",
+  "counterfactuals_addressable": [
+    {
+      "answer_form": "numerical_range",
+      "answered_by_synthetic_fixture": true,
+      "evidence_path": "/natural_baselines/layernorm_end_prompt/quantiles",
+      "question": "What is the natural nearest-neighbor baseline under the declared metric?",
+      "question_id": "cf-natural-baseline-quantiles"
+    }
+  ],
+  "execution_status": "synthetic_fixture",
+  "generated_at": "2026-05-11T00:00:00Z",
+  "ledger_entry": {
+    "child_fragment_ids": [],
+    "content_sha256_canonical": "7777777777777777777777777777777777777777777777777777777777777777",
+    "controller_spec_id": "m1-0-refuse-and-redirect-444444444444",
+    "fragment_id": "m2-manifold-baseline-777777777777",
+    "fragment_sha256": "8888888888888888888888888888888888888888888888888888888888888888",
+    "parent_fragment_id": "m2-activation-cache-555555555555",
+    "sealed_at": "2026-05-11T00:00:00Z",
+    "sealed_by": "tests/fixtures",
+    "supersedes": null
+  },
+  "metric_stack": [
+    {
+      "metric_formula_ref": "docs/m2-metrics.md#layernorm-euclidean",
+      "metric_id": "layernorm_euclidean",
+      "metric_name": "layernorm_euclidean",
+      "metric_parameters": {}
+    }
+  ],
+  "natural_baselines": {
+    "layernorm_end_prompt": {
+      "conformal_coverage_guarantee": {
+        "achieved_coverage": 0.95,
+        "calibration_method": "synthetic_fixture",
+        "target_coverage": 0.95
+      },
+      "empirical_distribution_sha256": "9999999999999999999999999999999999999999999999999999999999999999",
+      "metric_id": "layernorm_euclidean",
+      "position_type": "end_of_prompt",
+      "quantiles": {
+        "q50": 0.5,
+        "q90": 0.9,
+        "q95": 0.95,
+        "q99": 0.99
+      }
+    }
+  },
+  "parent_fragment_id": "m2-activation-cache-555555555555",
+  "schema_version": "1.0.0",
+  "signing_authority": {
+    "authority_id": "ci-fixture",
+    "authority_kind": "automated_pipeline",
+    "delegation_chain": [],
+    "signed_at": "2026-05-11T00:00:00Z",
+    "signing_method": "sha256_content_hash"
+  }
+}
