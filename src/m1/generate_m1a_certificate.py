@@ -238,13 +238,48 @@ def build_model_section(repo: str, revision: str) -> dict[str, Any]:
     }
 
 
+def cross_width_target(
+    *,
+    role: str,
+    repo: str,
+    width: str,
+    average_l0: int,
+    d_sae: int,
+    model_hidden_size: int | None,
+) -> dict[str, Any]:
+    subpath = f"layer_20/width_{width}/average_l0_{average_l0}"
+    sae_d_in = 3584
+    return {
+        "role": role,
+        "huggingface_repo": repo,
+        "subpath": subpath,
+        "width": width,
+        "average_l0": average_l0,
+        "params_path": f"{subpath}/params.npz",
+        "d_in": sae_d_in,
+        "d_sae": d_sae,
+        "params_downloaded": False,
+        "params_npz_sha256": None,
+        "compatibility_check": {
+            "d_in_matches_model_hidden_size": (model_hidden_size == sae_d_in) if model_hidden_size is not None else None,
+            "model_hidden_size": model_hidden_size,
+            "sae_d_in": sae_d_in,
+        },
+    }
+
+
 def build_sae_section(repo: str, revision: str, model_hidden_size: int | None, local_params: Path | None = None) -> dict[str, Any]:
     metadata = fetch_hf_model_metadata(repo, revision)
     resolved = metadata.get("sha") or revision
     sibling_paths = hf_sibling_paths(metadata)
-    if DEFAULT_SAE_PARAMS not in sibling_paths:
-        similar = sorted(p for p in sibling_paths if p.startswith(DEFAULT_SAE_SUBPATH))
-        raise RuntimeError(f"Missing SAE params path {DEFAULT_SAE_PARAMS}. Similar paths: {similar[:20]}")
+    required_paths = {
+        DEFAULT_SAE_PARAMS,
+        "layer_20/width_16k/average_l0_91/params.npz",
+    }
+    missing = sorted(path for path in required_paths if path not in sibling_paths)
+    if missing:
+        similar = sorted(p for p in sibling_paths if p.startswith("layer_20/"))[:40]
+        raise RuntimeError(f"Missing SAE params paths {missing}. Layer-20 paths sample: {similar}")
 
     params_downloaded = bool(local_params and local_params.exists())
     params_hash = hf_file_hash_from_local_cache(local_params)
@@ -270,6 +305,24 @@ def build_sae_section(repo: str, revision: str, model_hidden_size: int | None, l
             "model_hidden_size": model_hidden_size,
             "sae_d_in": sae_d_in,
         },
+        "cross_width_witness_targets": [
+            cross_width_target(
+                role="primary",
+                repo=repo,
+                width="131k",
+                average_l0=81,
+                d_sae=131072,
+                model_hidden_size=model_hidden_size,
+            ),
+            cross_width_target(
+                role="witness",
+                repo=repo,
+                width="16k",
+                average_l0=91,
+                d_sae=16384,
+                model_hidden_size=model_hidden_size,
+            ),
+        ],
     }
 
 
