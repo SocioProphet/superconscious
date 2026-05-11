@@ -1,0 +1,165 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.socioprophet.ai/superconscious/m1/implementability-certificate.v1.json",
+  "title": "M1 Composite Implementability Certificate",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "certificate_kind",
+    "generated_at",
+    "generated_by",
+    "controller_spec_ref",
+    "source_lock_fragment",
+    "witness_card_fragments",
+    "causal_triad_fragments",
+    "off_target_audit_fragments",
+    "m1_result",
+    "m2_handoff",
+    "ledger_entry"
+  ],
+  "properties": {
+    "schema_version": { "const": "1.0.0" },
+    "certificate_kind": { "const": "m1-implementability-certificate" },
+    "generated_at": { "type": "string", "format": "date-time" },
+    "generated_by": { "type": "string" },
+    "controller_spec_ref": { "$ref": "#/$defs/controllerSpecRef" },
+    "source_lock_fragment": { "$ref": "#/$defs/fragmentRef" },
+    "witness_card_fragments": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/witnessCardFragmentRef" }
+    },
+    "causal_triad_fragments": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/causalTriadFragmentRef" }
+    },
+    "off_target_audit_fragments": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/offTargetAuditFragmentRef" }
+    },
+    "m1_result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "runtime_status",
+        "sanity_check_status",
+        "promoted_feature_count",
+        "causal_triad_pass_count",
+        "off_target_pass_count",
+        "critical_safety_failures",
+        "passes_m1_acceptance",
+        "headline_finding"
+      ],
+      "properties": {
+        "runtime_status": { "enum": ["not_run", "partial", "complete", "failed"] },
+        "sanity_check_status": { "enum": ["not_run", "passed", "failed", "not_applicable"] },
+        "promoted_feature_count": { "type": "integer", "minimum": 0 },
+        "causal_triad_pass_count": { "type": "integer", "minimum": 0 },
+        "off_target_pass_count": { "type": "integer", "minimum": 0 },
+        "critical_safety_failures": { "type": "array", "items": { "type": "string" } },
+        "passes_m1_acceptance": { "type": "boolean" },
+        "headline_finding": { "type": "string" }
+      }
+    },
+    "m2_handoff": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["ready_for_m2", "selected_feature_ids", "alpha_behavioral_by_feature", "blocking_reasons"],
+      "properties": {
+        "ready_for_m2": { "type": "boolean" },
+        "selected_feature_ids": { "type": "array", "items": { "type": "string" } },
+        "alpha_behavioral_by_feature": {
+          "type": "object",
+          "additionalProperties": { "type": ["number", "null"] }
+        },
+        "blocking_reasons": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "ledger_entry": { "$ref": "#/$defs/ledgerEntry" }
+  },
+  "$defs": {
+    "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "controllerSpecRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "content_sha256", "git_blob_sha", "commit_sha"],
+      "properties": {
+        "path": { "type": "string" },
+        "content_sha256": { "$ref": "#/$defs/sha256" },
+        "git_blob_sha": { "type": ["string", "null"] },
+        "commit_sha": { "type": "string" }
+      }
+    },
+    "fragmentRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["fragment_id", "fragment_sha256", "content_sha256_canonical", "path", "certificate_kind", "verification_status"],
+      "properties": {
+        "fragment_id": { "type": "string" },
+        "fragment_sha256": { "$ref": "#/$defs/sha256" },
+        "content_sha256_canonical": { "$ref": "#/$defs/sha256" },
+        "path": { "type": "string" },
+        "certificate_kind": { "type": "string" },
+        "verification_status": { "enum": ["not_verified", "partial", "verified", "failed"] }
+      }
+    },
+    "witnessCardFragmentRef": {
+      "allOf": [
+        { "$ref": "#/$defs/fragmentRef" },
+        {
+          "type": "object",
+          "required": ["feature_id", "promoted_to_m1c"],
+          "properties": {
+            "feature_id": { "type": "string" },
+            "promoted_to_m1c": { "type": "boolean" }
+          }
+        }
+      ]
+    },
+    "causalTriadFragmentRef": {
+      "allOf": [
+        { "$ref": "#/$defs/fragmentRef" },
+        {
+          "type": "object",
+          "required": ["feature_id", "alpha_behavioral", "passes_m1c_acceptance", "designated_latent_leakage_flag"],
+          "properties": {
+            "feature_id": { "type": "string" },
+            "alpha_behavioral": { "type": ["number", "null"] },
+            "passes_m1c_acceptance": { "type": "boolean" },
+            "designated_latent_leakage_flag": { "type": "boolean" }
+          }
+        }
+      ]
+    },
+    "offTargetAuditFragmentRef": {
+      "allOf": [
+        { "$ref": "#/$defs/fragmentRef" },
+        {
+          "type": "object",
+          "required": ["feature_id", "passes_m1d_acceptance", "critical_failures"],
+          "properties": {
+            "feature_id": { "type": "string" },
+            "passes_m1d_acceptance": { "type": "boolean" },
+            "critical_failures": { "type": "array", "items": { "type": "string" } }
+          }
+        }
+      ]
+    },
+    "ledgerEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["fragment_id", "fragment_sha256", "content_sha256_canonical", "parent_fragment_id", "child_fragment_ids", "controller_spec_id", "sealed_at", "sealed_by", "supersedes"],
+      "properties": {
+        "fragment_id": { "type": "string" },
+        "fragment_sha256": { "type": ["string", "null"], "pattern": "^[a-f0-9]{64}$" },
+        "content_sha256_canonical": { "type": ["string", "null"], "pattern": "^[a-f0-9]{64}$" },
+        "parent_fragment_id": { "type": ["string", "null"] },
+        "child_fragment_ids": { "type": "array", "items": { "type": "string" } },
+        "controller_spec_id": { "type": "string" },
+        "sealed_at": { "type": "string", "format": "date-time" },
+        "sealed_by": { "type": "string" },
+        "supersedes": { "type": ["string", "null"] }
+      }
+    }
+  }
+}
