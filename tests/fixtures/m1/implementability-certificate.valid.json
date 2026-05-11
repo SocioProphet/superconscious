@@ -1,0 +1,90 @@
+{
+  "causal_triad_fragments": [
+    {
+      "alpha_behavioral": 2.0,
+      "certificate_kind": "m1c-causal-triad",
+      "content_sha256_canonical": "3333333333333333333333333333333333333333333333333333333333333333",
+      "designated_latent_leakage_flag": false,
+      "feature_id": "gemma-scope-9b-it-res-l20-w131k-l081-feature-7",
+      "fragment_id": "m1c-causal-triad-333333333333",
+      "fragment_sha256": "4444444444444444444444444444444444444444444444444444444444444444",
+      "passes_m1c_acceptance": true,
+      "path": "outputs/m1/certificates/m1c-causal-triad.json",
+      "verification_status": "not_verified"
+    }
+  ],
+  "certificate_kind": "m1-implementability-certificate",
+  "controller_spec_ref": {
+    "commit_sha": "abc123",
+    "content_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+    "git_blob_sha": "blob123",
+    "path": "docs/m1-0-controller-spec.md"
+  },
+  "generated_at": "2026-05-11T00:00:00Z",
+  "generated_by": "tests/fixtures",
+  "ledger_entry": {
+    "child_fragment_ids": [],
+    "content_sha256_canonical": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+    "controller_spec_id": "m1-0-refuse-and-redirect-111111111111",
+    "fragment_id": "m1-implementability-certificate-cccccccccccc",
+    "fragment_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+    "parent_fragment_id": null,
+    "sealed_at": "2026-05-11T00:00:00Z",
+    "sealed_by": "tests/fixtures",
+    "supersedes": null
+  },
+  "m1_result": {
+    "causal_triad_pass_count": 1,
+    "critical_safety_failures": [],
+    "headline_finding": "Synthetic fixture: one feature passes M1 chain and is ready for M2 handoff.",
+    "off_target_pass_count": 1,
+    "passes_m1_acceptance": true,
+    "promoted_feature_count": 1,
+    "runtime_status": "complete",
+    "sanity_check_status": "passed"
+  },
+  "m2_handoff": {
+    "alpha_behavioral_by_feature": {
+      "gemma-scope-9b-it-res-l20-w131k-l081-feature-7": 2.0
+    },
+    "blocking_reasons": [],
+    "ready_for_m2": true,
+    "selected_feature_ids": [
+      "gemma-scope-9b-it-res-l20-w131k-l081-feature-7"
+    ]
+  },
+  "off_target_audit_fragments": [
+    {
+      "certificate_kind": "m1d-off-target-audit",
+      "content_sha256_canonical": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "critical_failures": [],
+      "feature_id": "gemma-scope-9b-it-res-l20-w131k-l081-feature-7",
+      "fragment_id": "m1d-off-target-audit-aaaaaaaaaaaa",
+      "fragment_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "passes_m1d_acceptance": true,
+      "path": "outputs/m1/certificates/m1d-off-target-audit.json",
+      "verification_status": "not_verified"
+    }
+  ],
+  "schema_version": "1.0.0",
+  "source_lock_fragment": {
+    "certificate_kind": "m1a-source-lock",
+    "content_sha256_canonical": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+    "fragment_id": "m1a-source-lock-eeeeeeeeeeee",
+    "fragment_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+    "path": "outputs/m1/certificates/m1a-source-lock.json",
+    "verification_status": "partial"
+  },
+  "witness_card_fragments": [
+    {
+      "certificate_kind": "m1b-witness-card",
+      "content_sha256_canonical": "1212121212121212121212121212121212121212121212121212121212121212",
+      "feature_id": "gemma-scope-9b-it-res-l20-w131k-l081-feature-7",
+      "fragment_id": "m1b-witness-card-121212121212",
+      "fragment_sha256": "3434343434343434343434343434343434343434343434343434343434343434",
+      "path": "outputs/m1/certificates/m1b-witness-card.json",
+      "promoted_to_m1c": true,
+      "verification_status": "not_verified"
+    }
+  ]
+}
