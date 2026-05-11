@@ -1,0 +1,351 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.socioprophet.ai/superconscious/m1/witness-card.v1.json",
+  "title": "M1B Feature Witness Card",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "certificate_kind",
+    "generated_at",
+    "generated_by",
+    "parent_fragment_id",
+    "controller_spec_ref",
+    "feature_identity",
+    "witnesses",
+    "promotion_status",
+    "ledger_entry"
+  ],
+  "properties": {
+    "schema_version": { "const": "1.0.0" },
+    "certificate_kind": { "const": "m1b-witness-card" },
+    "generated_at": { "type": "string", "format": "date-time" },
+    "generated_by": { "type": "string" },
+    "parent_fragment_id": { "type": "string" },
+    "controller_spec_ref": { "$ref": "#/$defs/controllerSpecRef" },
+    "feature_identity": { "$ref": "#/$defs/featureIdentity" },
+    "witnesses": { "$ref": "#/$defs/witnesses" },
+    "promotion_status": { "$ref": "#/$defs/promotionStatus" },
+    "ledger_entry": { "$ref": "#/$defs/ledgerEntry" }
+  },
+  "$defs": {
+    "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "controllerSpecRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "content_sha256", "git_blob_sha", "commit_sha"],
+      "properties": {
+        "path": { "type": "string" },
+        "content_sha256": { "$ref": "#/$defs/sha256" },
+        "git_blob_sha": { "type": ["string", "null"] },
+        "commit_sha": { "type": "string" }
+      }
+    },
+    "featureIdentity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "feature_id",
+        "sae_repo",
+        "sae_subpath",
+        "feature_index",
+        "decoder_direction_sha256",
+        "decoder_norm"
+      ],
+      "properties": {
+        "feature_id": { "type": "string" },
+        "sae_repo": { "type": "string" },
+        "sae_subpath": { "type": "string" },
+        "feature_index": { "type": ["integer", "null"], "minimum": 0 },
+        "decoder_direction_sha256": { "type": ["string", "null"], "pattern": "^[a-f0-9]{64}$" },
+        "decoder_norm": { "type": ["number", "null"] }
+      }
+    },
+    "witnesses": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "top_contexts",
+        "contrastive_activation",
+        "preliminary_causal",
+        "cross_width_equivalence",
+        "patchability_profile",
+        "family_classification"
+      ],
+      "properties": {
+        "top_contexts": { "$ref": "#/$defs/topContextsWitness" },
+        "contrastive_activation": { "$ref": "#/$defs/contrastiveActivationWitness" },
+        "preliminary_causal": { "$ref": "#/$defs/preliminaryCausalWitness" },
+        "cross_width_equivalence": { "$ref": "#/$defs/crossWidthEquivalenceWitness" },
+        "patchability_profile": { "$ref": "#/$defs/patchabilityProfileWitness" },
+        "family_classification": { "$ref": "#/$defs/familyClassificationWitness" }
+      }
+    },
+    "witnessStatus": {
+      "enum": ["not_collected", "collected", "failed", "not_applicable"]
+    },
+    "topContextsWitness": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "data"],
+      "properties": {
+        "status": { "$ref": "#/$defs/witnessStatus" },
+        "data": {
+          "type": ["object", "null"],
+          "additionalProperties": false,
+          "required": ["source", "top_k", "contexts_sha256", "keyword_scores", "analyst_description", "sample_contexts"],
+          "properties": {
+            "source": { "type": "string" },
+            "top_k": { "type": "integer", "minimum": 0 },
+            "contexts_sha256": { "$ref": "#/$defs/sha256" },
+            "keyword_scores": {
+              "type": "object",
+              "additionalProperties": { "type": "integer", "minimum": 0 }
+            },
+            "analyst_description": { "type": "string" },
+            "sample_contexts": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["context_sha256", "rank", "activation", "redacted_text"],
+                "properties": {
+                  "context_sha256": { "$ref": "#/$defs/sha256" },
+                  "rank": { "type": "integer", "minimum": 1 },
+                  "activation": { "type": ["number", "null"] },
+                  "redacted_text": { "type": "string" }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "contrastiveActivationWitness": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "data"],
+      "properties": {
+        "status": { "$ref": "#/$defs/witnessStatus" },
+        "data": {
+          "type": ["object", "null"],
+          "additionalProperties": false,
+          "required": ["benign_set_ref", "harmful_set_ref", "position_class", "benign_mean", "harmful_mean", "activation_ratio", "bootstrap_ci", "passes_ratio_threshold"],
+          "properties": {
+            "benign_set_ref": { "$ref": "#/$defs/datasetRef" },
+            "harmful_set_ref": { "$ref": "#/$defs/datasetRef" },
+            "position_class": { "type": "string" },
+            "benign_mean": { "type": "number" },
+            "harmful_mean": { "type": "number" },
+            "activation_ratio": { "type": "number" },
+            "bootstrap_ci": { "$ref": "#/$defs/numberInterval" },
+            "passes_ratio_threshold": { "type": "boolean" }
+          }
+        }
+      }
+    },
+    "preliminaryCausalWitness": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "data"],
+      "properties": {
+        "status": { "$ref": "#/$defs/witnessStatus" },
+        "data": {
+          "type": ["object", "null"],
+          "additionalProperties": false,
+          "required": ["test_set_ref", "intervention_type", "effect_vector_sha256", "measured_direction", "compliance_delta", "accuracy_delta", "passes_direction_check"],
+          "properties": {
+            "test_set_ref": { "$ref": "#/$defs/datasetRef" },
+            "intervention_type": { "enum": ["zero_ablation", "positive_steering", "negative_steering", "other"] },
+            "effect_vector_sha256": { "$ref": "#/$defs/sha256" },
+            "measured_direction": { "type": "string" },
+            "compliance_delta": { "type": ["number", "null"] },
+            "accuracy_delta": { "type": ["number", "null"] },
+            "passes_direction_check": { "type": "boolean" }
+          }
+        }
+      }
+    },
+    "crossWidthEquivalenceWitness": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "data"],
+      "properties": {
+        "status": { "$ref": "#/$defs/witnessStatus" },
+        "data": {
+          "type": ["object", "null"],
+          "additionalProperties": false,
+          "required": [
+            "ablation_effect_vector_sha256",
+            "test_set_ref",
+            "cross_width_matches",
+            "robust_identification_score",
+            "robust_identification_threshold",
+            "passes"
+          ],
+          "properties": {
+            "ablation_effect_vector_sha256": { "$ref": "#/$defs/sha256" },
+            "test_set_ref": { "$ref": "#/$defs/datasetRef" },
+            "cross_width_matches": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["width", "matched_feature_index", "cosine_similarity", "match_threshold", "match_passes_threshold"],
+                "properties": {
+                  "width": { "type": "string" },
+                  "matched_feature_index": { "type": ["integer", "null"], "minimum": 0 },
+                  "cosine_similarity": { "type": ["number", "null"] },
+                  "match_threshold": { "type": "number" },
+                  "match_passes_threshold": { "type": "boolean" }
+                }
+              }
+            },
+            "robust_identification_score": { "type": "integer", "minimum": 0 },
+            "robust_identification_threshold": { "type": "integer", "minimum": 0 },
+            "passes": { "type": "boolean" }
+          }
+        }
+      }
+    },
+    "patchabilityProfileWitness": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "data"],
+      "properties": {
+        "status": { "$ref": "#/$defs/witnessStatus" },
+        "data": {
+          "type": ["object", "null"],
+          "additionalProperties": false,
+          "required": ["base_contexts", "patchability_summary"],
+          "properties": {
+            "base_contexts": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["context_sha256", "base_activation", "perturbations"],
+                "properties": {
+                  "context_sha256": { "$ref": "#/$defs/sha256" },
+                  "base_activation": { "type": "number" },
+                  "perturbations": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": ["perturbation_type", "magnitude", "activation_under_perturbation", "activation_ratio"],
+                      "properties": {
+                        "perturbation_type": { "enum": ["prefix_drop", "suffix_random", "suffix_unrelated", "suffix_related", "other"] },
+                        "magnitude": { "type": "integer", "minimum": 0 },
+                        "activation_under_perturbation": { "type": "number" },
+                        "activation_ratio": { "type": "number" }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "patchability_summary": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["mean_activation_ratio", "min_activation_ratio", "ratio_below_threshold_count", "passes_brittleness_check"],
+              "properties": {
+                "mean_activation_ratio": { "type": "number" },
+                "min_activation_ratio": { "type": "number" },
+                "ratio_below_threshold_count": { "type": "integer", "minimum": 0 },
+                "passes_brittleness_check": { "type": "boolean" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "familyClassificationWitness": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "data"],
+      "properties": {
+        "status": { "$ref": "#/$defs/witnessStatus" },
+        "data": {
+          "type": ["object", "null"],
+          "additionalProperties": false,
+          "required": ["family", "confidence", "rationale", "controller_spec_match"],
+          "properties": {
+            "family": { "enum": ["harm_detection", "refuse_and_redirect", "correct_answer", "task_completion", "policy_meta", "off_target", "ambiguous"] },
+            "confidence": { "type": "number", "minimum": 0, "maximum": 1 },
+            "rationale": { "type": "string" },
+            "controller_spec_match": { "enum": ["match", "partial_match", "off_target", "ambiguous", "unclassifiable_spec_gap"] }
+          }
+        }
+      }
+    },
+    "promotionStatus": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["current_stage", "selection_rule_evaluation", "rejection_reason", "promoted_to_m1c"],
+      "properties": {
+        "current_stage": { "enum": ["stage-1", "stage-2", "stage-3", "stage-4", "stage-5", "promoted", "rejected"] },
+        "selection_rule_evaluation": {
+          "type": ["object", "null"],
+          "additionalProperties": false,
+          "required": ["rule_version", "criteria", "all_criteria_pass", "promoted"],
+          "properties": {
+            "rule_version": { "const": "m1b-selection-rule.v1" },
+            "criteria": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": true,
+                "required": ["name", "passes"],
+                "properties": {
+                  "name": { "type": "string" },
+                  "passes": { "type": "boolean" }
+                }
+              }
+            },
+            "all_criteria_pass": { "type": "boolean" },
+            "promoted": { "type": "boolean" }
+          }
+        },
+        "rejection_reason": { "type": ["string", "null"] },
+        "promoted_to_m1c": { "type": "boolean" }
+      }
+    },
+    "datasetRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "content_sha256", "item_count"],
+      "properties": {
+        "path": { "type": "string" },
+        "content_sha256": { "$ref": "#/$defs/sha256" },
+        "item_count": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "numberInterval": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["low", "high", "confidence"],
+      "properties": {
+        "low": { "type": "number" },
+        "high": { "type": "number" },
+        "confidence": { "type": "number", "minimum": 0, "maximum": 1 }
+      }
+    },
+    "ledgerEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["fragment_id", "fragment_sha256", "content_sha256_canonical", "parent_fragment_id", "child_fragment_ids", "controller_spec_id", "sealed_at", "sealed_by", "supersedes"],
+      "properties": {
+        "fragment_id": { "type": "string" },
+        "fragment_sha256": { "type": ["string", "null"], "pattern": "^[a-f0-9]{64}$" },
+        "content_sha256_canonical": { "type": ["string", "null"], "pattern": "^[a-f0-9]{64}$" },
+        "parent_fragment_id": { "type": ["string", "null"] },
+        "child_fragment_ids": { "type": "array", "items": { "type": "string" } },
+        "controller_spec_id": { "type": "string" },
+        "sealed_at": { "type": "string", "format": "date-time" },
+        "sealed_by": { "type": "string" },
+        "supersedes": { "type": ["string", "null"] }
+      }
+    }
+  }
+}
