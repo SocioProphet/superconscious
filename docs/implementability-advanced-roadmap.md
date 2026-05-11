@@ -4,9 +4,9 @@
 
 This document upgrades the Implementability Steering Pilot from a one-off steering reproduction into a certificate pipeline for behavior-first interpretability.
 
-The current M1 lane is intentionally conservative: source-lock Gemma/Gemma-Scope artifacts, identify a candidate refusal/safety feature, reproduce a measurable steering effect, and stop before making implementability-distance claims.
+The current M1 lane is intentionally conservative: source-lock Gemma/Gemma-Scope artifacts, specify the refusal controller, identify a candidate refusal/safety feature, reproduce a measurable steering effect, and stop before making implementability-distance claims.
 
-The advanced lane keeps that discipline but raises the ceiling. The target is an implementability certificate: a replayable statement that a controlled activation behavior is inside, outside, or on the boundary of the model's reachable activation envelope under declared data, metric, and intervention assumptions.
+The advanced lane keeps that discipline but raises the ceiling. The target is an implementability certificate: a replayable statement that a controlled activation behavior is inside, outside, or on the boundary of the model's reachable activation envelope under declared data, metric, controller, and intervention assumptions.
 
 ## Upgrade principle
 
@@ -19,10 +19,143 @@ Does steering change model behavior?
 It should ask:
 
 ```text
-Is the changed behavior reachable by the unsteered plant under natural inputs, under behaviorally relevant metrics, with calibrated uncertainty and causal controls?
+Is the changed behavior reachable by the unsteered plant under natural inputs, under behaviorally relevant metrics, with calibrated uncertainty and causal controls, relative to a declared controller specification?
 ```
 
 This turns steering from an intervention trick into a governed behavior test.
+
+## Milestone ordering
+
+The correct order is:
+
+```text
+M1-0 -> M1A -> pre-M1B sanity check -> M1B -> M1C -> M1D -> M2 -> M3 -> M5
+```
+
+Each milestone emits a certificate fragment. Fragments compose into the final `ImplementabilityCertificate`.
+
+### M1-0: Controller specification
+
+Upgrade 9 belongs before every other M1 sub-milestone.
+
+M1-0 defines the refusal / redirect controller target in Willems-style vocabulary: plant, manifest variables, latent variables, admissible controller behavior, implementability bounds, and failure modes.
+
+Without this specification, M1A-M1D are merely activities. With it, they become verification fragments.
+
+Output target:
+
+```text
+docs/m1-0-controller-spec.md
+outputs/m1/certificates/m1-0-controller-spec.json
+```
+
+### M1A: Forensic source-lock
+
+Upgrade 1 lands here. M1A source-locks the plant, SAE, controller spec, datasets, code, runtime, random seeds, hashes, and artifact manifest.
+
+The certificate format, hashing scheme, and replay protocol also begin here.
+
+Output target:
+
+```text
+outputs/m1/source-lock.json
+outputs/m1/source-lock.sha256
+outputs/m1/artifact-manifest.json
+outputs/m1/certificates/m1a-source-lock.json
+```
+
+### Pre-M1B sanity check
+
+Before building the full witness-card pipeline, run a cheap steering sanity check on a published refusal-adjacent feature or candidate direction.
+
+This is not a scientific claim. It is a risk-control gate. If no visible behavior moves under a large naive steering magnitude on a small evaluative set, suspend M1B and revisit source-lock assumptions.
+
+Output target:
+
+```text
+docs/pre-m1b-sanity-check.md
+outputs/m1/certificates/pre-m1b-sanity.json
+```
+
+### M1B: Feature witness cards
+
+Upgrades 2, 3, and 10 land here.
+
+M1B answers the identity question: does this feature or feature family match the declared controller specification?
+
+Witnesses:
+
+1. top-context witness;
+2. contrastive activation witness;
+3. preliminary causal witness;
+4. behavioral-equivalence / cross-width neighborhood witness;
+5. patchability witness;
+6. manual family-classification witness.
+
+Output target:
+
+```text
+outputs/m1/feature-witness-cards.jsonl
+outputs/m1/feature-family-table.md
+outputs/m1/eliminated-candidates.jsonl
+outputs/m1/promoted-candidates.jsonl
+outputs/m1/certificates/m1b-witness-cards.json
+```
+
+### M1C: Causal triad with designated-latent tracking
+
+Upgrade 6 lands here. Upgrade 8 is folded into M1C because designated-latent behavior must be tracked during causal probes.
+
+M1C runs ablation, positive steering, and negative steering, while tracking SAE residuals, residual-stream norm, layer-norm scale, and related designated-latent quantities.
+
+Output target:
+
+```text
+outputs/m1/causal-triad-results.jsonl
+outputs/m1/causal-triad-summary.md
+outputs/m1/designated-latent-summary.json
+outputs/m1/certificates/m1c-causal-triad.json
+```
+
+### M1D: Off-target audit
+
+Upgrade 7 lands here.
+
+M1D tests whether the effective intervention preserves benign QA, harmless requests, format-following, generation quality, and genuine refusal behavior.
+
+Output target:
+
+```text
+outputs/m1/off-target-audit.json
+outputs/m1/certificates/m1d-off-target-audit.json
+```
+
+### M2: Implementability envelope
+
+Upgrades 4 and 5 land here.
+
+M2 builds the activation cache, conformal-style natural-baseline calibration, metric stack, and Pattern A/B/C classification.
+
+Output target:
+
+```text
+outputs/m2/natural-baseline-reference.manifest.json
+outputs/m2/natural-baseline-calibration.json
+outputs/m2/metric-agreement-matrix.json
+outputs/m2/certificates/m2-implementability-envelope.json
+```
+
+### M3: Cross-layer and representation robustness
+
+Upgrade 11 lands here.
+
+M3 compares layers 9, 20, and 31, and tests cross-layer / cross-width / cross-L0 robustness without multiplying M1 cost prematurely.
+
+### M5: Colah-shaped public note
+
+Upgrade 12 lands here.
+
+The public note should have one conceptual move: feature steering needs an implementability test.
 
 ## Upgrade 1: Source-lock becomes a certificate preamble
 
@@ -33,6 +166,9 @@ Advanced source-lock should add:
 - resolved model and SAE commit SHAs;
 - model-card and license hash references;
 - tokenizer chat-template hash;
+- tokenizer vocabulary hash;
+- model config hash;
+- model weight hashes when downloaded;
 - SAE parameter-file hash after download;
 - feature-dashboard / Neuronpedia export hash when used;
 - exact prompt-set hash;
@@ -41,32 +177,18 @@ Advanced source-lock should add:
 - random seed ledger;
 - generated artifact manifest.
 
-Output target:
-
-```text
-outputs/m1/source-lock.json
-outputs/m1/source-lock.sha256
-outputs/m1/artifact-manifest.json
-```
-
 ## Upgrade 2: Feature selection becomes multi-witness, not label-driven
 
-The current Stage-1 funnel correctly treats generated descriptions as weak evidence. The advanced protocol requires four independent witnesses before a feature becomes the pilot target:
+The current Stage-1 funnel correctly treats generated descriptions as weak evidence. The advanced protocol requires independent witnesses before a feature becomes the pilot target:
 
 1. **Context witness.** Top-activating examples contain refusal, redirect, harm-detection, or policy-meta text.
 2. **Activation witness.** The feature activates differentially on refusal/safety prompts versus benign prompts.
 3. **Causal witness.** Ablation or steering produces a measurable behavioral change.
-4. **Family witness.** Manual inspection places the feature into a typed family: harm-detection, refuse-and-redirect, policy-meta, correct-answer/task-completion, or ambiguous.
+4. **Behavioral-equivalence witness.** Similar effect vectors appear across widths, L0s, layers, or nearby features where feasible.
+5. **Patchability witness.** Activation survives controlled prefix/suffix context perturbations.
+6. **Family witness.** Manual inspection places the feature into a typed family.
 
 A feature is not selected by description. It is selected by convergence across witnesses.
-
-Advanced output target:
-
-```text
-outputs/m1/feature-witness-card.json
-outputs/m1/feature-family-table.md
-outputs/m1/eliminated-candidates.jsonl
-```
 
 ## Upgrade 3: Use behavioral equivalence classes as the analytic primitive
 
@@ -74,20 +196,13 @@ A single SAE feature direction is not canonical. The advanced lane should group 
 
 Procedure:
 
-1. Select candidate features across at least two SAE settings where available: same layer but different width/L0, or nearby layers.
+1. Select candidate features across at least two SAE settings where available: same layer but different width/L0, nearby layers, or neighboring features.
 2. Run the same ablation/steering probes on each candidate.
 3. Represent each feature by an effect vector over prompts and metrics.
 4. Cluster effect vectors.
 5. Treat clusters as behavioral equivalence classes.
 
 This answers whether the target is a real refusal-controller behavior or an artifact of one dictionary.
-
-Output target:
-
-```text
-outputs/m1/behavioral-equivalence-classes.json
-outputs/m1/effect-vector-matrix.parquet
-```
 
 ## Upgrade 4: Natural activation manifold gets conformal calibration
 
@@ -100,14 +215,6 @@ Advanced calibration should split the natural activation cache into:
 - test set: evaluates intervention distances.
 
 This creates a conformal-style finite-sample calibration discipline. The result is not merely a heuristic nearest-neighbor anomaly score; it becomes an empirical coverage statement under the declared exchangeability assumption.
-
-Output target:
-
-```text
-outputs/m2/natural-baseline-reference.manifest.json
-outputs/m2/natural-baseline-calibration.json
-outputs/m2/coverage-report.json
-```
 
 ## Upgrade 5: Metric stack becomes geometric, functional, and behavioral
 
@@ -147,13 +254,6 @@ For the selected feature or behavioral-equivalence class, run:
 
 A true controller feature should show coherent directionality across all three tests.
 
-Output target:
-
-```text
-outputs/m1/causal-triad-results.jsonl
-outputs/m1/causal-triad-summary.md
-```
-
 ## Upgrade 7: Add off-target and capability-preservation audits
 
 A steering effect is not acceptable if it restores one target behavior while damaging unrelated capabilities.
@@ -165,7 +265,8 @@ Add side evaluations:
 - format-following;
 - calibration / confidence proxy;
 - toxicity / policy overcorrection check;
-- repetition / degeneration check.
+- repetition / degeneration check;
+- genuine refusal preservation on explicitly harmful operational requests.
 
 Report:
 
@@ -190,13 +291,9 @@ For every intervention, record:
 
 If behavioral recovery depends on a large shift in SAE residual or norm dynamics, the feature explanation is incomplete.
 
-Output target:
-
-```text
-outputs/m2/designated-latent-report.json
-```
-
 ## Upgrade 9: Add controller specification before interpretation
+
+This is now M1-0, not a parallel upgrade.
 
 Before mechanistic analysis, define the refusal/safety behavior as a controller.
 
@@ -213,13 +310,6 @@ Controller specification fields:
 
 This converts the analysis from feature hunting into controller verification.
 
-Output target:
-
-```text
-docs/m1-controller-spec.md
-outputs/m1/controller-spec-checklist.json
-```
-
 ## Upgrade 10: Add activation-field patchability
 
 A feature that activates in one prompt may be brittle under context extension.
@@ -232,12 +322,6 @@ Patchability test:
 4. Classify feature as globally patchable, locally patchable, or brittle.
 
 Patchability is the field-theoretic version of implementability: can the local activation slice extend to a globally consistent context field?
-
-Output target:
-
-```text
-outputs/m3/patchability-profile.json
-```
 
 ## Upgrade 11: Add conservation-coupled or cross-layer follow-up
 
@@ -273,24 +357,25 @@ The note should include:
 
 Recommended follow-on issues:
 
-1. **M1A: Source-lock certificate hardening.** Add hashes, model-card references, tokenizer-template hash, artifact manifest.
-2. **M1B: Feature witness cards.** Produce multi-witness selection records and eliminated-candidate controls.
-3. **M1C: Causal triad.** Run ablation, positive steering, and negative steering on selected candidate.
-4. **M1D: Off-target audit.** Add benign QA and format/capability preservation checks.
-5. **M2A: Conformal natural-baseline split.** Reference/calibration/test split for activation manifold distance.
-6. **M2B: Metric stack expansion.** Add Jacobian/logit-effect/feature-coordinate metrics.
-7. **M2C: Designated latent report.** Track SAE residuals, norm dynamics, and layernorm scale.
-8. **M3A: Behavioral equivalence classes.** Cluster features by intervention effect vectors.
-9. **M3B: Patchability profile.** Test local-to-global context extension.
-10. **M4A: Public Colah note.** Produce a short explanatory artifact around the proof-carrying figure.
+1. **M1-0: Controller specification.** Define plant, manifest variables, latent variables, admissible behavior, implementability bounds, and failure modes.
+2. **M1A: Source-lock certificate hardening.** Add hashes, model-card references, tokenizer-template hash, artifact manifest, certificate format, and verifier.
+3. **Pre-M1B: Sanity check.** Try one cheap refusal-adjacent steering spike before expensive witness-card work.
+4. **M1B: Feature witness cards.** Produce multi-witness selection records, cross-width/effect-vector evidence, patchability, and eliminated-candidate controls.
+5. **M1C: Causal triad.** Run ablation, positive steering, and negative steering with designated-latent tracking.
+6. **M1D: Off-target audit.** Add benign QA, harmless prompts, format/capability preservation, degeneration, and genuine refusal preservation checks.
+7. **M2A: Conformal natural-baseline split.** Reference/calibration/test split for activation manifold distance.
+8. **M2B: Metric stack expansion.** Add Jacobian/logit-effect/feature-coordinate metrics.
+9. **M2C: Implementability certificate.** Emit Pattern A/B/C classification and metric-agreement matrix.
+10. **M3A: Cross-layer robustness.** Compare layer 9, 20, 31 and related representations.
+11. **M5A: Public Colah note.** Produce a short explanatory artifact around the proof-carrying figure.
 
 ## Definition of advanced done
 
 The advanced implementability lane is done when it can emit an `ImplementabilityCertificate` with:
 
+- controller specification;
 - source-lock manifest;
 - feature witness card;
-- controller specification;
 - behavioral steering curve;
 - causal triad results;
 - off-target audit;
