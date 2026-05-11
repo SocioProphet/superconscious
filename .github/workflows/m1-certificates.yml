@@ -1,4 +1,4 @@
-name: M1 Certificates
+name: Certificate Doctrine CI
 
 on:
   pull_request:
@@ -7,7 +7,7 @@ on:
       - main
 
 jobs:
-  m1-static-and-smoke:
+  certificate-static-and-smoke:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -18,12 +18,12 @@ jobs:
           python-version: '3.11'
       - name: Install schema validator
         run: python3 -m pip install jsonschema
-      - name: Run M1 static and smoke checks
-        run: make m1-ci
-      - name: Upload M1 smoke artifacts
+      - name: Run certificate static and smoke checks
+        run: make certificate-ci
+      - name: Upload certificate smoke artifacts
         uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: m1-ci-artifacts
-          path: outputs/m1/ci/
+          name: certificate-ci-artifacts
+          path: outputs/
           if-no-files-found: ignore
