@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.socioprophet.ai/superconscious/m3/transcoder-evidence.v1.json",
+  "title": "M3 Transcoder / Crosscoder Evidence Placeholder",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "certificate_kind", "generated_at", "availability_status", "placeholder_rationale", "trigger_conditions_for_activation", "expected_evidence_shape", "execution_status", "signing_authority", "ledger_entry"],
+  "properties": {
+    "schema_version": { "const": "1.0.0" },
+    "certificate_kind": { "const": "m3-transcoder-evidence" },
+    "generated_at": { "type": "string", "format": "date-time" },
+    "availability_status": { "enum": ["not_publicly_available", "publicly_available_unintegrated", "integrated_pending_execution", "integrated_executed"] },
+    "placeholder_rationale": { "type": "string" },
+    "trigger_conditions_for_activation": { "type": "array", "items": { "type": "string" } },
+    "expected_evidence_shape": { "type": "object", "additionalProperties": true, "required": ["transcoder_repo", "crosscoder_repo", "cross_layer_feature_alignment_metric", "expected_addition_to_certificate"], "properties": { "transcoder_repo": { "type": ["string", "null"] }, "crosscoder_repo": { "type": ["string", "null"] }, "cross_layer_feature_alignment_metric": { "type": "string" }, "expected_addition_to_certificate": { "type": "string" } } },
+    "execution_status": { "$ref": "#/$defs/executionStatus" },
+    "signing_authority": { "$ref": "#/$defs/signingAuthority" },
+    "ledger_entry": { "$ref": "#/$defs/ledgerEntry" }
+  },
+  "$defs": {
+    "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "executionStatus": { "enum": ["doctrine_only", "synthetic_fixture", "runtime_partial", "runtime_executed", "failed"] },
+    "signingAuthority": { "type":"object", "additionalProperties":false, "required":["authority_id","authority_kind","signed_at","signing_method","delegation_chain"], "properties":{"authority_id":{"type":"string"},"authority_kind":{"enum":["individual","automated_pipeline","role","delegated","external_auditor"]},"signed_at":{"type":"string","format":"date-time"},"signing_method":{"enum":["sha256_content_hash","gpg_signature","sigstore","x509","internal_hmac"]},"delegation_chain":{"type":"array","items":{"type":"string"}}} },
+    "ledgerEntry": { "type":"object", "additionalProperties":false, "required":["fragment_id","fragment_sha256","content_sha256_canonical","parent_fragment_id","child_fragment_ids","controller_spec_id","sealed_at","sealed_by","supersedes"], "properties":{"fragment_id":{"type":"string"},"fragment_sha256":{"$ref":"#/$defs/sha256"},"content_sha256_canonical":{"$ref":"#/$defs/sha256"},"parent_fragment_id":{"type":["string","null"]},"child_fragment_ids":{"type":"array","items":{"type":"string"}},"controller_spec_id":{"type":"string"},"sealed_at":{"type":"string","format":"date-time"},"sealed_by":{"type":"string"},"supersedes":{"type":["string","null"]}} }
+  }
+}
