@@ -1,4 +1,4 @@
-.PHONY: test smoke trust-surface artifact-validate canonicalize inspect validate
+.PHONY: test smoke trust-surface artifact-validate canonicalize inspect validate m1-source-lock m1-feature-stage1
 
 test:
 	python3 -m pytest
@@ -23,3 +23,9 @@ inspect:
 	python3 packages/superconscious-core/superconscious_core/inspect_artifacts.py "$$run_dir"
 
 validate: trust-surface test artifact-validate canonicalize inspect
+
+m1-source-lock:
+	python3 src/m1/source_lock.py --write outputs/m1/source-lock.json --print
+
+m1-feature-stage1:
+	python3 src/m1/feature_selection.py --features data/m1/feature_contexts.jsonl --out-dir outputs/m1
