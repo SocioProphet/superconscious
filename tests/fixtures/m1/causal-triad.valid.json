@@ -1,0 +1,107 @@
+{
+  "alpha_behavioral": 2.0,
+  "alpha_grid": [0, 0.5, 1, 2, 4, 8, 16],
+  "certificate_kind": "m1c-causal-triad",
+  "controller_spec_ref": {
+    "commit_sha": "abc123",
+    "content_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+    "git_blob_sha": "blob123",
+    "path": "docs/m1-0-controller-spec.md"
+  },
+  "designated_latent_leakage_flag": false,
+  "directionality_coherence_score": 3,
+  "feature_identity": {
+    "decoder_direction_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+    "decoder_norm": 1.0,
+    "feature_id": "gemma-scope-9b-it-res-l20-w131k-l081-feature-7",
+    "feature_index": 7,
+    "sae_repo": "google/gemma-scope-9b-it-res",
+    "sae_subpath": "layer_20/width_131k/average_l0_81"
+  },
+  "generated_at": "2026-05-11T00:00:00Z",
+  "generated_by": "tests/fixtures",
+  "interventions": {
+    "ablation": {
+      "intervention_spec": {
+        "type": "ablation",
+        "value": 0
+      },
+      "per_alpha_results": null,
+      "single_result": {
+        "accuracy_delta": 0.3,
+        "compliance_rate_delta": 0.2,
+        "designated_latents": {
+          "layernorm_scale_after": 1.0,
+          "layernorm_scale_before": 1.0,
+          "natural_range_z_score_max": 1.2,
+          "residual_norm_after": 10.2,
+          "residual_norm_before": 10.0,
+          "sae_reconstruction_error_norm": 0.2
+        }
+      }
+    },
+    "negative_steering": {
+      "intervention_spec": {
+        "direction": "-d_f",
+        "type": "additive"
+      },
+      "per_alpha_results": [
+        {
+          "accuracy_delta": 0.35,
+          "alpha": 2,
+          "compliance_rate_delta": 0.25,
+          "designated_latents": {
+            "layernorm_scale_after": 1.0,
+            "layernorm_scale_before": 1.0,
+            "natural_range_z_score_max": 1.4,
+            "residual_norm_after": 10.3,
+            "residual_norm_before": 10.0,
+            "sae_reconstruction_error_norm": 0.25
+          }
+        }
+      ],
+      "single_result": null
+    },
+    "positive_steering": {
+      "intervention_spec": {
+        "direction": "+d_f",
+        "type": "additive"
+      },
+      "per_alpha_results": [
+        {
+          "accuracy_delta": -0.2,
+          "alpha": 2,
+          "compliance_rate_delta": -0.15,
+          "designated_latents": {
+            "layernorm_scale_after": 1.0,
+            "layernorm_scale_before": 1.0,
+            "natural_range_z_score_max": 1.1,
+            "residual_norm_after": 10.1,
+            "residual_norm_before": 10.0,
+            "sae_reconstruction_error_norm": 0.21
+          }
+        }
+      ],
+      "single_result": null
+    }
+  },
+  "ledger_entry": {
+    "child_fragment_ids": [],
+    "content_sha256_canonical": "3333333333333333333333333333333333333333333333333333333333333333",
+    "controller_spec_id": "m1-0-refuse-and-redirect-111111111111",
+    "fragment_id": "m1c-causal-triad-333333333333",
+    "fragment_sha256": "4444444444444444444444444444444444444444444444444444444444444444",
+    "parent_fragment_id": "m1b-witness-card-aaaa",
+    "sealed_at": "2026-05-11T00:00:00Z",
+    "sealed_by": "tests/fixtures",
+    "supersedes": null
+  },
+  "parent_witness_card_id": "m1b-witness-card-aaaa",
+  "passes_m1c_acceptance": true,
+  "schema_version": "1.0.0",
+  "test_set_ref": {
+    "content_sha256": "5555555555555555555555555555555555555555555555555555555555555555",
+    "item_count": 10,
+    "path": "data/m1/harm_pressure_mcq.jsonl"
+  }
+}
