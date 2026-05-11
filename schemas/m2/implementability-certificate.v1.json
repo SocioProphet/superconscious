@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.socioprophet.ai/superconscious/m2/implementability-certificate.v1.json",
+  "title": "M2 Implementability Certificate Composite",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "certificate_kind", "generated_at", "m1_certificate_ref", "constituent_fragments", "headline_claim", "claim_pattern", "claim_qualifications", "authority_concentration_index", "non_claims", "execution_status", "signing_authority", "counterfactuals_addressable", "ledger_entry"],
+  "properties": {
+    "schema_version": { "const": "1.0.0" },
+    "certificate_kind": { "const": "m2-implementability-certificate" },
+    "generated_at": { "type": "string", "format": "date-time" },
+    "m1_certificate_ref": { "$ref": "#/$defs/fragmentRef" },
+    "constituent_fragments": { "type": "object", "additionalProperties": false, "required": ["activation_cache", "manifold_baseline", "implementability_curve"], "properties": { "activation_cache": { "$ref": "#/$defs/fragmentRef" }, "manifold_baseline": { "$ref": "#/$defs/fragmentRef" }, "implementability_curve": { "$ref": "#/$defs/fragmentRef" } } },
+    "headline_claim": { "type": "string" },
+    "claim_pattern": { "enum": ["A_in_envelope", "B_boundary_crossing", "C_out_of_distribution", "indeterminate"] },
+    "claim_qualifications": { "type": "array", "items": { "type": "object", "additionalProperties": false, "required": ["qualification", "evidence_path"], "properties": { "qualification": { "type": "string" }, "evidence_path": { "type": "string" } } } },
+    "authority_concentration_index": { "$ref": "#/$defs/authorityConcentrationIndex" },
+    "non_claims": { "type": "array", "items": { "type": "string" } },
+    "execution_status": { "$ref": "#/$defs/executionStatus" },
+    "signing_authority": { "$ref": "#/$defs/signingAuthority" },
+    "counterfactuals_addressable": { "$ref": "#/$defs/counterfactualsAddressable" },
+    "ledger_entry": { "$ref": "#/$defs/ledgerEntry" }
+  },
+  "$defs": {
+    "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "executionStatus": { "enum": ["doctrine_only", "synthetic_fixture", "runtime_partial", "runtime_executed", "failed"] },
+    "fragmentRef": { "type": "object", "additionalProperties": false, "required": ["fragment_id", "fragment_sha256"], "properties": { "fragment_id": { "type": "string" }, "fragment_sha256": { "$ref": "#/$defs/sha256" } } },
+    "authorityConcentrationIndex": { "type": "object", "additionalProperties": false, "required": ["distinct_authority_count", "fragment_authority_breakdown", "index_value", "interpretation", "weakness_flag"], "properties": { "distinct_authority_count": { "type": "integer", "minimum": 1 }, "fragment_authority_breakdown": { "type": "object", "additionalProperties": { "type": "string" } }, "index_value": { "type": "number", "minimum": 0, "maximum": 1 }, "interpretation": { "enum": ["single_authority", "partial_independence", "full_independence"] }, "weakness_flag": { "type": "boolean" } } },
+    "signingAuthority": { "type": "object", "additionalProperties": false, "required": ["authority_id", "authority_kind", "signed_at", "signing_method", "delegation_chain"], "properties": { "authority_id": { "type": "string" }, "authority_kind": { "enum": ["individual", "automated_pipeline", "role", "delegated", "external_auditor"] }, "signed_at": { "type": "string", "format": "date-time" }, "signing_method": { "enum": ["sha256_content_hash", "gpg_signature", "sigstore", "x509", "internal_hmac"] }, "delegation_chain": { "type": "array", "items": { "type": "string" } } } },
+    "counterfactualsAddressable": { "type": "array", "minItems": 1, "items": { "type": "object", "additionalProperties": false, "required": ["question_id", "question", "evidence_path", "answer_form", "answered_by_synthetic_fixture"], "properties": { "question_id": { "type": "string", "pattern": "^cf-[a-z0-9-]+$" }, "question": { "type": "string" }, "evidence_path": { "type": "string" }, "answer_form": { "enum": ["boolean", "hash_match", "numerical_range", "categorical", "structured"] }, "answered_by_synthetic_fixture": { "type": "boolean" } } } },
+    "ledgerEntry": { "type": "object", "additionalProperties": false, "required": ["fragment_id", "fragment_sha256", "content_sha256_canonical", "parent_fragment_id", "child_fragment_ids", "controller_spec_id", "sealed_at", "sealed_by", "supersedes"], "properties": { "fragment_id": { "type": "string" }, "fragment_sha256": { "$ref": "#/$defs/sha256" }, "content_sha256_canonical": { "$ref": "#/$defs/sha256" }, "parent_fragment_id": { "type": ["string", "null"] }, "child_fragment_ids": { "type": "array", "items": { "type": "string" } }, "controller_spec_id": { "type": "string" }, "sealed_at": { "type": "string", "format": "date-time" }, "sealed_by": { "type": "string" }, "supersedes": { "type": ["string", "null"] } } }
+  }
+}
