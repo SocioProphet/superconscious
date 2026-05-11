@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.socioprophet.ai/superconscious/m2/activation-cache.v1.json",
+  "title": "M2 Activation Cache Manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "certificate_kind", "generated_at", "parent_fragment_id", "controller_spec_ref", "source_lock_ref", "cache_construction", "cache_contents", "execution_status", "signing_authority", "counterfactuals_addressable", "ledger_entry"],
+  "properties": {
+    "schema_version": { "const": "1.0.0" },
+    "certificate_kind": { "const": "m2-activation-cache" },
+    "generated_at": { "type": "string", "format": "date-time" },
+    "parent_fragment_id": { "type": "string" },
+    "controller_spec_ref": { "$ref": "#/$defs/docRef" },
+    "source_lock_ref": { "$ref": "#/$defs/fragmentRef" },
+    "cache_construction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["target_layer", "input_mixture", "sample_count", "position_types_captured", "tokenization_config"],
+      "properties": {
+        "target_layer": { "type": "integer", "minimum": 0 },
+        "input_mixture": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["pile_fraction", "instruction_chat_fraction", "mcq_without_pressure_fraction", "other_fractions"],
+          "properties": {
+            "pile_fraction": { "type": "number", "minimum": 0, "maximum": 1 },
+            "instruction_chat_fraction": { "type": "number", "minimum": 0, "maximum": 1 },
+            "mcq_without_pressure_fraction": { "type": "number", "minimum": 0, "maximum": 1 },
+            "other_fractions": { "type": "object", "additionalProperties": { "type": "number" } }
+          }
+        },
+        "sample_count": { "type": "integer", "minimum": 1 },
+        "position_types_captured": { "type": "array", "items": { "enum": ["end_of_prompt", "beginning_of_completion", "mid_completion", "end_of_completion", "random_position"] } },
+        "tokenization_config": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["tokenizer_template_sha256", "max_sequence_length"],
+          "properties": {
+            "tokenizer_template_sha256": { "$ref": "#/$defs/sha256" },
+            "max_sequence_length": { "type": "integer", "minimum": 1 }
+          }
+        }
+      }
+    },
+    "cache_contents": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["activation_tensor_sha256", "metadata_jsonl_sha256", "total_activations", "per_position_breakdown", "storage_bytes", "precision"],
+      "properties": {
+        "activation_tensor_sha256": { "$ref": "#/$defs/sha256" },
+        "metadata_jsonl_sha256": { "$ref": "#/$defs/sha256" },
+        "total_activations": { "type": "integer", "minimum": 1 },
+        "per_position_breakdown": { "type": "object", "additionalProperties": { "type": "integer", "minimum": 0 } },
+        "storage_bytes": { "type": "integer", "minimum": 0 },
+        "precision": { "enum": ["fp16", "bf16", "fp32"] }
+      }
+    },
+    "execution_status": { "$ref": "#/$defs/executionStatus" },
+    "signing_authority": { "$ref": "#/$defs/signingAuthority" },
+    "counterfactuals_addressable": { "$ref": "#/$defs/counterfactualsAddressable" },
+    "ledger_entry": { "$ref": "#/$defs/ledgerEntry" }
+  },
+  "$defs": {
+    "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "executionStatus": { "enum": ["doctrine_only", "synthetic_fixture", "runtime_partial", "runtime_executed", "failed"] },
+    "docRef": { "type": "object", "additionalProperties": false, "required": ["path", "content_sha256"], "properties": { "path": { "type": "string" }, "content_sha256": { "$ref": "#/$defs/sha256" } } },
+    "fragmentRef": { "type": "object", "additionalProperties": false, "required": ["fragment_id", "fragment_sha256"], "properties": { "fragment_id": { "type": "string" }, "fragment_sha256": { "$ref": "#/$defs/sha256" } } },
+    "signingAuthority": { "type": "object", "additionalProperties": false, "required": ["authority_id", "authority_kind", "signed_at", "signing_method", "delegation_chain"], "properties": { "authority_id": { "type": "string" }, "authority_kind": { "enum": ["individual", "automated_pipeline", "role", "delegated", "external_auditor"] }, "signed_at": { "type": "string", "format": "date-time" }, "signing_method": { "enum": ["sha256_content_hash", "gpg_signature", "sigstore", "x509", "internal_hmac"] }, "delegation_chain": { "type": "array", "items": { "type": "string" } } } },
+    "counterfactualsAddressable": { "type": "array", "minItems": 1, "items": { "type": "object", "additionalProperties": false, "required": ["question_id", "question", "evidence_path", "answer_form", "answered_by_synthetic_fixture"], "properties": { "question_id": { "type": "string", "pattern": "^cf-[a-z0-9-]+$" }, "question": { "type": "string" }, "evidence_path": { "type": "string" }, "answer_form": { "enum": ["boolean", "hash_match", "numerical_range", "categorical", "structured"] }, "answered_by_synthetic_fixture": { "type": "boolean" } } } },
+    "ledgerEntry": { "type": "object", "additionalProperties": false, "required": ["fragment_id", "fragment_sha256", "content_sha256_canonical", "parent_fragment_id", "child_fragment_ids", "controller_spec_id", "sealed_at", "sealed_by", "supersedes"], "properties": { "fragment_id": { "type": "string" }, "fragment_sha256": { "$ref": "#/$defs/sha256" }, "content_sha256_canonical": { "$ref": "#/$defs/sha256" }, "parent_fragment_id": { "type": ["string", "null"] }, "child_fragment_ids": { "type": "array", "items": { "type": "string" } }, "controller_spec_id": { "type": "string" }, "sealed_at": { "type": "string", "format": "date-time" }, "sealed_by": { "type": "string" }, "supersedes": { "type": ["string", "null"] } } }
+  }
+}
