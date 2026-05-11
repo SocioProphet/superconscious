@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.socioprophet.ai/superconscious/m5/public-note.v1.json",
+  "title": "M5 Public Note",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "certificate_kind", "generated_at", "outcome_pattern", "template_used", "m3_certificate_ref", "headline_finding", "structure", "limitations", "publication_status", "execution_status", "signing_authority", "counterfactuals_addressable", "ledger_entry"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "certificate_kind": {"const": "m5-public-note"},
+    "generated_at": {"type": "string", "format": "date-time"},
+    "outcome_pattern": {"enum": ["pattern_a_clean", "pattern_b_clean", "pattern_c_clean", "off_target_damage", "no_viable_feature"]},
+    "template_used": {"type": "string"},
+    "m3_certificate_ref": {"$ref": "#/$defs/fragmentRef"},
+    "headline_finding": {"type": "string"},
+    "structure": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["abstract", "one_conceptual_move", "load_bearing_figure_path", "real_curve_figure_path", "limitations_section"],
+      "properties": {
+        "abstract": {"type": "string"},
+        "one_conceptual_move": {"type": "string"},
+        "load_bearing_figure_path": {"type": "string"},
+        "real_curve_figure_path": {"type": "string"},
+        "limitations_section": {"type": "string"}
+      }
+    },
+    "limitations": {"type": "array", "minItems": 3, "items": {"type": "string"}},
+    "publication_status": {"enum": ["drafted", "internal_review", "external_review", "submitted", "published"]},
+    "execution_status": {"$ref": "#/$defs/executionStatus"},
+    "signing_authority": {"$ref": "#/$defs/signingAuthority"},
+    "counterfactuals_addressable": {"$ref": "#/$defs/counterfactualsAddressable"},
+    "ledger_entry": {"$ref": "#/$defs/ledgerEntry"}
+  },
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "executionStatus": {"enum": ["doctrine_only", "synthetic_fixture", "runtime_partial", "runtime_executed", "failed"]},
+    "fragmentRef": {"type": "object", "additionalProperties": false, "required": ["fragment_id", "fragment_sha256"], "properties": {"fragment_id": {"type": "string"}, "fragment_sha256": {"$ref": "#/$defs/sha256"}}},
+    "signingAuthority": {"type": "object", "additionalProperties": false, "required": ["authority_id", "authority_kind", "signed_at", "signing_method", "delegation_chain"], "properties": {"authority_id": {"type": "string"}, "authority_kind": {"enum": ["individual", "automated_pipeline", "role", "delegated", "external_auditor"]}, "signed_at": {"type": "string", "format": "date-time"}, "signing_method": {"enum": ["sha256_content_hash", "gpg_signature", "sigstore", "x509", "internal_hmac"]}, "delegation_chain": {"type": "array", "items": {"type": "string"}}}},
+    "counterfactualsAddressable": {"type": "array", "minItems": 1, "items": {"type": "object", "additionalProperties": false, "required": ["question_id", "question", "evidence_path", "answer_form", "answered_by_synthetic_fixture"], "properties": {"question_id": {"type": "string", "pattern": "^cf-[a-z0-9-]+$"}, "question": {"type": "string"}, "evidence_path": {"type": "string"}, "answer_form": {"enum": ["boolean", "hash_match", "numerical_range", "categorical", "structured"]}, "answered_by_synthetic_fixture": {"type": "boolean"}}}},
+    "ledgerEntry": {"type": "object", "additionalProperties": false, "required": ["fragment_id", "fragment_sha256", "content_sha256_canonical", "parent_fragment_id", "child_fragment_ids", "controller_spec_id", "sealed_at", "sealed_by", "supersedes"], "properties": {"fragment_id": {"type": "string"}, "fragment_sha256": {"$ref": "#/$defs/sha256"}, "content_sha256_canonical": {"$ref": "#/$defs/sha256"}, "parent_fragment_id": {"type": ["string", "null"]}, "child_fragment_ids": {"type": "array", "items": {"type": "string"}}, "controller_spec_id": {"type": "string"}, "sealed_at": {"type": "string", "format": "date-time"}, "sealed_by": {"type": "string"}, "supersedes": {"type": ["string", "null"]}}}
+  }
+}
