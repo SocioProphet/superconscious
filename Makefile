@@ -1,4 +1,4 @@
-.PHONY: test smoke trust-surface artifact-validate canonicalize inspect validate m1-source-lock m1a-generate m1-verify-source-lock m1-verify-source-lock-strict m1-verify-weights m1-feature-stage1 m1-static m1b-cross-width-smoke m1-ci
+.PHONY: test smoke trust-surface artifact-validate canonicalize inspect validate m1-source-lock m1a-generate m1-verify-source-lock m1-verify-source-lock-strict m1-verify-weights m1-feature-stage1 m1-static m1-schema-fixtures m1b-cross-width-smoke m1-ci
 
 test:
 	python3 -m pytest
@@ -46,6 +46,14 @@ m1-static:
 	python3 -m compileall src/m1
 	python3 -m json.tool schemas/m1/source-lock.v1.json >/dev/null
 	python3 -m json.tool schemas/m1/witness-card.v1.json >/dev/null
+	python3 -m json.tool schemas/m1/causal-triad.v1.json >/dev/null
+	python3 -m json.tool schemas/m1/off-target-audit.v1.json >/dev/null
+	python3 -m json.tool schemas/m1/implementability-certificate.v1.json >/dev/null
+
+m1-schema-fixtures:
+	python3 -m src.m1.validate_schema_instance schemas/m1/causal-triad.v1.json tests/fixtures/m1/causal-triad.valid.json
+	python3 -m src.m1.validate_schema_instance schemas/m1/off-target-audit.v1.json tests/fixtures/m1/off-target-audit.valid.json
+	python3 -m src.m1.validate_schema_instance schemas/m1/implementability-certificate.v1.json tests/fixtures/m1/implementability-certificate.valid.json
 
 m1b-cross-width-smoke:
 	python3 -m src.m1.witness_card_cross_width \
@@ -56,4 +64,4 @@ m1b-cross-width-smoke:
 		--out outputs/m1/ci/cross_width_equivalence.json
 	python3 -m json.tool outputs/m1/ci/cross_width_equivalence.json >/dev/null
 
-m1-ci: m1-static m1b-cross-width-smoke
+m1-ci: m1-static m1-schema-fixtures m1b-cross-width-smoke
