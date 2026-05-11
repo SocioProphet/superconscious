@@ -1,0 +1,177 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.socioprophet.ai/superconscious/m1/off-target-audit.v1.json",
+  "title": "M1D Off-Target Audit Certificate Fragment",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "certificate_kind",
+    "generated_at",
+    "generated_by",
+    "parent_causal_triad_id",
+    "feature_identity",
+    "intervention_used",
+    "audit_batteries",
+    "all_batteries_pass",
+    "critical_failures",
+    "passes_m1d_acceptance",
+    "ledger_entry"
+  ],
+  "properties": {
+    "schema_version": { "const": "1.0.0" },
+    "certificate_kind": { "const": "m1d-off-target-audit" },
+    "generated_at": { "type": "string", "format": "date-time" },
+    "generated_by": { "type": "string" },
+    "parent_causal_triad_id": { "type": "string" },
+    "feature_identity": { "$ref": "#/$defs/featureIdentity" },
+    "intervention_used": { "$ref": "#/$defs/interventionUsed" },
+    "audit_batteries": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "benign_qa",
+        "format_following",
+        "over_refusal_probe",
+        "degeneration",
+        "genuine_refusal_preservation"
+      ],
+      "properties": {
+        "benign_qa": { "$ref": "#/$defs/accuracyBattery" },
+        "format_following": { "$ref": "#/$defs/accuracyBattery" },
+        "over_refusal_probe": { "$ref": "#/$defs/refusalRateBattery" },
+        "degeneration": { "$ref": "#/$defs/degenerationBattery" },
+        "genuine_refusal_preservation": { "$ref": "#/$defs/genuineRefusalBattery" }
+      }
+    },
+    "all_batteries_pass": { "type": "boolean" },
+    "critical_failures": { "type": "array", "items": { "type": "string" } },
+    "passes_m1d_acceptance": { "type": "boolean" },
+    "ledger_entry": { "$ref": "#/$defs/ledgerEntry" }
+  },
+  "$defs": {
+    "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "featureIdentity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["feature_id", "sae_repo", "sae_subpath", "feature_index", "decoder_direction_sha256", "decoder_norm"],
+      "properties": {
+        "feature_id": { "type": "string" },
+        "sae_repo": { "type": "string" },
+        "sae_subpath": { "type": "string" },
+        "feature_index": { "type": ["integer", "null"], "minimum": 0 },
+        "decoder_direction_sha256": { "type": ["string", "null"], "pattern": "^[a-f0-9]{64}$" },
+        "decoder_norm": { "type": ["number", "null"] }
+      }
+    },
+    "datasetRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "content_sha256", "item_count"],
+      "properties": {
+        "path": { "type": "string" },
+        "content_sha256": { "$ref": "#/$defs/sha256" },
+        "item_count": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "interventionUsed": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "alpha", "intervention_site", "direction"],
+      "properties": {
+        "type": { "enum": ["negative_steering", "positive_steering", "ablation", "other"] },
+        "alpha": { "type": ["number", "null"] },
+        "intervention_site": { "type": "string" },
+        "direction": { "type": ["string", "null"] }
+      }
+    },
+    "accuracyBattery": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["battery_ref", "baseline_accuracy", "post_intervention_accuracy", "accuracy_delta", "pre_declared_threshold", "passes"],
+      "properties": {
+        "battery_ref": { "$ref": "#/$defs/datasetRef" },
+        "baseline_accuracy": { "type": "number" },
+        "post_intervention_accuracy": { "type": "number" },
+        "accuracy_delta": { "type": "number" },
+        "pre_declared_threshold": { "type": "number" },
+        "passes": { "type": "boolean" }
+      }
+    },
+    "refusalRateBattery": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["battery_ref", "baseline_refusal_rate", "post_intervention_refusal_rate", "refusal_rate_delta", "pre_declared_threshold", "passes"],
+      "properties": {
+        "battery_ref": { "$ref": "#/$defs/datasetRef" },
+        "baseline_refusal_rate": { "type": "number" },
+        "post_intervention_refusal_rate": { "type": "number" },
+        "refusal_rate_delta": { "type": "number" },
+        "pre_declared_threshold": { "type": "number" },
+        "passes": { "type": "boolean" }
+      }
+    },
+    "degenerationBattery": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "battery_ref",
+        "baseline_repetition_rate",
+        "post_intervention_repetition_rate",
+        "baseline_reference_perplexity",
+        "post_intervention_reference_perplexity",
+        "reference_model",
+        "pre_declared_threshold",
+        "passes"
+      ],
+      "properties": {
+        "battery_ref": { "$ref": "#/$defs/datasetRef" },
+        "baseline_repetition_rate": { "type": "number" },
+        "post_intervention_repetition_rate": { "type": "number" },
+        "baseline_reference_perplexity": { "type": "number" },
+        "post_intervention_reference_perplexity": { "type": "number" },
+        "reference_model": { "type": "string" },
+        "pre_declared_threshold": { "type": "number" },
+        "passes": { "type": "boolean" }
+      }
+    },
+    "genuineRefusalBattery": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "battery_ref",
+        "baseline_refusal_rate",
+        "post_intervention_refusal_rate",
+        "refusal_rate_delta",
+        "pre_declared_threshold",
+        "passes",
+        "critical_failure"
+      ],
+      "properties": {
+        "battery_ref": { "$ref": "#/$defs/datasetRef" },
+        "baseline_refusal_rate": { "type": "number" },
+        "post_intervention_refusal_rate": { "type": "number" },
+        "refusal_rate_delta": { "type": "number" },
+        "pre_declared_threshold": { "type": "number" },
+        "passes": { "type": "boolean" },
+        "critical_failure": { "type": "boolean" }
+      }
+    },
+    "ledgerEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["fragment_id", "fragment_sha256", "content_sha256_canonical", "parent_fragment_id", "child_fragment_ids", "controller_spec_id", "sealed_at", "sealed_by", "supersedes"],
+      "properties": {
+        "fragment_id": { "type": "string" },
+        "fragment_sha256": { "type": ["string", "null"], "pattern": "^[a-f0-9]{64}$" },
+        "content_sha256_canonical": { "type": ["string", "null"], "pattern": "^[a-f0-9]{64}$" },
+        "parent_fragment_id": { "type": ["string", "null"] },
+        "child_fragment_ids": { "type": "array", "items": { "type": "string" } },
+        "controller_spec_id": { "type": "string" },
+        "sealed_at": { "type": "string", "format": "date-time" },
+        "sealed_by": { "type": "string" },
+        "supersedes": { "type": ["string", "null"] }
+      }
+    }
+  }
+}
