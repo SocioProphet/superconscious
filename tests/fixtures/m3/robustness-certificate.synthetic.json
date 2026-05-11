@@ -1,0 +1,60 @@
+{
+  "certificate_kind": "m3-robustness-certificate",
+  "claim_qualifications": [
+    {
+      "evidence_path": "/constituent_fragments/cross_layer_comparison",
+      "qualification": "Synthetic fixture: mixed pattern across layers; no runtime activations used."
+    }
+  ],
+  "constituent_fragments": {
+    "cross_layer_comparison": {
+      "fragment_id": "m3-cross-layer-comparison-222222222222",
+      "fragment_sha256": "3333333333333333333333333333333333333333333333333333333333333333"
+    },
+    "transcoder_evidence": {
+      "fragment_id": "m3-transcoder-evidence-444444444444",
+      "fragment_sha256": "5555555555555555555555555555555555555555555555555555555555555555"
+    }
+  },
+  "counterfactuals_addressable": [
+    {
+      "answer_form": "categorical",
+      "answered_by_synthetic_fixture": true,
+      "evidence_path": "/robustness_pattern",
+      "question": "What cross-layer robustness pattern does the synthetic certificate claim?",
+      "question_id": "cf-m3-robustness-pattern"
+    }
+  ],
+  "execution_status": "synthetic_fixture",
+  "generated_at": "2026-05-11T00:00:00Z",
+  "headline_claim": "Synthetic fixture: implementability patterns are mixed across layers 9, 20, and 31.",
+  "ledger_entry": {
+    "child_fragment_ids": [],
+    "content_sha256_canonical": "6666666666666666666666666666666666666666666666666666666666666666",
+    "controller_spec_id": "m1-0-refuse-and-redirect-111111111111",
+    "fragment_id": "m3-robustness-certificate-666666666666",
+    "fragment_sha256": "7777777777777777777777777777777777777777777777777777777777777777",
+    "parent_fragment_id": "m2-implementability-certificate-cccccccccccc",
+    "sealed_at": "2026-05-11T00:00:00Z",
+    "sealed_by": "tests/fixtures",
+    "supersedes": null
+  },
+  "m2_certificate_ref": {
+    "fragment_id": "m2-implementability-certificate-cccccccccccc",
+    "fragment_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+  },
+  "non_claims": [
+    "Does not claim runtime execution.",
+    "Does not claim cross-model generalization.",
+    "Does not claim transcoder evidence availability."
+  ],
+  "robustness_pattern": "mixed_pattern_across_layers",
+  "schema_version": "1.0.0",
+  "signing_authority": {
+    "authority_id": "ci-fixture",
+    "authority_kind": "automated_pipeline",
+    "delegation_chain": [],
+    "signed_at": "2026-05-11T00:00:00Z",
+    "signing_method": "sha256_content_hash"
+  }
+}
