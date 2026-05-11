@@ -23,7 +23,6 @@ from .certificate_utils import (
     git_commit_sha,
     git_status_porcelain,
     has_uncommitted_changes,
-    hf_sibling_record,
     hf_sibling_paths,
     ledger_event,
     list_script_records,
@@ -38,7 +37,6 @@ from .certificate_utils import (
     strip_keys,
     try_jsonschema_validate,
     utc_now,
-    write_json,
 )
 
 DEFAULT_MODEL_REPO = "google/gemma-2-9b-it"
@@ -50,12 +48,21 @@ DEFAULT_LEDGER = "outputs/m1/evidence-ledger.jsonl"
 DEFAULT_SAE_SUBPATH = "layer_20/width_131k/average_l0_81"
 DEFAULT_SAE_PARAMS = f"{DEFAULT_SAE_SUBPATH}/params.npz"
 
+VOLATILE_SUBSTANTIVE_KEYS = {
+    "generated_at",
+    "sealed_at",
+    "fragment_id",
+    "fragment_sha256",
+    "content_sha256_canonical",
+}
+
 SCRIPT_PATHS = [
     "src/m1/__init__.py",
     "src/m1/certificate_utils.py",
     "src/m1/source_lock.py",
     "src/m1/generate_m1a_certificate.py",
     "src/m1/verify_source_lock.py",
+    "src/m1/verify_weights.py",
     "src/m1/feature_selection.py",
 ]
 
@@ -69,12 +76,6 @@ CONFIG_PATHS = [
 ]
 
 SCHEMA_PATHS = [DEFAULT_SCHEMA]
-
-MODEL_CONFIG_FILES = [
-    "config.json",
-    "tokenizer_config.json",
-    "tokenizer.json",
-]
 
 
 def hf_file_hash_from_local_cache(local_path: Path | None) -> str | None:
@@ -166,8 +167,6 @@ def architecture_from_config(config: dict[str, Any] | None) -> dict[str, Any]:
 
 
 def maybe_fetch_hf_text(repo: str, revision: str, filename: str) -> str | None:
-    # Avoid a hard dependency on huggingface_hub. The resolve URL is stable for
-    # small text files and does not download model weights.
     import urllib.error
     import urllib.parse
     import urllib.request
@@ -300,30 +299,36 @@ def build_controller_spec_ref(root: Path, path: str) -> dict[str, Any]:
     }
 
 
-def seal_certificate(cert: dict[str, Any]) -> dict[str, Any]:
-    # First compute substantive hash excluding volatile fields and ledger hash placeholders.
-    cert_for_content = strip_keys(cert, {"generated_at", "sealed_at", "fragment_sha256", "content_sha256_canonical"})
-    content_sha = sha256_json(cert_for_content)
-    fragment_id = make_fragment_id("m1a-source-lock", content_sha)
+def substantive_hash(cert: dict[str, Any]) -> str:
+    return sha256_json(strip_keys(cert, VOLATILE_SUBSTANTIVE_KEYS))
+
+
+def fragment_hash(cert: dict[str, Any]) -> str:
+    clone = json.loads(json.dumps(cert))
+    clone["ledger_entry"]["fragment_sha256"] = None
+    first = sha256_json(clone)
+    clone["ledger_entry"]["fragment_sha256"] = first
+    return sha256_json(clone)
+
+
+def seal_certificate(cert: dict[str, Any], supersedes: str | None) -> dict[str, Any]:
     controller_id = make_fragment_id("m1-0-refuse-and-redirect", cert["controller_spec_ref"]["content_sha256"])
     sealed_at = utc_now()
-
     cert["ledger_entry"] = {
-        "fragment_id": fragment_id,
+        "fragment_id": None,
         "fragment_sha256": None,
-        "content_sha256_canonical": content_sha,
+        "content_sha256_canonical": None,
         "parent_fragment_id": None,
         "child_fragment_ids": [],
         "controller_spec_id": controller_id,
         "sealed_at": sealed_at,
         "sealed_by": "src/m1/generate_m1a_certificate.py",
-        "supersedes": None,
+        "supersedes": supersedes,
     }
-
-    fragment_sha = sha256_json(cert)
-    cert["ledger_entry"]["fragment_sha256"] = fragment_sha
-    # Recompute with the hash field filled so the on-disk certificate identity is exact.
-    cert["ledger_entry"]["fragment_sha256"] = sha256_json(cert)
+    content_sha = substantive_hash(cert)
+    cert["ledger_entry"]["content_sha256_canonical"] = content_sha
+    cert["ledger_entry"]["fragment_id"] = make_fragment_id("m1a-source-lock", content_sha)
+    cert["ledger_entry"]["fragment_sha256"] = fragment_hash(cert)
     return cert
 
 
@@ -352,21 +357,9 @@ def build_certificate(args: argparse.Namespace) -> dict[str, Any]:
             ["outputs/m1/source-lock.json"],
             "src/m1/source_lock.py",
         ),
-        "ledger_entry": {
-            "fragment_id": "pending",
-            "fragment_sha256": None,
-            "content_sha256_canonical": None,
-            "parent_fragment_id": None,
-            "child_fragment_ids": [],
-            "controller_spec_id": "pending",
-            "sealed_at": generated_at,
-            "sealed_by": "src/m1/generate_m1a_certificate.py",
-            "supersedes": args.supersedes,
-        },
+        "ledger_entry": {},
     }
-    if args.supersedes:
-        cert["ledger_entry"]["supersedes"] = args.supersedes
-    return seal_certificate(cert)
+    return seal_certificate(cert, args.supersedes)
 
 
 def validate_against_schema(root: Path, cert: dict[str, Any], schema_path: str) -> list[str]:
