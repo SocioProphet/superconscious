@@ -1,0 +1,107 @@
+{
+  "alpha_behavioral_ref": {
+    "source_certificate_id": "m1c-causal-triad-333333333333",
+    "value": 2.0
+  },
+  "certificate_kind": "m2-implementability-curve",
+  "counterfactuals_addressable": [
+    {
+      "answer_form": "categorical",
+      "answered_by_synthetic_fixture": true,
+      "evidence_path": "/pattern_classification/pattern",
+      "question": "Which implementability pattern does the synthetic curve classify as?",
+      "question_id": "cf-implementability-pattern"
+    }
+  ],
+  "execution_status": "synthetic_fixture",
+  "feature_ref": {
+    "m1b_witness_card_id": "m1b-witness-card-121212121212",
+    "m1c_causal_triad_id": "m1c-causal-triad-333333333333",
+    "m1d_off_target_audit_id": "m1d-off-target-audit-aaaaaaaaaaaa"
+  },
+  "generated_at": "2026-05-11T00:00:00Z",
+  "intervention_curves": {
+    "alternative_feature_steering": {
+      "alpha_grid": [0, 1, 2, 4],
+      "per_alpha_distance": [
+        {"alpha": 0, "distances_by_metric": {"layernorm_euclidean": 0.5}},
+        {"alpha": 1, "distances_by_metric": {"layernorm_euclidean": 0.7}},
+        {"alpha": 2, "distances_by_metric": {"layernorm_euclidean": 1.0}},
+        {"alpha": 4, "distances_by_metric": {"layernorm_euclidean": 1.4}}
+      ]
+    },
+    "no_intervention": {
+      "alpha_grid": [0],
+      "per_alpha_distance": [
+        {"alpha": 0, "distances_by_metric": {"layernorm_euclidean": 0.5}}
+      ]
+    },
+    "random_direction": {
+      "alpha_grid": [0, 1, 2, 4],
+      "per_alpha_distance": [
+        {"alpha": 0, "distances_by_metric": {"layernorm_euclidean": 0.5}},
+        {"alpha": 1, "distances_by_metric": {"layernorm_euclidean": 1.2}},
+        {"alpha": 2, "distances_by_metric": {"layernorm_euclidean": 2.0}},
+        {"alpha": 4, "distances_by_metric": {"layernorm_euclidean": 3.5}}
+      ]
+    },
+    "studied_feature_steering": {
+      "alpha_grid": [0, 1, 2, 4],
+      "per_alpha_distance": [
+        {"alpha": 0, "distances_by_metric": {"layernorm_euclidean": 0.5}},
+        {"alpha": 1, "distances_by_metric": {"layernorm_euclidean": 0.8}},
+        {"alpha": 2, "distances_by_metric": {"layernorm_euclidean": 0.94}},
+        {"alpha": 4, "distances_by_metric": {"layernorm_euclidean": 1.6}}
+      ]
+    },
+    "teleportation": {
+      "alpha_grid": [0, 1, 2, 4],
+      "per_alpha_distance": [
+        {"alpha": 0, "distances_by_metric": {"layernorm_euclidean": 0.5}},
+        {"alpha": 1, "distances_by_metric": {"layernorm_euclidean": 0.55}},
+        {"alpha": 2, "distances_by_metric": {"layernorm_euclidean": 0.56}},
+        {"alpha": 4, "distances_by_metric": {"layernorm_euclidean": 0.57}}
+      ]
+    }
+  },
+  "ledger_entry": {
+    "child_fragment_ids": [],
+    "content_sha256_canonical": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "controller_spec_id": "m1-0-refuse-and-redirect-444444444444",
+    "fragment_id": "m2-implementability-curve-aaaaaaaaaaaa",
+    "fragment_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "parent_fragment_id": "m2-manifold-baseline-777777777777",
+    "sealed_at": "2026-05-11T00:00:00Z",
+    "sealed_by": "tests/fixtures",
+    "supersedes": null
+  },
+  "manifold_baseline_ref": {
+    "fragment_id": "m2-manifold-baseline-777777777777",
+    "fragment_sha256": "8888888888888888888888888888888888888888888888888888888888888888"
+  },
+  "parent_fragment_id": "m2-manifold-baseline-777777777777",
+  "pattern_classification": {
+    "alpha_behavioral_in_curve": 2.0,
+    "decision_thresholds_used": {
+      "in_envelope_threshold_quantile": "q95",
+      "ood_threshold_quantile": "q99"
+    },
+    "distance_at_alpha_behavioral": {
+      "layernorm_euclidean": {
+        "distance": 0.94,
+        "metric_id": "layernorm_euclidean",
+        "quantile_position": "below_q95"
+      }
+    },
+    "pattern": "A_in_envelope",
+    "rationale": "Synthetic fixture places alpha_behavioral below q95 under the layernorm metric."
+  },
+  "schema_version": "1.0.0",
+  "signing_authority": {
+    "authority_id": "ci-fixture",
+    "authority_kind": "automated_pipeline",
+    "delegation_chain": [],
+    "signed_at": "2026-05-11T00:00:00Z",
+    "signing_method": "sha256_content_hash"
+  }
+}
