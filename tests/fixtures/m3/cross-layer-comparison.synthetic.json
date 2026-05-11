@@ -1,0 +1,91 @@
+{
+  "certificate_kind": "m3-cross-layer-comparison",
+  "controller_spec_ref": {
+    "content_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+    "path": "docs/m1-0-controller-spec.md"
+  },
+  "counterfactuals_addressable": [
+    {
+      "answer_form": "categorical",
+      "answered_by_synthetic_fixture": true,
+      "evidence_path": "/pattern_consistency/consistent_pattern",
+      "question": "Is the implementability pattern consistent across the studied layers?",
+      "question_id": "cf-cross-layer-pattern"
+    }
+  ],
+  "cross_layer_agreement": {
+    "alpha_behavioral_consistency": {
+      "alphas_by_layer": {
+        "layer_9": 1.5,
+        "layer_20": 2.0,
+        "layer_31": 2.25
+      },
+      "coefficient_of_variation": 0.18
+    },
+    "feature_family_consistency": {
+      "all_layers_found_refuse_and_redirect_family": true,
+      "details": [
+        {"family_classification": "refuse_and_redirect", "layer_index": 9, "rationale": "Synthetic early-layer witness."},
+        {"family_classification": "refuse_and_redirect", "layer_index": 20, "rationale": "Synthetic primary layer."},
+        {"family_classification": "refuse_and_redirect", "layer_index": 31, "rationale": "Synthetic late-layer witness."}
+      ]
+    },
+    "pattern_consistency_score": {
+      "index_value": 0.67,
+      "interpretation": "partially_consistent"
+    }
+  },
+  "execution_status": "synthetic_fixture",
+  "generated_at": "2026-05-11T00:00:00Z",
+  "layer_set": [
+    {"layer_index": 9, "role": "early_witness", "sae_params_sha256": null, "sae_subpath": "layer_9/width_131k/average_l0_81"},
+    {"layer_index": 20, "role": "primary", "sae_params_sha256": null, "sae_subpath": "layer_20/width_131k/average_l0_81"},
+    {"layer_index": 31, "role": "late_witness", "sae_params_sha256": null, "sae_subpath": "layer_31/width_131k/average_l0_81"}
+  ],
+  "ledger_entry": {
+    "child_fragment_ids": [],
+    "content_sha256_canonical": "2222222222222222222222222222222222222222222222222222222222222222",
+    "controller_spec_id": "m1-0-refuse-and-redirect-111111111111",
+    "fragment_id": "m3-cross-layer-comparison-222222222222",
+    "fragment_sha256": "3333333333333333333333333333333333333333333333333333333333333333",
+    "parent_fragment_id": "m2-implementability-certificate-cccccccccccc",
+    "sealed_at": "2026-05-11T00:00:00Z",
+    "sealed_by": "tests/fixtures",
+    "supersedes": null
+  },
+  "parent_m2_certificate_ref": {
+    "fragment_id": "m2-implementability-certificate-cccccccccccc",
+    "fragment_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+    "primary_layer": 20
+  },
+  "pattern_consistency": {
+    "consistent_across_layers": false,
+    "consistent_pattern": null,
+    "divergence_summary": "Synthetic fixture: layer 9 is Pattern A, layers 20 and 31 are Pattern B."
+  },
+  "per_layer_instances": [
+    {
+      "feature_identification_result": {"feature_id_or_reason": "synthetic-feature-layer-9", "identified": true, "m1b_witness_card_id": "m1b-l9", "m1c_causal_triad_id": "m1c-l9", "m1d_off_target_audit_id": "m1d-l9"},
+      "implementability_result": {"alpha_behavioral": 1.5, "m2_certificate_id_or_null": "m2-l9", "pattern_classification": "A_in_envelope"},
+      "layer_index": 9
+    },
+    {
+      "feature_identification_result": {"feature_id_or_reason": "synthetic-feature-layer-20", "identified": true, "m1b_witness_card_id": "m1b-l20", "m1c_causal_triad_id": "m1c-l20", "m1d_off_target_audit_id": "m1d-l20"},
+      "implementability_result": {"alpha_behavioral": 2.0, "m2_certificate_id_or_null": "m2-l20", "pattern_classification": "B_boundary_crossing"},
+      "layer_index": 20
+    },
+    {
+      "feature_identification_result": {"feature_id_or_reason": "synthetic-feature-layer-31", "identified": true, "m1b_witness_card_id": "m1b-l31", "m1c_causal_triad_id": "m1c-l31", "m1d_off_target_audit_id": "m1d-l31"},
+      "implementability_result": {"alpha_behavioral": 2.25, "m2_certificate_id_or_null": "m2-l31", "pattern_classification": "B_boundary_crossing"},
+      "layer_index": 31
+    }
+  ],
+  "schema_version": "1.0.0",
+  "signing_authority": {
+    "authority_id": "ci-fixture",
+    "authority_kind": "automated_pipeline",
+    "delegation_chain": [],
+    "signed_at": "2026-05-11T00:00:00Z",
+    "signing_method": "sha256_content_hash"
+  }
+}
