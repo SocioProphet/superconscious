@@ -1,4 +1,4 @@
-.PHONY: test smoke trust-surface artifact-validate canonicalize inspect validate m1-source-lock m1a-generate m1-verify-source-lock m1-verify-source-lock-strict m1-verify-weights m1-feature-stage1 m1-static m1-schema-fixtures m1b-cross-width-smoke m1-ci m2-static m2-schema-fixtures m2-ci certificate-ci
+.PHONY: test smoke trust-surface artifact-validate canonicalize inspect validate m1-source-lock m1a-generate m1-verify-source-lock m1-verify-source-lock-strict m1-verify-weights m1-feature-stage1 m1-static m1-schema-fixtures m1b-cross-width-smoke m1-ci m2-static m2-schema-fixtures m2-ci m3-static m3-schema-fixtures m3-ci m5-static m5-schema-fixtures m5-template-set m5-ci certificate-ci
 
 test:
 	python3 -m pytest
@@ -81,4 +81,31 @@ m2-schema-fixtures:
 
 m2-ci: m2-static m2-schema-fixtures
 
-certificate-ci: m1-ci m2-ci
+m3-static:
+	python3 -m json.tool schemas/m3/cross-layer-comparison.v1.json >/dev/null
+	python3 -m json.tool schemas/m3/transcoder-evidence.v1.json >/dev/null
+	python3 -m json.tool schemas/m3/robustness-certificate.v1.json >/dev/null
+
+m3-schema-fixtures:
+	python3 -m src.m1.validate_schema_instance schemas/m3/cross-layer-comparison.v1.json tests/fixtures/m3/cross-layer-comparison.synthetic.json
+	python3 -m src.m1.validate_schema_instance schemas/m3/transcoder-evidence.v1.json tests/fixtures/m3/transcoder-evidence.synthetic.json
+	python3 -m src.m1.validate_schema_instance schemas/m3/robustness-certificate.v1.json tests/fixtures/m3/robustness-certificate.synthetic.json
+
+m3-ci: m3-static m3-schema-fixtures
+
+m5-static:
+	python3 -m json.tool schemas/m5/public-note.v1.json >/dev/null
+
+m5-schema-fixtures:
+	python3 -m src.m1.validate_schema_instance schemas/m5/public-note.v1.json tests/fixtures/m5/public-note.synthetic.json
+
+m5-template-set:
+	ls templates/m5/public-note-pattern-a-clean.md \
+	   templates/m5/public-note-pattern-b-clean.md \
+	   templates/m5/public-note-pattern-c-clean.md \
+	   templates/m5/public-note-off-target-damage.md \
+	   templates/m5/public-note-no-viable-feature.md >/dev/null
+
+m5-ci: m5-static m5-schema-fixtures m5-template-set
+
+certificate-ci: m1-ci m2-ci m3-ci m5-ci
