@@ -36,7 +36,6 @@ from .certificate_utils import (
 DEFAULT_CERTIFICATE = "outputs/m1/certificates/m1a-source-lock.json"
 DEFAULT_SCHEMA = "schemas/m1/source-lock.v1.json"
 DEFAULT_LEDGER = "outputs/m1/evidence-ledger.jsonl"
-DEFAULT_SAE_PARAMS = "layer_20/width_131k/average_l0_81/params.npz"
 
 VOLATILE_SUBSTANTIVE_KEYS = {
     "generated_at",
@@ -135,8 +134,11 @@ def verify_hf(root: Path, cert: dict[str, Any], failures: list[str], network_err
         sae_meta = fetch_hf_model_metadata(cert["sae"]["huggingface_repo"], cert["sae"]["repo_commit_sha"] or "main")
         paths = hf_sibling_paths(sae_meta)
         ok_commit = (sae_meta.get("sha") == cert["sae"]["repo_commit_sha"]) or (cert["sae"]["repo_commit_sha"] in {None, "main"})
-        ok_path = DEFAULT_SAE_PARAMS in paths
-        check(ok_commit and ok_path, "[7/8] Resolving SAE metadata from Hugging Face", failures, detail=str(sae_meta.get("sha")))
+        targets = cert["sae"].get("cross_width_witness_targets", [])
+        target_paths = [target.get("params_path") for target in targets if target.get("role") in {"primary", "witness"}]
+        ok_paths = all(path in paths for path in target_paths)
+        detail = f"{sae_meta.get('sha')}; paths={sum(1 for path in target_paths if path in paths)}/{len(target_paths)}"
+        check(ok_commit and ok_paths, "[7/8] Resolving SAE metadata from Hugging Face", failures, detail=detail)
     except Exception as exc:  # noqa: BLE001
         network_errors.append(str(exc))
         print(f"{'[7/8] Resolving SAE metadata from Hugging Face':<68} ERROR ({exc})")
@@ -145,10 +147,12 @@ def verify_hf(root: Path, cert: dict[str, Any], failures: list[str], network_err
 def verify_weight_status(cert: dict[str, Any], failures: list[str], partials: list[str], *, strict: bool) -> None:
     status = cert["model"]["weights_manifest"]["weights_verification_status"]
     sae_downloaded = cert["sae"]["params_downloaded"]
-    if status == "verified" and sae_downloaded and cert["sae"].get("params_npz_sha256"):
+    witness_targets = cert["sae"].get("cross_width_witness_targets", [])
+    witness_pending = [target["params_path"] for target in witness_targets if not target.get("params_downloaded")]
+    if status == "verified" and sae_downloaded and cert["sae"].get("params_npz_sha256") and not witness_pending:
         check(True, "[8/8] Verifying weights/SAE params", failures, detail="verified")
         return
-    message = f"weights={status}; sae_downloaded={sae_downloaded}"
+    message = f"weights={status}; primary_sae_downloaded={sae_downloaded}; witness_pending={len(witness_pending)}"
     if strict:
         check(False, "[8/8] Verifying weights/SAE params", failures, detail=message)
     else:
