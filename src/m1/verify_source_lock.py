@@ -12,13 +12,13 @@ Exit codes:
 from __future__ import annotations
 
 import argparse
+import json
 import sys
 from pathlib import Path
 from typing import Any
 
 from .certificate_utils import (
     append_ledger,
-    canonical_json,
     fetch_hf_model_metadata,
     file_record,
     git_commit_sha,
@@ -28,7 +28,6 @@ from .certificate_utils import (
     read_json,
     repo_root,
     schema_validate_basic,
-    sha256_file,
     sha256_json,
     strip_keys,
     try_jsonschema_validate,
@@ -38,6 +37,14 @@ DEFAULT_CERTIFICATE = "outputs/m1/certificates/m1a-source-lock.json"
 DEFAULT_SCHEMA = "schemas/m1/source-lock.v1.json"
 DEFAULT_LEDGER = "outputs/m1/evidence-ledger.jsonl"
 DEFAULT_SAE_PARAMS = "layer_20/width_131k/average_l0_81/params.npz"
+
+VOLATILE_SUBSTANTIVE_KEYS = {
+    "generated_at",
+    "sealed_at",
+    "fragment_id",
+    "fragment_sha256",
+    "content_sha256_canonical",
+}
 
 
 def check(ok: bool, label: str, failures: list[str], *, detail: str = "") -> None:
@@ -56,8 +63,7 @@ def check_schema(cert: dict[str, Any], schema: dict[str, Any] | None) -> list[st
 
 
 def recompute_fragment_hash(cert: dict[str, Any]) -> str:
-    clone = dict(cert)
-    clone["ledger_entry"] = dict(cert["ledger_entry"])
+    clone = json.loads(json.dumps(cert))
     clone["ledger_entry"]["fragment_sha256"] = None
     first = sha256_json(clone)
     clone["ledger_entry"]["fragment_sha256"] = first
@@ -65,8 +71,7 @@ def recompute_fragment_hash(cert: dict[str, Any]) -> str:
 
 
 def recompute_content_hash(cert: dict[str, Any]) -> str:
-    stripped = strip_keys(cert, {"generated_at", "sealed_at", "fragment_sha256", "content_sha256_canonical"})
-    return sha256_json(stripped)
+    return sha256_json(strip_keys(cert, VOLATILE_SUBSTANTIVE_KEYS))
 
 
 def verify_controller_spec(root: Path, cert: dict[str, Any], failures: list[str]) -> None:
