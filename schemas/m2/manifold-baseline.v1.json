@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.socioprophet.ai/superconscious/m2/manifold-baseline.v1.json",
+  "title": "M2 Manifold Baseline Certificate Fragment",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "certificate_kind", "generated_at", "parent_fragment_id", "activation_cache_ref", "calibration_split", "metric_stack", "natural_baselines", "execution_status", "signing_authority", "counterfactuals_addressable", "ledger_entry"],
+  "properties": {
+    "schema_version": { "const": "1.0.0" },
+    "certificate_kind": { "const": "m2-manifold-baseline" },
+    "generated_at": { "type": "string", "format": "date-time" },
+    "parent_fragment_id": { "type": "string" },
+    "activation_cache_ref": { "$ref": "#/$defs/fragmentRef" },
+    "calibration_split": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["reference_set_size", "calibration_set_size", "test_set_size", "split_seed", "split_method"],
+      "properties": {
+        "reference_set_size": { "type": "integer", "minimum": 1 },
+        "calibration_set_size": { "type": "integer", "minimum": 1 },
+        "test_set_size": { "type": "integer", "minimum": 1 },
+        "split_seed": { "type": "integer" },
+        "split_method": { "enum": ["random", "stratified_by_position", "stratified_by_input_class"] }
+      }
+    },
+    "metric_stack": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/metricSpec" } },
+    "natural_baselines": { "type": "object", "additionalProperties": { "$ref": "#/$defs/naturalBaseline" } },
+    "execution_status": { "$ref": "#/$defs/executionStatus" },
+    "signing_authority": { "$ref": "#/$defs/signingAuthority" },
+    "counterfactuals_addressable": { "$ref": "#/$defs/counterfactualsAddressable" },
+    "ledger_entry": { "$ref": "#/$defs/ledgerEntry" }
+  },
+  "$defs": {
+    "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "executionStatus": { "enum": ["doctrine_only", "synthetic_fixture", "runtime_partial", "runtime_executed", "failed"] },
+    "fragmentRef": { "type": "object", "additionalProperties": false, "required": ["fragment_id", "fragment_sha256"], "properties": { "fragment_id": { "type": "string" }, "fragment_sha256": { "$ref": "#/$defs/sha256" } } },
+    "metricSpec": { "type": "object", "additionalProperties": false, "required": ["metric_id", "metric_name", "metric_formula_ref", "metric_parameters"], "properties": { "metric_id": { "type": "string" }, "metric_name": { "enum": ["layernorm_euclidean", "cosine", "readout_weighted_euclidean", "jacobian_weighted", "logit_effect", "feature_coordinate"] }, "metric_formula_ref": { "type": "string" }, "metric_parameters": { "type": "object" } } },
+    "naturalBaseline": { "type": "object", "additionalProperties": false, "required": ["position_type", "metric_id", "quantiles", "empirical_distribution_sha256", "conformal_coverage_guarantee"], "properties": { "position_type": { "type": "string" }, "metric_id": { "type": "string" }, "quantiles": { "type": "object", "additionalProperties": false, "required": ["q50", "q90", "q95", "q99"], "properties": { "q50": { "type": "number" }, "q90": { "type": "number" }, "q95": { "type": "number" }, "q99": { "type": "number" } } }, "empirical_distribution_sha256": { "$ref": "#/$defs/sha256" }, "conformal_coverage_guarantee": { "type": "object", "additionalProperties": false, "required": ["target_coverage", "achieved_coverage", "calibration_method"], "properties": { "target_coverage": { "type": "number", "minimum": 0, "maximum": 1 }, "achieved_coverage": { "type": "number", "minimum": 0, "maximum": 1 }, "calibration_method": { "type": "string" } } } } },
+    "signingAuthority": { "type": "object", "additionalProperties": false, "required": ["authority_id", "authority_kind", "signed_at", "signing_method", "delegation_chain"], "properties": { "authority_id": { "type": "string" }, "authority_kind": { "enum": ["individual", "automated_pipeline", "role", "delegated", "external_auditor"] }, "signed_at": { "type": "string", "format": "date-time" }, "signing_method": { "enum": ["sha256_content_hash", "gpg_signature", "sigstore", "x509", "internal_hmac"] }, "delegation_chain": { "type": "array", "items": { "type": "string" } } } },
+    "counterfactualsAddressable": { "type": "array", "minItems": 1, "items": { "type": "object", "additionalProperties": false, "required": ["question_id", "question", "evidence_path", "answer_form", "answered_by_synthetic_fixture"], "properties": { "question_id": { "type": "string", "pattern": "^cf-[a-z0-9-]+$" }, "question": { "type": "string" }, "evidence_path": { "type": "string" }, "answer_form": { "enum": ["boolean", "hash_match", "numerical_range", "categorical", "structured"] }, "answered_by_synthetic_fixture": { "type": "boolean" } } } },
+    "ledgerEntry": { "type": "object", "additionalProperties": false, "required": ["fragment_id", "fragment_sha256", "content_sha256_canonical", "parent_fragment_id", "child_fragment_ids", "controller_spec_id", "sealed_at", "sealed_by", "supersedes"], "properties": { "fragment_id": { "type": "string" }, "fragment_sha256": { "$ref": "#/$defs/sha256" }, "content_sha256_canonical": { "$ref": "#/$defs/sha256" }, "parent_fragment_id": { "type": ["string", "null"] }, "child_fragment_ids": { "type": "array", "items": { "type": "string" } }, "controller_spec_id": { "type": "string" }, "sealed_at": { "type": "string", "format": "date-time" }, "sealed_by": { "type": "string" }, "supersedes": { "type": ["string", "null"] } } }
+  }
+}
