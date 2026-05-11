@@ -1,4 +1,4 @@
-.PHONY: test smoke trust-surface artifact-validate canonicalize inspect validate m1-source-lock m1-feature-stage1
+.PHONY: test smoke trust-surface artifact-validate canonicalize inspect validate m1-source-lock m1a-generate m1-verify-source-lock m1-verify-source-lock-strict m1-verify-weights m1-feature-stage1
 
 test:
 	python3 -m pytest
@@ -25,7 +25,19 @@ inspect:
 validate: trust-surface test artifact-validate canonicalize inspect
 
 m1-source-lock:
-	python3 src/m1/source_lock.py --write outputs/m1/source-lock.json --print
+	python3 -m src.m1.source_lock --write outputs/m1/source-lock.json --print
+
+m1a-generate:
+	python3 -m src.m1.generate_m1a_certificate
+
+m1-verify-source-lock:
+	python3 -m src.m1.verify_source_lock outputs/m1/certificates/m1a-source-lock.json --allow-pending
+
+m1-verify-source-lock-strict:
+	python3 -m src.m1.verify_source_lock outputs/m1/certificates/m1a-source-lock.json --strict
+
+m1-verify-weights:
+	python3 -m src.m1.verify_weights outputs/m1/certificates/m1a-source-lock.json
 
 m1-feature-stage1:
-	python3 src/m1/feature_selection.py --features data/m1/feature_contexts.jsonl --out-dir outputs/m1
+	python3 -m src.m1.feature_selection --features data/m1/feature_contexts.jsonl --out-dir outputs/m1
