@@ -1,0 +1,75 @@
+{
+  "authority_concentration_index": {
+    "distinct_authority_count": 1,
+    "fragment_authority_breakdown": {
+      "activation_cache": "ci-fixture",
+      "implementability_curve": "ci-fixture",
+      "manifold_baseline": "ci-fixture"
+    },
+    "index_value": 0.3333333333,
+    "interpretation": "single_authority",
+    "weakness_flag": true
+  },
+  "certificate_kind": "m2-implementability-certificate",
+  "claim_pattern": "A_in_envelope",
+  "claim_qualifications": [
+    {
+      "evidence_path": "/constituent_fragments/implementability_curve",
+      "qualification": "Synthetic fixture only; no runtime activations were used."
+    }
+  ],
+  "constituent_fragments": {
+    "activation_cache": {
+      "fragment_id": "m2-activation-cache-555555555555",
+      "fragment_sha256": "6666666666666666666666666666666666666666666666666666666666666666"
+    },
+    "implementability_curve": {
+      "fragment_id": "m2-implementability-curve-aaaaaaaaaaaa",
+      "fragment_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+    },
+    "manifold_baseline": {
+      "fragment_id": "m2-manifold-baseline-777777777777",
+      "fragment_sha256": "8888888888888888888888888888888888888888888888888888888888888888"
+    }
+  },
+  "counterfactuals_addressable": [
+    {
+      "answer_form": "categorical",
+      "answered_by_synthetic_fixture": true,
+      "evidence_path": "/claim_pattern",
+      "question": "What implementability pattern does the synthetic M2 certificate claim?",
+      "question_id": "cf-m2-claim-pattern"
+    }
+  ],
+  "execution_status": "synthetic_fixture",
+  "generated_at": "2026-05-11T00:00:00Z",
+  "headline_claim": "Synthetic fixture: studied feature steering is classified as in-envelope under toy distances.",
+  "ledger_entry": {
+    "child_fragment_ids": [],
+    "content_sha256_canonical": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+    "controller_spec_id": "m1-0-refuse-and-redirect-444444444444",
+    "fragment_id": "m2-implementability-certificate-cccccccccccc",
+    "fragment_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+    "parent_fragment_id": "m1-implementability-certificate-cccccccccccc",
+    "sealed_at": "2026-05-11T00:00:00Z",
+    "sealed_by": "tests/fixtures",
+    "supersedes": null
+  },
+  "m1_certificate_ref": {
+    "fragment_id": "m1-implementability-certificate-cccccccccccc",
+    "fragment_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+  },
+  "non_claims": [
+    "Does not claim runtime execution.",
+    "Does not claim cross-layer robustness.",
+    "Does not claim cross-model generalization."
+  ],
+  "schema_version": "1.0.0",
+  "signing_authority": {
+    "authority_id": "ci-fixture",
+    "authority_kind": "automated_pipeline",
+    "delegation_chain": [],
+    "signed_at": "2026-05-11T00:00:00Z",
+    "signing_method": "sha256_content_hash"
+  }
+}
