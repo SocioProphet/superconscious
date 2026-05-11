@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.socioprophet.ai/superconscious/m3/cross-layer-comparison.v1.json",
+  "title": "M3 Cross-Layer Comparison",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "certificate_kind", "generated_at", "parent_m2_certificate_ref", "controller_spec_ref", "layer_set", "per_layer_instances", "cross_layer_agreement", "pattern_consistency", "execution_status", "signing_authority", "counterfactuals_addressable", "ledger_entry"],
+  "properties": {
+    "schema_version": { "const": "1.0.0" },
+    "certificate_kind": { "const": "m3-cross-layer-comparison" },
+    "generated_at": { "type": "string", "format": "date-time" },
+    "parent_m2_certificate_ref": {
+      "type": "object", "additionalProperties": false,
+      "required": ["fragment_id", "fragment_sha256", "primary_layer"],
+      "properties": { "fragment_id": {"type":"string"}, "fragment_sha256": {"$ref":"#/$defs/sha256"}, "primary_layer": {"type":"integer"} }
+    },
+    "controller_spec_ref": { "$ref": "#/$defs/docRef" },
+    "layer_set": { "type": "array", "minItems": 2, "items": { "$ref": "#/$defs/layerRecord" } },
+    "per_layer_instances": { "type": "array", "minItems": 2, "items": { "$ref": "#/$defs/layerInstance" } },
+    "cross_layer_agreement": { "$ref": "#/$defs/crossLayerAgreement" },
+    "pattern_consistency": { "$ref": "#/$defs/patternConsistency" },
+    "execution_status": { "$ref": "#/$defs/executionStatus" },
+    "signing_authority": { "$ref": "#/$defs/signingAuthority" },
+    "counterfactuals_addressable": { "$ref": "#/$defs/counterfactualsAddressable" },
+    "ledger_entry": { "$ref": "#/$defs/ledgerEntry" }
+  },
+  "$defs": {
+    "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "executionStatus": { "enum": ["doctrine_only", "synthetic_fixture", "runtime_partial", "runtime_executed", "failed"] },
+    "docRef": { "type":"object", "additionalProperties":false, "required":["path","content_sha256"], "properties":{"path":{"type":"string"},"content_sha256":{"$ref":"#/$defs/sha256"}} },
+    "layerRecord": { "type":"object", "additionalProperties":false, "required":["layer_index","role","sae_subpath","sae_params_sha256"], "properties":{"layer_index":{"type":"integer","minimum":0},"role":{"enum":["primary","early_witness","late_witness"]},"sae_subpath":{"type":"string"},"sae_params_sha256":{"type":["string","null"],"pattern":"^[a-f0-9]{64}$"}} },
+    "layerInstance": { "type":"object", "additionalProperties":false, "required":["layer_index","feature_identification_result","implementability_result"], "properties":{"layer_index":{"type":"integer"},"feature_identification_result":{"type":"object","additionalProperties":false,"required":["identified","feature_id_or_reason","m1b_witness_card_id","m1c_causal_triad_id","m1d_off_target_audit_id"],"properties":{"identified":{"type":"boolean"},"feature_id_or_reason":{"type":"string"},"m1b_witness_card_id":{"type":["string","null"]},"m1c_causal_triad_id":{"type":["string","null"]},"m1d_off_target_audit_id":{"type":["string","null"]}}},"implementability_result":{"type":"object","additionalProperties":false,"required":["m2_certificate_id_or_null","pattern_classification","alpha_behavioral"],"properties":{"m2_certificate_id_or_null":{"type":["string","null"]},"pattern_classification":{"enum":["A_in_envelope","B_boundary_crossing","C_out_of_distribution","indeterminate","not_attempted_no_feature_found"]},"alpha_behavioral":{"type":["number","null"]}}}} },
+    "crossLayerAgreement": { "type":"object", "additionalProperties":false, "required":["feature_family_consistency","pattern_consistency_score","alpha_behavioral_consistency"], "properties":{"feature_family_consistency":{"type":"object","additionalProperties":false,"required":["all_layers_found_refuse_and_redirect_family","details"],"properties":{"all_layers_found_refuse_and_redirect_family":{"type":"boolean"},"details":{"type":"array","items":{"type":"object","additionalProperties":false,"required":["layer_index","family_classification","rationale"],"properties":{"layer_index":{"type":"integer"},"family_classification":{"type":"string"},"rationale":{"type":"string"}}}}}},"pattern_consistency_score":{"type":"object","additionalProperties":false,"required":["index_value","interpretation"],"properties":{"index_value":{"type":"number","minimum":0,"maximum":1},"interpretation":{"enum":["fully_consistent","partially_consistent","inconsistent","indeterminate"]}}},"alpha_behavioral_consistency":{"type":"object","additionalProperties":false,"required":["alphas_by_layer","coefficient_of_variation"],"properties":{"alphas_by_layer":{"type":"object","additionalProperties":{"type":["number","null"]}},"coefficient_of_variation":{"type":["number","null"],"minimum":0}}}} },
+    "patternConsistency": { "type":"object", "additionalProperties":false, "required":["consistent_across_layers","consistent_pattern","divergence_summary"], "properties":{"consistent_across_layers":{"type":"boolean"},"consistent_pattern":{"type":["string","null"],"enum":["A_in_envelope","B_boundary_crossing","C_out_of_distribution",null]},"divergence_summary":{"type":"string"}} },
+    "signingAuthority": { "type":"object", "additionalProperties":false, "required":["authority_id","authority_kind","signed_at","signing_method","delegation_chain"], "properties":{"authority_id":{"type":"string"},"authority_kind":{"enum":["individual","automated_pipeline","role","delegated","external_auditor"]},"signed_at":{"type":"string","format":"date-time"},"signing_method":{"enum":["sha256_content_hash","gpg_signature","sigstore","x509","internal_hmac"]},"delegation_chain":{"type":"array","items":{"type":"string"}}} },
+    "counterfactualsAddressable": { "type":"array", "minItems":1, "items":{"type":"object","additionalProperties":false,"required":["question_id","question","evidence_path","answer_form","answered_by_synthetic_fixture"],"properties":{"question_id":{"type":"string","pattern":"^cf-[a-z0-9-]+$"},"question":{"type":"string"},"evidence_path":{"type":"string"},"answer_form":{"enum":["boolean","hash_match","numerical_range","categorical","structured"]},"answered_by_synthetic_fixture":{"type":"boolean"}}} },
+    "ledgerEntry": { "type":"object", "additionalProperties":false, "required":["fragment_id","fragment_sha256","content_sha256_canonical","parent_fragment_id","child_fragment_ids","controller_spec_id","sealed_at","sealed_by","supersedes"], "properties":{"fragment_id":{"type":"string"},"fragment_sha256":{"$ref":"#/$defs/sha256"},"content_sha256_canonical":{"$ref":"#/$defs/sha256"},"parent_fragment_id":{"type":["string","null"]},"child_fragment_ids":{"type":"array","items":{"type":"string"}},"controller_spec_id":{"type":"string"},"sealed_at":{"type":"string","format":"date-time"},"sealed_by":{"type":"string"},"supersedes":{"type":["string","null"]}} }
+  }
+}
