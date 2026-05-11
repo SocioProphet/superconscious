@@ -1,0 +1,37 @@
+{
+  "availability_status": "not_publicly_available",
+  "certificate_kind": "m3-transcoder-evidence",
+  "execution_status": "doctrine_only",
+  "expected_evidence_shape": {
+    "cross_layer_feature_alignment_metric": "future-transcoder-feature-alignment",
+    "crosscoder_repo": null,
+    "expected_addition_to_certificate": "typed cross-layer feature evidence when public artifacts exist",
+    "transcoder_repo": null
+  },
+  "generated_at": "2026-05-11T00:00:00Z",
+  "ledger_entry": {
+    "child_fragment_ids": [],
+    "content_sha256_canonical": "4444444444444444444444444444444444444444444444444444444444444444",
+    "controller_spec_id": "m1-0-refuse-and-redirect-111111111111",
+    "fragment_id": "m3-transcoder-evidence-444444444444",
+    "fragment_sha256": "5555555555555555555555555555555555555555555555555555555555555555",
+    "parent_fragment_id": "m3-cross-layer-comparison-222222222222",
+    "sealed_at": "2026-05-11T00:00:00Z",
+    "sealed_by": "tests/fixtures",
+    "supersedes": null
+  },
+  "placeholder_rationale": "No public Gemma-2-9B-IT transcoder/crosscoder artifact is source-locked for this doctrine lane.",
+  "schema_version": "1.0.0",
+  "signing_authority": {
+    "authority_id": "ci-fixture",
+    "authority_kind": "automated_pipeline",
+    "delegation_chain": [],
+    "signed_at": "2026-05-11T00:00:00Z",
+    "signing_method": "sha256_content_hash"
+  },
+  "trigger_conditions_for_activation": [
+    "public source-locked transcoder or crosscoder artifact exists",
+    "artifact has declared target model and layer compatibility",
+    "artifact license permits reproducible analysis"
+  ]
+}
