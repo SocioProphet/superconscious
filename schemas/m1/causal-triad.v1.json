@@ -1,0 +1,180 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.socioprophet.ai/superconscious/m1/causal-triad.v1.json",
+  "title": "M1C Causal Triad Certificate Fragment",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "certificate_kind",
+    "generated_at",
+    "generated_by",
+    "parent_witness_card_id",
+    "feature_identity",
+    "controller_spec_ref",
+    "test_set_ref",
+    "alpha_grid",
+    "interventions",
+    "alpha_behavioral",
+    "directionality_coherence_score",
+    "designated_latent_leakage_flag",
+    "passes_m1c_acceptance",
+    "ledger_entry"
+  ],
+  "properties": {
+    "schema_version": { "const": "1.0.0" },
+    "certificate_kind": { "const": "m1c-causal-triad" },
+    "generated_at": { "type": "string", "format": "date-time" },
+    "generated_by": { "type": "string" },
+    "parent_witness_card_id": { "type": "string" },
+    "feature_identity": { "$ref": "#/$defs/featureIdentity" },
+    "controller_spec_ref": { "$ref": "#/$defs/controllerSpecRef" },
+    "test_set_ref": { "$ref": "#/$defs/datasetRef" },
+    "alpha_grid": { "type": "array", "items": { "type": "number" }, "minItems": 1 },
+    "interventions": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["ablation", "positive_steering", "negative_steering"],
+      "properties": {
+        "ablation": { "$ref": "#/$defs/ablationIntervention" },
+        "positive_steering": { "$ref": "#/$defs/sweptIntervention" },
+        "negative_steering": { "$ref": "#/$defs/sweptIntervention" }
+      }
+    },
+    "alpha_behavioral": { "type": ["number", "null"] },
+    "directionality_coherence_score": { "type": "integer", "minimum": 0, "maximum": 3 },
+    "designated_latent_leakage_flag": { "type": "boolean" },
+    "passes_m1c_acceptance": { "type": "boolean" },
+    "ledger_entry": { "$ref": "#/$defs/ledgerEntry" }
+  },
+  "$defs": {
+    "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "controllerSpecRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "content_sha256", "git_blob_sha", "commit_sha"],
+      "properties": {
+        "path": { "type": "string" },
+        "content_sha256": { "$ref": "#/$defs/sha256" },
+        "git_blob_sha": { "type": ["string", "null"] },
+        "commit_sha": { "type": "string" }
+      }
+    },
+    "featureIdentity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["feature_id", "sae_repo", "sae_subpath", "feature_index", "decoder_direction_sha256", "decoder_norm"],
+      "properties": {
+        "feature_id": { "type": "string" },
+        "sae_repo": { "type": "string" },
+        "sae_subpath": { "type": "string" },
+        "feature_index": { "type": ["integer", "null"], "minimum": 0 },
+        "decoder_direction_sha256": { "type": ["string", "null"], "pattern": "^[a-f0-9]{64}$" },
+        "decoder_norm": { "type": ["number", "null"] }
+      }
+    },
+    "datasetRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "content_sha256", "item_count"],
+      "properties": {
+        "path": { "type": "string" },
+        "content_sha256": { "$ref": "#/$defs/sha256" },
+        "item_count": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "ablationIntervention": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["intervention_spec", "single_result", "per_alpha_results"],
+      "properties": {
+        "intervention_spec": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["type", "value"],
+          "properties": {
+            "type": { "const": "ablation" },
+            "value": { "type": "number" }
+          }
+        },
+        "single_result": { "$ref": "#/$defs/interventionResult" },
+        "per_alpha_results": { "type": "null" }
+      }
+    },
+    "sweptIntervention": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["intervention_spec", "single_result", "per_alpha_results"],
+      "properties": {
+        "intervention_spec": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["type", "direction"],
+          "properties": {
+            "type": { "const": "additive" },
+            "direction": { "enum": ["+d_f", "-d_f"] }
+          }
+        },
+        "single_result": { "type": "null" },
+        "per_alpha_results": { "type": "array", "items": { "$ref": "#/$defs/alphaResult" } }
+      }
+    },
+    "alphaResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["alpha", "accuracy_delta", "compliance_rate_delta", "designated_latents"],
+      "properties": {
+        "alpha": { "type": "number" },
+        "accuracy_delta": { "type": "number" },
+        "compliance_rate_delta": { "type": "number" },
+        "designated_latents": { "$ref": "#/$defs/designatedLatents" }
+      }
+    },
+    "interventionResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["accuracy_delta", "compliance_rate_delta", "designated_latents"],
+      "properties": {
+        "accuracy_delta": { "type": "number" },
+        "compliance_rate_delta": { "type": "number" },
+        "designated_latents": { "$ref": "#/$defs/designatedLatents" }
+      }
+    },
+    "designatedLatents": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "residual_norm_before",
+        "residual_norm_after",
+        "layernorm_scale_before",
+        "layernorm_scale_after",
+        "sae_reconstruction_error_norm",
+        "natural_range_z_score_max"
+      ],
+      "properties": {
+        "residual_norm_before": { "type": ["number", "null"] },
+        "residual_norm_after": { "type": ["number", "null"] },
+        "layernorm_scale_before": { "type": ["number", "null"] },
+        "layernorm_scale_after": { "type": ["number", "null"] },
+        "sae_reconstruction_error_norm": { "type": ["number", "null"] },
+        "natural_range_z_score_max": { "type": ["number", "null"] }
+      }
+    },
+    "ledgerEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["fragment_id", "fragment_sha256", "content_sha256_canonical", "parent_fragment_id", "child_fragment_ids", "controller_spec_id", "sealed_at", "sealed_by", "supersedes"],
+      "properties": {
+        "fragment_id": { "type": "string" },
+        "fragment_sha256": { "type": ["string", "null"], "pattern": "^[a-f0-9]{64}$" },
+        "content_sha256_canonical": { "type": ["string", "null"], "pattern": "^[a-f0-9]{64}$" },
+        "parent_fragment_id": { "type": ["string", "null"] },
+        "child_fragment_ids": { "type": "array", "items": { "type": "string" } },
+        "controller_spec_id": { "type": "string" },
+        "sealed_at": { "type": "string", "format": "date-time" },
+        "sealed_by": { "type": "string" },
+        "supersedes": { "type": ["string", "null"] }
+      }
+    }
+  }
+}
