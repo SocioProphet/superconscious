@@ -80,9 +80,28 @@ primary: google/gemma-scope-9b-it-res/layer_20/width_131k/average_l0_81
 witness: google/gemma-scope-9b-it-res/layer_20/width_16k/average_l0_91
 ```
 
-The original 2-of-4 robustness idea is deferred to M3 because 65k and 1M widths are not available in the 9B-IT residual release. Using PT widths in M1B would introduce a model-regime shift and weaken the witness.
+The original 2-of-4 robustness idea is retired for M1B v1 because 65k and 1M widths are not available in the 9B-IT residual release. Using PT widths in M1B would introduce a model-regime shift and weaken the witness.
 
-M1B v1 selection rule: the 16k witness match must pass the declared cosine threshold.
+M1B v1 records Witness 4 as a continuous advisory score, not a hard promotion gate. The witness reports:
+
+- `cross_width_agreement_score`;
+- `noise_floor_threshold`;
+- `score_above_noise_floor`;
+- `advisory_only: true`;
+- deferred widths and milestone handoff to M3.
+
+The score is still important. It affects confidence and downstream prioritization, but a candidate is not rejected solely because its single available cross-width score falls near threshold.
+
+### Witness 4 compute pattern
+
+M1B v1 uses Option C: gated exhaustive matching.
+
+1. Direction-space filter: compute cosine similarity between the 131k candidate decoder direction and 16k decoder directions.
+2. Keep the top `k=10` directional candidates.
+3. Effect-space verification: compute ablation-effect-vector cosine only for those top-10 candidates.
+4. Select the 16k candidate with the strongest effect-space cosine.
+
+This avoids the full 131k-by-16k exhaustive causal search while still verifying that a direction-space candidate actually agrees in effect space.
 
 ### Stage 5: patchability
 
@@ -116,13 +135,20 @@ Rule version:
 m1b-selection-rule.v1
 ```
 
-A candidate is promoted to M1C if:
+A candidate is promoted to M1C if the four hard gates pass:
 
 1. Witness 1 and Witness 6 agree: top-context interpretation matches family classification.
 2. Contrastive activation ratio is at least 5x.
 3. Preliminary ablation direction is correct for the declared family.
-4. Cross-width witness match passes threshold against the 16k layer-20 witness SAE.
-5. Patchability is not pathologically brittle.
+4. Patchability is not pathologically brittle.
+
+Witness 4 is continuous advisory evidence:
+
+```text
+cross_width_agreement_score_above_noise_floor
+```
+
+The advisory score is recorded in `promotion_status.selection_rule_evaluation.advisory_scores`. It does not determine promotion alone.
 
 A rejected card is still useful. Rejected cards preserve the negative evidence and can become controls.
 
