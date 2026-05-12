@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://superconscious.dev/schemas/m1/implementability-certificate.v1.2.json",
+  "title": "M1 Composite Certificate v1.2 Extension",
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["schema_version", "certificate_kind", "attribution_graph_summary", "authority_concentration_index"],
+  "properties": {
+    "schema_version": {"const": "1.2.0"},
+    "certificate_kind": {"const": "m1-implementability-certificate"},
+    "attribution_graph_summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["total_graphs", "bit_exact_replayed", "manifest_verified_latent_diverged", "manifest_diverged", "not_yet_replayed", "replay_verification_rate"],
+      "properties": {
+        "total_graphs": {"type": "integer", "minimum": 0},
+        "bit_exact_replayed": {"type": "integer", "minimum": 0},
+        "manifest_verified_latent_diverged": {"type": "integer", "minimum": 0},
+        "manifest_diverged": {"type": "integer", "minimum": 0},
+        "not_yet_replayed": {"type": "integer", "minimum": 0},
+        "replay_verification_rate": {"type": "number", "minimum": 0, "maximum": 1}
+      }
+    },
+    "authority_concentration_index": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["fragment_authority_breakdown"],
+      "properties": {
+        "fragment_authority_breakdown": {
+          "type": "object",
+          "required": ["m0", "m1a", "m1b", "m1c", "m1_5", "m1d"]
+        }
+      }
+    }
+  }
+}

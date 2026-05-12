@@ -1,0 +1,21 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "$id":"https://superconscious.dev/schemas/governance/redaction-cascade.v1.json",
+  "title":"Certificate Redaction Cascade",
+  "type":"object",
+  "additionalProperties":true,
+  "required":["schema_version","cascade_kind","cascade_id","ts_initiated","source_tombstone_ref","affected_fragments","invalidation_order","re_derivation_plan","cascade_authority"],
+  "properties":{
+    "schema_version":{"const":"1.0.0"},
+    "cascade_kind":{"const":"certificate-redaction-cascade"},
+    "cascade_id":{"type":"string"},
+    "ts_initiated":{"type":"string","format":"date-time"},
+    "source_tombstone_ref":{"type":"object","required":["tombstone_id","tombstone_content_sha256"],"properties":{"tombstone_id":{"type":"string"},"tombstone_content_sha256":{"$ref":"#/$defs/sha256"}}},
+    "affected_fragments":{"type":"array","minItems":1,"items":{"type":"object","required":["fragment_id","fragment_kind","fragment_content_sha256","invalidation_reason"],"properties":{"fragment_id":{"type":"string"},"fragment_kind":{"enum":["m0-training-provenance","m1a-source-lock","m1b-witness-card","m1c-causal-triad","m1-5-attribution-graph","m1d-off-target-audit","m1-composite","m2-implementability","m3-cross-layer-robustness","m5-public-note"]},"fragment_content_sha256":{"$ref":"#/$defs/sha256"},"invalidation_reason":{"enum":["direct_evidence_reference","downstream_aggregation","transitive_authority_loss","manifest_digest_dependency"]},"previous_promotion_state":{"enum":["candidate","promoted_stele","rejected","superseded"]},"new_promotion_state":{"const":"superseded"}}}},
+    "invalidation_order":{"type":"array","minItems":1,"items":{"type":"object","required":["stage_number","fragment_kinds","must_complete_before_next"],"properties":{"stage_number":{"type":"integer","minimum":1},"fragment_kinds":{"type":"array","items":{"type":"string"}},"must_complete_before_next":{"type":"boolean"}}}},
+    "re_derivation_plan":{"type":"object","required":["plan_kind","responsible_authority","estimated_completion_at"],"properties":{"plan_kind":{"enum":["full_re_derivation_required","partial_re_derivation_acceptable","abandon_claim_chain","supersede_with_alternative_evidence"]},"responsible_authority":{"type":"string"},"estimated_completion_at":{"type":"string","format":"date-time"},"alternative_evidence_refs":{"type":"array","items":{"type":"string"}}}},
+    "cascade_authority":{"type":"object","required":["authority_id","authority_kind","authority_layer","signed_at"],"properties":{"authority_id":{"type":"string"},"authority_kind":{"enum":["role","individual","service_account","quorum"]},"authority_layer":{"enum":["institutional_truth","grounded_schema","commonsense_prior"]},"signed_at":{"type":"string","format":"date-time"}}},
+    "non_claims":{"type":"array","items":{"type":"string"}}
+  },
+  "$defs":{"sha256":{"type":"string","pattern":"^[a-f0-9]{64}$"}}
+}

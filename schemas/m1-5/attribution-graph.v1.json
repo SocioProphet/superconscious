@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://superconscious.dev/schemas/m1-5/attribution-graph.v1.json",
+  "title": "M1.5 Attribution Graph Certificate",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "schema_version",
+    "certificate_kind",
+    "generated_at",
+    "parent_m1c_causal_triad_id",
+    "graph_identity",
+    "construction_method",
+    "edges",
+    "graph_manifest_digest",
+    "graph_full_digest",
+    "implementability_assessment",
+    "execution_status",
+    "signing_authority",
+    "counterfactuals_addressable",
+    "non_claims",
+    "ledger_entry"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "certificate_kind": {"const": "m1-5-attribution-graph"},
+    "generated_at": {"type": "string", "format": "date-time"},
+    "parent_m1c_causal_triad_id": {"type": "string"},
+    "graph_identity": {"type": "object"},
+    "construction_method": {"type": "object"},
+    "edges": {"type": "array", "minItems": 1, "items": {"type": "object"}},
+    "graph_manifest_digest": {"$ref": "#/$defs/sha256"},
+    "graph_full_digest": {"$ref": "#/$defs/sha256"},
+    "replay_verification": {"type": ["object", "null"]},
+    "implementability_assessment": {"type": "object"},
+    "execution_status": {"type": "string"},
+    "signing_authority": {"type": "object"},
+    "counterfactuals_addressable": {"type": "array", "minItems": 1},
+    "non_claims": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+    "ledger_entry": {"type": "object"}
+  },
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"}
+  }
+}
