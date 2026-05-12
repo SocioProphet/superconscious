@@ -1,0 +1,1 @@
+{"schema_version":"1.2.0","certificate_kind":"m1a-source-lock","upstream_training_provenance_ref":{"m0_certificate_id":"m0-synthetic-external-artifact-001","m0_fragment_sha256":"1111111111111111111111111111111111111111111111111111111111111111","completeness_interpretation":"minimal_provenance"},"non_claims":["M1A fixture uses an upstream M0 reference."]}
