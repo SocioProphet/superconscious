@@ -26,9 +26,30 @@ emits:
 .runs/<run-id>/events.jsonl
 .runs/<run-id>/reasoning-run.json
 .runs/<run-id>/agentplane-evidence.json
-.runs/<run-id>/replay-plan.json
+.replay-plan.json
 .runs/<run-id>/benchmark-result.json
 ```
+
+## M1.5 — Architecture falsification doctrine
+
+Goal: make the artifact / evidence / gate architecture falsifiable before runtime integration hardens around the wrong layer cut.
+
+Deliverables:
+
+- maintain `docs/architecture-falsification-v0.1.md` as the current Superconscious-facing doctrine reference;
+- tag benchmark and red-team fixtures by falsification observable (`F1.1` through `F3.2`, `M.1` through `M.3`);
+- ensure safe operational traces can reference which observable a proposed architecture change resolves, worsens, or introduces;
+- create cross-repo work items for fixture-testable observables;
+- establish quarterly review cadence and realized-observable scorekeeping.
+
+Initial fixture targets:
+
+- `F1.2`: M0 derived provenance after LayerSurgeryPlan;
+- `F1.3`: multi-encoder NetworkArtifact decomposition;
+- `F2.1`: partial certificate verdict to Atlas canary/review decision;
+- `F2.2`: SHACL/Rego constitutional invariant coverage;
+- `F2.3`: vector-valued eval delta preserving Pattern A/B/C resolution;
+- `F3.1`: runtime promotion verdict checks before serving governed artifacts.
 
 ## M2 — Contract promotion
 
@@ -67,6 +88,7 @@ emits:
 - Memory quarantine suite.
 - MCP trust suite.
 - Source exposure leak suite.
+- Architecture falsification fixture suite grouped by `docs/architecture-falsification-v0.1.md` observables.
 
 ## M7 — Opt-in personalization lane
 
