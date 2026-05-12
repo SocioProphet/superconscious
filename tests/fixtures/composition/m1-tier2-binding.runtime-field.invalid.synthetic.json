@@ -1,0 +1,26 @@
+{
+  "composition_id": "superconscious.m1.composite",
+  "composition_kind": "certificate_fragment_composition",
+  "binding_doctrine_version": "v0.1",
+  "constituent_refs": [
+    {
+      "ref_kind": "certificate_fragment",
+      "opaque_hash": "sha256:0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
+    }
+  ],
+  "bound_modes": {
+    "receipt_integration": "hash_bound_reference",
+    "authority_scope_analysis": "declared_scope_lattice_v1",
+    "non_claim_analysis": "explicit_propagate_or_resolve_v1",
+    "monitor_independence_analysis": "declared_monitor_independence_v1",
+    "evidence_freshness_analysis": "declared_evidence_freshness_v1"
+  },
+  "non_claims": [
+    "no_runtime_receipt_lookup",
+    "no_runtime_non_claim_verification",
+    "no_runtime_monitor_attestation",
+    "no_timestamp_authenticity",
+    "opaque_hashes_not_resolved"
+  ],
+  "evidence_receipt_refs": []
+}
