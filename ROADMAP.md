@@ -26,7 +26,7 @@ emits:
 .runs/<run-id>/events.jsonl
 .runs/<run-id>/reasoning-run.json
 .runs/<run-id>/agentplane-evidence.json
-.replay-plan.json
+.runs/<run-id>/replay-plan.json
 .runs/<run-id>/benchmark-result.json
 ```
 
