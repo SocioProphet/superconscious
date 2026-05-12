@@ -1,0 +1,49 @@
+{
+  "schema_version": "0.1.0",
+  "lock_kind": "artifact-source-lock",
+  "source_lock_id": "asl-gemma-2-9b-it-model",
+  "artifact_kind": "model",
+  "artifact_identity": {
+    "artifact_id": "google/gemma-2-9b-it",
+    "name": "Gemma 2 9B instruction-tuned model",
+    "model_family": "gemma-2",
+    "layer": null,
+    "width": null,
+    "average_l0": null,
+    "feature_index": null,
+    "registry_url": null
+  },
+  "provider_binding_ref": {
+    "provider_binding_id": "pb-gemma-white-box-local",
+    "access_mode": "white_box"
+  },
+  "immutable_reference": {
+    "source_type": "huggingface_repo",
+    "source": "google/gemma-2-9b-it",
+    "requested_ref": "main",
+    "resolved_ref": "synthetic-gemma-model-sha",
+    "path": null,
+    "retrieved_at": "2026-05-12T00:00:00Z"
+  },
+  "integrity": {
+    "content_sha256_status": "synthetic_fixture",
+    "content_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "metadata_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "size_bytes": null
+  },
+  "access_boundary": {
+    "download_required": true,
+    "credentials_required": true,
+    "egress_required": true,
+    "license_or_terms_ref": "Gemma usage terms"
+  },
+  "replay_class": "synthetic_fixture",
+  "known_limitations": [
+    "Fixture does not download model weights.",
+    "Resolved ref is synthetic."
+  ],
+  "non_claims": [
+    "Does not prove model weights are locally present.",
+    "Does not prove any behavior or steering effect."
+  ]
+}
