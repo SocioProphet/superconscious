@@ -19,6 +19,27 @@ Superconscious is a reference cognition/control-loop implementation. It is inten
 | Terminal/browser surfaces | TurtleTerm, AgentTerm, BearBrowser | Provide trace tree and adapter semantics. |
 | Opt-in automation | `SociOS-Linux/socios` | Reference signed opt-in orchestration; never bypass proof-of-life or consent. |
 
+## Falsification doctrine
+
+Superconscious carries the estate-facing falsification doctrine at [`docs/architecture-falsification-v0.1.md`](docs/architecture-falsification-v0.1.md).
+
+This doctrine does not make Superconscious the authority for artifact schemas, certificate semantics, Atlas promotion, SHACL validation, or runtime serving decisions. It defines the observations that would prove the current artifact / evidence / gate cut is structurally inadequate and therefore force revision in the proper owner repositories.
+
+Superconscious uses the doctrine in three limited ways:
+
+- safe operational traces can reference which falsification observable a proposed change resolves, worsens, or introduces;
+- benchmark and red-team fixtures can be grouped by falsification observable;
+- adapters can expose whether a runtime path is respecting Atlas promotion verdicts before serving governed artifacts.
+
+The initial falsification boundaries are:
+
+```text
+Artifact -> Evidence: graphbrain-contract artifacts into M0/M1/M1.5/M2/M3/M5 certificates
+Evidence -> Gate: certificate verdicts and invariants into TritFabric Atlas / SHACL / Gatekeeper
+Gate -> Runtime: Atlas decisions into memory-mesh, new-hope, slash-topics, sherlock-search, holmes, graphbrain-contract
+Methodology: fixture-testability, quarterly review, and decomposition failure criteria
+```
+
 ## Core loop
 
 ```text
