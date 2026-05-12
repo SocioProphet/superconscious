@@ -1,4 +1,4 @@
-.PHONY: test smoke trust-surface artifact-validate canonicalize inspect validate m1-source-lock m1a-generate m1-verify-source-lock m1-verify-source-lock-strict m1-verify-weights m1-feature-stage1 m1-static m1-schema-fixtures m1b-cross-width-smoke m1-ci m2-static m2-schema-fixtures m2-ci m3-static m3-schema-fixtures m3-ci m5-static m5-schema-fixtures m5-template-set m5-ci certificate-ci
+.PHONY: test smoke trust-surface artifact-validate canonicalize inspect validate m0-static m0-schema-fixtures m0-ci m1-5-static m1-5-schema-fixtures m1-5-ci m1-source-lock m1a-generate m1-verify-source-lock m1-verify-source-lock-strict m1-verify-weights m1-feature-stage1 m1-static m1-schema-fixtures m1b-cross-width-smoke m1-ci m2-static m2-schema-fixtures m2-ci m3-static m3-schema-fixtures m3-ci m5-static m5-schema-fixtures m5-template-set m5-ci certificate-ci
 
 test:
 	python3 -m pytest
@@ -108,4 +108,35 @@ m5-template-set:
 
 m5-ci: m5-static m5-schema-fixtures m5-template-set
 
-certificate-ci: m1-ci m2-ci m3-ci m5-ci
+m0-static:
+	python3 -m json.tool schemas/m0/training-provenance.v1.json >/dev/null
+	python3 -m json.tool schemas/m1/source-lock.v1.2.json >/dev/null
+
+m0-schema-fixtures:
+	python3 -m src.m1.validate_schema_instance schemas/m0/training-provenance.v1.json tests/fixtures/m0/training-provenance.fully-certified.synthetic.json
+	python3 scripts/check-m0.py tests/fixtures/m0/training-provenance.fully-certified.synthetic.json
+	python3 -m src.m1.validate_schema_instance schemas/m0/training-provenance.v1.json tests/fixtures/m0/training-provenance.external-artifact.synthetic.json
+	python3 scripts/check-m0.py tests/fixtures/m0/training-provenance.external-artifact.synthetic.json
+	python3 -m src.m1.validate_schema_instance schemas/m1/source-lock.v1.2.json tests/fixtures/m1/source-lock.valid-provenance-ref.synthetic.json
+	! python3 -m src.m1.validate_schema_instance schemas/m1/source-lock.v1.2.json tests/fixtures/m1/source-lock.invalid-null-provenance.synthetic.json
+
+m0-ci: m0-static m0-schema-fixtures
+
+m1-5-static:
+	python3 -m json.tool schemas/m1-5/attribution-graph.v1.json >/dev/null
+	python3 -m json.tool schemas/m1/off-target-audit.v1.2.json >/dev/null
+	python3 -m json.tool schemas/m1/implementability-certificate.v1.2.json >/dev/null
+
+m1-5-schema-fixtures:
+	python3 -m src.m1.validate_schema_instance schemas/m1-5/attribution-graph.v1.json tests/fixtures/m1-5/attribution-graph.bit-exact-replay.synthetic.json
+	python3 scripts/check-m15.py tests/fixtures/m1-5/attribution-graph.bit-exact-replay.synthetic.json
+	python3 -m src.m1.validate_schema_instance schemas/m1-5/attribution-graph.v1.json tests/fixtures/m1-5/attribution-graph.manifest-matches-latent-diverges.synthetic.json
+	python3 scripts/check-m15.py tests/fixtures/m1-5/attribution-graph.manifest-matches-latent-diverges.synthetic.json
+	python3 -m src.m1.validate_schema_instance schemas/m1-5/attribution-graph.v1.json tests/fixtures/m1-5/attribution-graph.manifest-diverges.synthetic.json
+	python3 scripts/check-m15.py tests/fixtures/m1-5/attribution-graph.manifest-diverges.synthetic.json
+	python3 -m src.m1.validate_schema_instance schemas/m1-5/attribution-graph.v1.json tests/fixtures/m1-5/attribution-graph.digest-rule.synthetic.json
+	! python3 scripts/check-m15.py tests/fixtures/m1-5/attribution-graph.digest-rule.synthetic.json
+
+m1-5-ci: m1-5-static m1-5-schema-fixtures
+
+certificate-ci: m0-ci m1-ci m1-5-ci m2-ci m3-ci m5-ci
