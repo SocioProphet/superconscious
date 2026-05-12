@@ -5,13 +5,16 @@ from pathlib import Path
 KEYS=("dataset","code","config","seed","base_model","checkpoint","eval_spec","compute_environment")
 def t(x): return datetime.fromisoformat(x.replace("Z","+00:00"))
 def band(x):
-    if x==1.0: return "fully_provenance_certified"
+    if abs(x-1.0)<1e-9: return "fully_provenance_certified"
     if 0.625<=x<=0.875: return "partial_provenance"
     if 0.25<=x<=0.5: return "minimal_provenance"
     if 0.0<=x<=0.125: return "no_provenance_external_artifact"
     return "out_of_band"
 def main():
-    p=Path(argparse.ArgumentParser().add_argument("f") or sys.argv[1])
+    ap=argparse.ArgumentParser()
+    ap.add_argument("f")
+    args=ap.parse_args()
+    p=Path(args.f)
     d=json.loads(p.read_text())
     c=d.get("commitments",{})
     errs=[]
