@@ -1,0 +1,39 @@
+{
+  "composition_id": "superconscious.m5.public_note",
+  "composition_kind": "publication_composition",
+  "binding_doctrine_version": "v0.1",
+  "upstream_certificate_refs": [
+    {
+      "ref_kind": "m1_certificate",
+      "opaque_hash": "sha256:1023456789abcdef1023456789abcdef1023456789abcdef1023456789abcdef"
+    },
+    {
+      "ref_kind": "m2_certificate",
+      "opaque_hash": "sha256:203456789abcdef1203456789abcdef1203456789abcdef1203456789abcdef1"
+    },
+    {
+      "ref_kind": "m3_certificate",
+      "opaque_hash": "sha256:30456789abcdef1230456789abcdef1230456789abcdef1230456789abcdef12"
+    }
+  ],
+  "publication_surface_ref": {
+    "ref_kind": "public_note_artifact",
+    "opaque_hash": "sha256:4056789abcdef1234056789abcdef1234056789abcdef1234056789abcdef123"
+  },
+  "bound_modes": {
+    "receipt_integration": "hash_bound_reference",
+    "authority_scope_analysis": "declared_scope_lattice_v1",
+    "non_claim_analysis": "explicit_propagate_or_resolve_v1",
+    "monitor_independence_analysis": "declared_monitor_independence_v1",
+    "evidence_freshness_analysis": "declared_evidence_freshness_v1"
+  },
+  "non_claims": [
+    "no_runtime_receipt_lookup",
+    "no_runtime_non_claim_verification",
+    "no_runtime_monitor_attestation",
+    "no_timestamp_authenticity",
+    "opaque_hashes_not_resolved",
+    "no_runtime_publication_gate",
+    "no_peer_review_substitution"
+  ]
+}
