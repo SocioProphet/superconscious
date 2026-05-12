@@ -1,0 +1,60 @@
+{
+  "composition_id": "superconscious.lawful_learning.trust_surface",
+  "composition_kind": "lawful_learning_trust_surface_declaration",
+  "binding_doctrine_version": "v0.1",
+  "substrate_component_refs": [
+    {
+      "ref_kind": "substrate_component",
+      "claim_id": "claim.substrate.hypercomplex.S",
+      "opaque_hash": "sha256:5123456789abcdef5123456789abcdef5123456789abcdef5123456789abcdef"
+    }
+  ],
+  "structure_component_refs": [
+    {
+      "ref_kind": "structure_component",
+      "claim_id": "claim.structure.constraint_families.T",
+      "opaque_hash": "sha256:623456789abcdef1623456789abcdef1623456789abcdef1623456789abcdef1"
+    }
+  ],
+  "mixture_slot_refs": [
+    {
+      "ref_kind": "mixture_slot",
+      "claim_id": "claim.mixture.shared_trunk.T",
+      "opaque_hash": "sha256:73456789abcdef1273456789abcdef1273456789abcdef1273456789abcdef12"
+    }
+  ],
+  "adapter_dag_ref": {
+    "ref_kind": "adapter_dag",
+    "claim_id": "claim.adapter.dag.T",
+    "opaque_hash": "sha256:8456789abcdef1238456789abcdef1238456789abcdef1238456789abcdef123"
+  },
+  "circuit_registry_ref": {
+    "ref_kind": "circuit_registry",
+    "claim_id": "claim.circuit.registry.G",
+    "opaque_hash": "sha256:956789abcdef1234956789abcdef1234956789abcdef1234956789abcdef1234"
+  },
+  "claim_ledger_ref": {
+    "ref_kind": "claim_ledger",
+    "claim_id": "claim.ledger.lawful_learning.phase1.G",
+    "opaque_hash": "sha256:a6789abcdef12345a6789abcdef12345a6789abcdef12345a6789abcdef12345"
+  },
+  "bound_modes": {
+    "receipt_integration": "hash_bound_reference",
+    "authority_scope_analysis": "declared_scope_lattice_v1",
+    "non_claim_analysis": "explicit_propagate_or_resolve_v1",
+    "monitor_independence_analysis": "declared_monitor_independence_v1",
+    "evidence_freshness_analysis": "declared_evidence_freshness_v1"
+  },
+  "non_claims": [
+    "no_runtime_receipt_lookup",
+    "no_runtime_non_claim_verification",
+    "no_runtime_monitor_attestation",
+    "no_timestamp_authenticity",
+    "opaque_hashes_not_resolved",
+    "no_runtime_circuit_discovery",
+    "no_runtime_ablation_verification",
+    "no_tag_promotion_at_composition",
+    "no_substrate_verification",
+    "no_frontier_claim_promotion"
+  ]
+}
