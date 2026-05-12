@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://superconscious.dev/schemas/m1/source-lock.v1.2.json",
+  "title": "M1A Source-Lock Certificate Fragment v1.2 Extension",
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["schema_version", "certificate_kind", "upstream_training_provenance_ref", "non_claims"],
+  "properties": {
+    "schema_version": {"const": "1.2.0"},
+    "certificate_kind": {"const": "m1a-source-lock"},
+    "upstream_training_provenance_ref": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["m0_certificate_id", "m0_fragment_sha256", "completeness_interpretation"],
+          "properties": {
+            "m0_certificate_id": {"type": "string"},
+            "m0_fragment_sha256": {"$ref": "#/$defs/sha256"},
+            "completeness_interpretation": {"type": "string", "enum": ["fully_provenance_certified", "partial_provenance", "minimal_provenance", "no_provenance_external_artifact"]}
+          }
+        },
+        {"type": "null"}
+      ]
+    },
+    "non_claims": {"type": "array", "items": {"type": "string"}}
+  },
+  "$defs": {"sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"}},
+  "allOf": [
+    {
+      "if": {"properties": {"upstream_training_provenance_ref": {"type": "null"}}},
+      "then": {"properties": {"non_claims": {"contains": {"pattern": "No upstream provenance certificate exists"}}}}
+    }
+  ]
+}
