@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://superconscious.dev/schemas/_common/v1-3-additive-fields.json",
+  "title": "Superconscious v1.3 Additive Certificate Fields",
+  "description": "Shared v1.3 additive fields that make Cairnmark-to-Stele promotion state, authority posture, reasoning traceability, and cadence classification structurally testable.",
+  "type": "object",
+  "required": [
+    "authority_layer",
+    "promotion_state",
+    "reasoning_trace_ref",
+    "cadence_classification"
+  ],
+  "properties": {
+    "authority_layer": {
+      "type": "string",
+      "enum": ["institutional_truth", "grounded_schema", "commonsense_prior"],
+      "default": "grounded_schema"
+    },
+    "promotion_state": {
+      "type": "string",
+      "enum": ["candidate", "promoted_stele", "rejected", "superseded"],
+      "default": "candidate"
+    },
+    "reasoning_trace_ref": {
+      "oneOf": [
+        {
+          "type": "object",
+          "required": ["trace_id", "trace_content_sha256"],
+          "properties": {
+            "trace_id": {"type": "string"},
+            "trace_content_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+            "trace_kind": {"type": "string"},
+            "trace_uri": {"type": "string"}
+          },
+          "additionalProperties": true
+        },
+        {"type": "null"}
+      ],
+      "default": null
+    },
+    "cadence_classification": {
+      "type": "string",
+      "enum": ["microbeat", "mesobeat", "macrobeat", "certificate"],
+      "default": "certificate"
+    },
+    "v1_3_migration": {
+      "type": "object",
+      "properties": {
+        "migration_mode": {"type": "string", "enum": ["defaulted", "explicit", "strict"]},
+        "migrated_from_schema_version": {"type": "string"},
+        "migrated_at": {"type": "string", "format": "date-time"}
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}
