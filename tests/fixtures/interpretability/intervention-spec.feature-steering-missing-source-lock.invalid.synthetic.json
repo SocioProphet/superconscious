@@ -1,0 +1,49 @@
+{
+  "schema_version": "0.1.0",
+  "intervention_kind": "feature_steering",
+  "intervention_id": "iv-invalid-feature-steering-missing-lock",
+  "provider_binding_ref": {
+    "provider_binding_id": "pb-gemma-white-box-local",
+    "access_mode": "white_box"
+  },
+  "target": {
+    "target_kind": "feature",
+    "model_id": "google/gemma-2-9b-it",
+    "source_lock_id": null,
+    "feature_entry_id": "fre-neuronpedia-gemma-feature-789",
+    "layer": 20,
+    "position_selector": "assistant_response_tokens",
+    "description": "Invalid fixture: feature steering without SAE/transcoder/probe source lock."
+  },
+  "coefficient_schedule": {
+    "schedule_kind": "linear_sweep",
+    "alpha": null,
+    "values": [-1.0, 0.0, 1.0],
+    "unit": "feature_activation_delta"
+  },
+  "position_policy": {
+    "policy_kind": "all_assistant_tokens",
+    "details": "Invalid fixture."
+  },
+  "safety_policy": {
+    "policy_ref": "policy://interpretability/feature-steering/off-target-required",
+    "policy_decision_required": true,
+    "off_target_audit_required": true,
+    "human_review_required": false
+  },
+  "required_source_locks": [
+    {
+      "source_lock_id": "asl-gemma-2-9b-it-model",
+      "artifact_kind": "model"
+    }
+  ],
+  "expected_effect": "Invalid fixture should be rejected before runtime.",
+  "forbidden_effects": [
+    "Do not allow feature steering without a source-locked SAE, transcoder, or probe."
+  ],
+  "evaluation_plan_ref": "synthetic://invalid",
+  "replay_class": "synthetic_fixture",
+  "non_claims": [
+    "This fixture must fail semantic validation."
+  ]
+}
