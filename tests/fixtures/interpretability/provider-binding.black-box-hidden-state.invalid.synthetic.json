@@ -1,0 +1,37 @@
+{
+  "schema_version": "0.1.0",
+  "binding_kind": "provider-binding",
+  "provider_binding_id": "pb-invalid-black-box-hidden-state",
+  "provider_name": "invalid-hosted-api",
+  "provider_display_name": "Invalid black-box hidden-state fixture",
+  "access_mode": "black_box",
+  "provider_surface": {
+    "surface_kind": "hosted_model_api",
+    "execution_location": "remote_hosted",
+    "source_uri": "provider://invalid",
+    "terms_or_policy_ref": null
+  },
+  "supported_observables": [
+    "outputs",
+    "hidden_states"
+  ],
+  "supported_interventions": [
+    "prompt_only"
+  ],
+  "governance_class": "remote_hosted_api",
+  "runtime_claims": {
+    "live_runtime_execution": false,
+    "internal_state_replay": false,
+    "white_box_replay_possible": false,
+    "runtime_evidence_ref": null
+  },
+  "evidence_requirements": [
+    "provider route receipt"
+  ],
+  "authority_scope": [
+    "behavior_benchmark"
+  ],
+  "non_claims": [
+    "This fixture must fail because black-box providers cannot claim hidden-state observability."
+  ]
+}
