@@ -1,4 +1,4 @@
-.PHONY: test smoke trust-surface artifact-validate canonicalize inspect validate m0-static m0-schema-fixtures m0-ci m1-5-static m1-5-schema-fixtures m1-5-ci v1-1-static v1-1-fixtures v1-1-cross-field v1-1-ci m1-source-lock m1a-generate m1-verify-source-lock m1-verify-source-lock-strict m1-verify-weights m1-feature-stage1 m1-static m1-schema-fixtures m1b-cross-width-smoke m1-ci m2-static m2-schema-fixtures m2-ci m3-static m3-schema-fixtures m3-ci m5-static m5-schema-fixtures m5-template-set m5-ci certificate-ci
+.PHONY: test smoke trust-surface artifact-validate canonicalize inspect validate m0-static m0-schema-fixtures m0-ci m1-5-static m1-5-schema-fixtures m1-5-ci v1-1-static v1-1-fixtures v1-1-cross-field v1-1-ci interpretability-harness-static interpretability-harness-schema-fixtures interpretability-harness-cross-field interpretability-harness-ci m1-source-lock m1a-generate m1-verify-source-lock m1-verify-source-lock-strict m1-verify-weights m1-feature-stage1 m1-static m1-schema-fixtures m1b-cross-width-smoke m1-ci m2-static m2-schema-fixtures m2-ci m3-static m3-schema-fixtures m3-ci m5-static m5-schema-fixtures m5-template-set m5-ci certificate-ci
 
 test:
 	python3 -m pytest
@@ -159,4 +159,31 @@ v1-1-cross-field:
 
 v1-1-ci: v1-1-static v1-1-fixtures v1-1-cross-field
 
-certificate-ci: m0-ci m1-ci m1-5-ci m2-ci m3-ci m5-ci v1-1-ci
+interpretability-harness-static:
+	python3 -m json.tool schemas/interpretability/provider-binding.v0.json >/dev/null
+	python3 -m json.tool schemas/interpretability/artifact-source-lock.v0.json >/dev/null
+	python3 -m json.tool schemas/interpretability/feature-registry-entry.v0.json >/dev/null
+	python3 -m json.tool schemas/interpretability/intervention-spec.v0.json >/dev/null
+	python3 -m py_compile scripts/check-interpretability-harness.py
+
+interpretability-harness-schema-fixtures:
+	python3 -m src.m1.validate_schema_instance schemas/interpretability/provider-binding.v0.json tests/fixtures/interpretability/provider-binding.gemma-white-box.synthetic.json
+	python3 -m src.m1.validate_schema_instance schemas/interpretability/provider-binding.v0.json tests/fixtures/interpretability/provider-binding.gemini-api-black-box.synthetic.json
+	python3 -m src.m1.validate_schema_instance schemas/interpretability/provider-binding.v0.json tests/fixtures/interpretability/provider-binding.neuronpedia-feature-registry.synthetic.json
+	! python3 -m src.m1.validate_schema_instance schemas/interpretability/provider-binding.v0.json tests/fixtures/interpretability/provider-binding.black-box-hidden-state.invalid.synthetic.json
+	python3 -m src.m1.validate_schema_instance schemas/interpretability/artifact-source-lock.v0.json tests/fixtures/interpretability/artifact-source-lock.gemma-model.synthetic.json
+	python3 -m src.m1.validate_schema_instance schemas/interpretability/artifact-source-lock.v0.json tests/fixtures/interpretability/artifact-source-lock.gemma-scope-sae.synthetic.json
+	python3 -m src.m1.validate_schema_instance schemas/interpretability/artifact-source-lock.v0.json tests/fixtures/interpretability/artifact-source-lock.neuronpedia-feature.synthetic.json
+	python3 -m src.m1.validate_schema_instance schemas/interpretability/artifact-source-lock.v0.json tests/fixtures/interpretability/artifact-source-lock.gemma-activation-cache.synthetic.json
+	python3 -m src.m1.validate_schema_instance schemas/interpretability/feature-registry-entry.v0.json tests/fixtures/interpretability/feature-registry-entry.neuronpedia.synthetic.json
+	python3 -m src.m1.validate_schema_instance schemas/interpretability/intervention-spec.v0.json tests/fixtures/interpretability/intervention-spec.feature-steering.synthetic.json
+	python3 -m src.m1.validate_schema_instance schemas/interpretability/intervention-spec.v0.json tests/fixtures/interpretability/intervention-spec.activation-patching.synthetic.json
+	python3 -m src.m1.validate_schema_instance schemas/interpretability/intervention-spec.v0.json tests/fixtures/interpretability/intervention-spec.prompt-only-black-box.synthetic.json
+	! python3 -m src.m1.validate_schema_instance schemas/interpretability/intervention-spec.v0.json tests/fixtures/interpretability/intervention-spec.feature-steering-missing-source-lock.invalid.synthetic.json
+
+interpretability-harness-cross-field:
+	python3 scripts/check-interpretability-harness.py tests/fixtures/interpretability
+
+interpretability-harness-ci: interpretability-harness-static interpretability-harness-schema-fixtures interpretability-harness-cross-field
+
+certificate-ci: m0-ci m1-ci m1-5-ci m2-ci m3-ci m5-ci v1-1-ci interpretability-harness-ci
