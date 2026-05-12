@@ -1,0 +1,28 @@
+schema_version: 1.0.0
+policy_kind: v1_3_cairnmark_to_stele_migration
+migration_strategy: default_existing_strict_new
+
+existing_fixture_defaults:
+  authority_layer: grounded_schema
+  promotion_state: candidate
+  reasoning_trace_ref: null
+  cadence_classification: certificate
+  v1_3_migration:
+    migration_mode: defaulted
+    migrated_from_schema_version: "1.2.x-or-earlier"
+
+strict_new_fixture_policy:
+  applies_to: new_fixtures_committed_after_v1_3
+  require_explicit_fields: true
+  require_reasoning_trace_when:
+    - promoted_stele
+    - rejected
+    - superseded
+
+schema_path_notes:
+  procybernetica_safety_case_v1_3: schemas/procybernetica/case.v1.3.json
+  note: Exact safety-case path was connector-filtered during PR assembly; this file is the v1.3 safety-case transition wrapper for the Superconscious repo.
+
+non_claims:
+  - Migration defaults preserve historical fixture validity but do not prove Stele eligibility.
+  - Strict mode is the preferred path for new empirical falsification work.
