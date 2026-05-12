@@ -1,4 +1,4 @@
-.PHONY: test smoke trust-surface artifact-validate canonicalize inspect validate m0-static m0-schema-fixtures m0-ci m1-5-static m1-5-schema-fixtures m1-5-ci v1-1-static v1-1-fixtures v1-1-cross-field v1-1-ci m1-source-lock m1a-generate m1-verify-source-lock m1-verify-source-lock-strict m1-verify-weights m1-feature-stage1 m1-static m1-schema-fixtures m1b-cross-width-smoke m1-ci m2-static m2-schema-fixtures m2-ci m3-static m3-schema-fixtures m3-ci m5-static m5-schema-fixtures m5-template-set m5-ci certificate-ci
+.PHONY: test smoke trust-surface artifact-validate canonicalize inspect validate m0-static m0-schema-fixtures m0-ci m1-5-static m1-5-schema-fixtures m1-5-ci tier2-binding-static tier2-binding-fixtures tier2-binding-ci v1-1-static v1-1-fixtures v1-1-cross-field v1-1-ci m1-source-lock m1a-generate m1-verify-source-lock m1-verify-source-lock-strict m1-verify-weights m1-feature-stage1 m1-static m1-schema-fixtures m1b-cross-width-smoke m1-ci m2-static m2-schema-fixtures m2-ci m3-static m3-schema-fixtures m3-ci m5-static m5-schema-fixtures m5-template-set m5-ci certificate-ci
 
 test:
 	python3 -m pytest
@@ -139,6 +139,17 @@ m1-5-schema-fixtures:
 
 m1-5-ci: m1-5-static m1-5-schema-fixtures
 
+tier2-binding-static:
+	python3 -m json.tool schemas/composition/m1-tier2-binding.v1.json >/dev/null
+
+tier2-binding-fixtures:
+	python3 -m src.m1.validate_schema_instance schemas/composition/m1-tier2-binding.v1.json tests/fixtures/composition/m1-tier2-binding.synthetic.json
+	python3 scripts/check-m1-tier2-binding.py tests/fixtures/composition/m1-tier2-binding.synthetic.json
+	! python3 -m src.m1.validate_schema_instance schemas/composition/m1-tier2-binding.v1.json tests/fixtures/composition/m1-tier2-binding.runtime-field.invalid.synthetic.json
+	! python3 scripts/check-m1-tier2-binding.py tests/fixtures/composition/m1-tier2-binding.runtime-field.invalid.synthetic.json
+
+tier2-binding-ci: tier2-binding-static tier2-binding-fixtures
+
 v1-1-static:
 	python3 -m json.tool schemas/pneumachinalis/microbeat-event.v1.1.json >/dev/null
 	python3 -m json.tool schemas/pneumachinalis/mesobeat-intent.v1.1.json >/dev/null
@@ -159,4 +170,4 @@ v1-1-cross-field:
 
 v1-1-ci: v1-1-static v1-1-fixtures v1-1-cross-field
 
-certificate-ci: m0-ci m1-ci m1-5-ci m2-ci m3-ci m5-ci v1-1-ci
+certificate-ci: m0-ci m1-ci m1-5-ci tier2-binding-ci m2-ci m3-ci m5-ci v1-1-ci
