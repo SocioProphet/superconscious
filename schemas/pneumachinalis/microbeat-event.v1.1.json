@@ -1,0 +1,31 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "$id":"https://socioprophet.dev/schemas/pneumachinalis/microbeat-event.v1.1.json",
+  "title":"Pneumachinalis Microbeat Contribution Event v1.1",
+  "type":"object",
+  "additionalProperties":true,
+  "required":["schema_version","event_kind","event_id","ts_microbeat","actor","stele_ref","braid_coordinate","state_coordinate","mesobeat_intent_ref","macrobeat_commitment_refs","authority_layer","promotion_state","cadence_classification","topology_profile"],
+  "properties":{
+    "schema_version":{"const":"1.1.0"},
+    "event_kind":{"const":"pneumachinalis-microbeat-event"},
+    "event_id":{"type":"string"},
+    "ts_microbeat":{"type":"string","format":"date-time"},
+    "actor":{"type":"object","required":["actor_id","actor_class","actor_handle"],"properties":{"actor_id":{"type":"string"},"actor_class":{"enum":["H","M","X"]},"actor_handle":{"type":"string"},"delegation_chain":{"type":"array","items":{"type":"string"}}}},
+    "stele_ref":{"type":"object","required":["stele_id","stele_kind","stele_content_sha256","stele_promotion_state"],"properties":{"stele_id":{"type":"string"},"stele_kind":{"type":"string"},"stele_content_sha256":{"$ref":"#/$defs/sha256"},"stele_promotion_state":{"enum":["candidate","promoted_stele","rejected","superseded"]}}},
+    "braid_coordinate":{"type":"object","required":["phase","topic"],"properties":{"phase":{"enum":["parse","structure","decide","act","freeze"]},"topic":{"enum":["schema","world-model","provenance","identity","retrieval","workflow"]},"encoded_byte":{"type":["integer","null"],"minimum":0,"maximum":242}}},
+    "state_coordinate":{"type":"object","required":["liveness","epistemic_status","review_status","gating","scope"],"properties":{"liveness":{"enum":["active","frozen"]},"epistemic_status":{"enum":["observed","verified","derived"]},"review_status":{"enum":["routine","review"]},"gating":{"enum":["fluid","gate"]},"scope":{"enum":["local","cohort","global"]}}},
+    "role_coordinate":{"type":"object"},
+    "topology_profile":{"enum":["solo-local","active-multi-agent-room","multi-room-workroom","enterprise-bridge","offline-fog"]},
+    "consent_receipt_ref":{"type":["object","null"]},
+    "mesobeat_intent_ref":{"type":"object","required":["intent_id","intent_content_sha256"],"properties":{"intent_id":{"type":"string"},"intent_content_sha256":{"$ref":"#/$defs/sha256"},"stream_id":{"type":"string"}}},
+    "macrobeat_commitment_refs":{"type":"array","minItems":1,"items":{"type":"object","required":["commitment_id","commitment_kind","commitment_content_sha256"],"properties":{"commitment_id":{"type":"string"},"commitment_kind":{"type":"string"},"commitment_content_sha256":{"$ref":"#/$defs/sha256"}}}},
+    "authority_layer":{"enum":["institutional_truth","grounded_schema","commonsense_prior"]},
+    "promotion_state":{"enum":["candidate","promoted_stele","rejected","superseded"]},
+    "cadence_classification":{"const":"microbeat"},
+    "operator_visible_summary":{"type":["object","null"]},
+    "retrospective_outcome":{"type":["object","null"]},
+    "stake_commitment_ref":{"type":["object","null"]},
+    "non_claims":{"type":"array","items":{"type":"string"}}
+  },
+  "$defs":{"sha256":{"type":"string","pattern":"^[a-f0-9]{64}$"}}
+}
