@@ -1,0 +1,52 @@
+{
+  "schema_version": "0.1.0",
+  "binding_kind": "provider-binding",
+  "provider_binding_id": "pb-gemma-white-box-local",
+  "provider_name": "google/gemma-2-9b-it",
+  "provider_display_name": "Gemma 2 9B IT local white-box fixture",
+  "access_mode": "white_box",
+  "provider_surface": {
+    "surface_kind": "local_model_runtime",
+    "execution_location": "synthetic_fixture",
+    "source_uri": "hf://google/gemma-2-9b-it",
+    "terms_or_policy_ref": "Gemma usage terms accepted outside this synthetic fixture"
+  },
+  "supported_observables": [
+    "outputs",
+    "logits",
+    "hidden_states",
+    "residual_stream",
+    "attention",
+    "sae_features"
+  ],
+  "supported_interventions": [
+    "prompt_only",
+    "feature_steering",
+    "activation_patching",
+    "activation_addition"
+  ],
+  "governance_class": "local_offline",
+  "runtime_claims": {
+    "live_runtime_execution": false,
+    "internal_state_replay": true,
+    "white_box_replay_possible": true,
+    "runtime_evidence_ref": null
+  },
+  "evidence_requirements": [
+    "model source lock",
+    "tokenizer source lock",
+    "SAE source lock",
+    "activation cache or replay manifest before runtime claim"
+  ],
+  "authority_scope": [
+    "candidate_discovery",
+    "behavior_benchmark",
+    "white_box_feature_claim",
+    "steering_experiment",
+    "attribution_graph_claim"
+  ],
+  "non_claims": [
+    "Synthetic fixture only; does not prove local model weights are downloaded.",
+    "Does not claim a production runtime executed."
+  ]
+}
