@@ -1,0 +1,56 @@
+{
+  "schema_version": "0.1.0",
+  "intervention_kind": "feature_steering",
+  "intervention_id": "iv-gemma-feature-789-steering",
+  "provider_binding_ref": {
+    "provider_binding_id": "pb-gemma-white-box-local",
+    "access_mode": "white_box"
+  },
+  "target": {
+    "target_kind": "feature",
+    "model_id": "google/gemma-2-9b-it",
+    "source_lock_id": "asl-gemma-scope-9b-it-res-l20-131k-l0-81",
+    "feature_entry_id": "fre-neuronpedia-gemma-feature-789",
+    "layer": 20,
+    "position_selector": "assistant_response_tokens",
+    "description": "Synthetic feature-steering intervention over Gemma Scope feature 789."
+  },
+  "coefficient_schedule": {
+    "schedule_kind": "linear_sweep",
+    "alpha": null,
+    "values": [-2.0, -1.0, 0.0, 1.0, 2.0],
+    "unit": "feature_activation_delta"
+  },
+  "position_policy": {
+    "policy_kind": "all_assistant_tokens",
+    "details": "Synthetic fixture; runtime implementation must record exact token positions."
+  },
+  "safety_policy": {
+    "policy_ref": "policy://interpretability/feature-steering/off-target-required",
+    "policy_decision_required": true,
+    "off_target_audit_required": true,
+    "human_review_required": false
+  },
+  "required_source_locks": [
+    {
+      "source_lock_id": "asl-gemma-2-9b-it-model",
+      "artifact_kind": "model"
+    },
+    {
+      "source_lock_id": "asl-gemma-scope-9b-it-res-l20-131k-l0-81",
+      "artifact_kind": "sae"
+    }
+  ],
+  "expected_effect": "Measure whether the selected feature modulates refusal or redirect behavior under a controlled sweep.",
+  "forbidden_effects": [
+    "Do not increase harmful instruction-following capability.",
+    "Do not publish steering recipe as deployment guidance.",
+    "Do not claim implementability envelope before M2 evidence exists."
+  ],
+  "evaluation_plan_ref": "synthetic://eval-plans/refusal-feature-steering",
+  "replay_class": "synthetic_fixture",
+  "non_claims": [
+    "Synthetic fixture only; does not execute steering.",
+    "Does not prove the feature is causal."
+  ]
+}
