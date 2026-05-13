@@ -1,0 +1,48 @@
+{
+  "applies_to_ref": "lawful-learning.trust-surface.synthetic",
+  "declaration_status": "draft",
+  "invariant_declarations": {
+    "adapter_dag_acyclic": {
+      "applies": true,
+      "status": "structurally_satisfied"
+    },
+    "black_boxing_composes": {
+      "applies": true,
+      "status": "declared_not_yet_checked"
+    },
+    "replay_seal_for_composed_trace": {
+      "applies": true,
+      "status": "declared_not_yet_checked"
+    },
+    "may_wigner_monitor_declared": {
+      "applies": true,
+      "status": "phase4_example_stub"
+    },
+    "control_data_plane_separation": {
+      "applies": true,
+      "status": "declared_not_yet_checked"
+    },
+    "tail_audit_allocated": {
+      "applies": true,
+      "status": "phase4_example_stub"
+    },
+    "emergent_discretization_logged": {
+      "applies": true,
+      "status": "phase4_example_stub"
+    },
+    "composition_superposition_declared": {
+      "applies": true,
+      "status": "phase4_example_stub"
+    },
+    "anti_satisficing_continuation": {
+      "applies": true,
+      "status": "phase4_example_stub"
+    },
+    "epistemic_non_collapse": {
+      "applies": true,
+      "status": "enforced_by_claim_ledger"
+    }
+  },
+  "tier2_binding_ref": "schemas/composition/lawful-learning-trust-surface-tier2-binding.v1.json",
+  "non_claims": ["synthetic_invariant_declaration_not_runtime_checker"]
+}
