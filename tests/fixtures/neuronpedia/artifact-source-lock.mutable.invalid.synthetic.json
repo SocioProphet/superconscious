@@ -1,0 +1,22 @@
+{
+  "schema_version": "0.1",
+  "kind": "artifact_source_lock",
+  "artifact_id": "neuronpedia.synthetic.mutable",
+  "source_ref": {
+    "source_kind": "static_snapshot",
+    "source_uri": "https://example.invalid/neuronpedia/snapshot.json",
+    "retrieved_at": "2026-05-13T00:00:00Z",
+    "source_hash": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+  },
+  "lock_reason": "benchmark_fixture",
+  "provenance_level": "content_hash_plus_metadata",
+  "mutation_policy": "in_place_update_allowed",
+  "frozen_fields": ["source_uri"],
+  "non_claims": [
+    "no_runtime_fetch",
+    "no_authenticity_guarantee",
+    "no_provider_endorsement",
+    "no_unlocked_mutation",
+    "no_model_behavior_claim"
+  ]
+}
