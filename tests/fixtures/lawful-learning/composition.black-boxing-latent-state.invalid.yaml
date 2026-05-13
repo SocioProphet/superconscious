@@ -1,0 +1,8 @@
+# Invalid: composed manifest derivation inspects latent state.
+# Violates black_boxing_composes.
+composed_manifest_derivation:
+  inputs:
+    - manifest_A
+    - manifest_B
+    - composition_rule
+    - latent_state_A

@@ -1,0 +1,25 @@
+# Invalid: discretization event is missing replay_seal.
+# Violates emergent_discretization_logged.
+may_wigner_monitor:
+  monitor_name: synthetic_stability_monitor
+  monitored_quantity: "sigma * sqrt(N * C) analogue"
+  checkpoint_interval: every_1000_steps
+  threshold_declaration: "0.8 warning, 1.0 halt"
+control_plane_components:
+  - mixture_router
+data_plane_components:
+  - expert_mlp_0
+boundary_interfaces: []
+expected_case_coverage: "standard benchmark eval suite"
+tail_allocation_strategy: "tail audit allocation present"
+tail_scope_declaration: "tail events"
+continuation_rule: "continue after sufficient condition"
+run_log:
+  sufficient_conditions_met: []
+  continuation_applied: false
+event_log:
+  - event_class: discretization
+    event_type: phase_transition
+    detected_at_checkpoint: checkpoint_010
+    timestamp: "2026-05-13T00:00:00Z"
+    declared_cause: unknown
