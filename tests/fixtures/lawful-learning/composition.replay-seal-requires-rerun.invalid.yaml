@@ -1,0 +1,14 @@
+# Invalid: composed replay seal derivation requires rerunning a constituent.
+# Violates replay_seal_for_composed_trace.
+composed_replay_seal_derivation:
+  inputs:
+    - seal_A
+    - seal_B
+    - composition_rule
+    - boundary_hash
+  seal_A: "seal-a"
+  seal_B: "seal-b"
+  composition_rule: "compose-a-b"
+  boundary_hash: "boundary-hash"
+  requires_rerun_A: true
+  requires_rerun_B: false
