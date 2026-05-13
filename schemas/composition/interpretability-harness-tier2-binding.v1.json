@@ -27,6 +27,7 @@
     },
     "fragment_refs": {
       "type": "array",
+      "description": "Exactly one opaque reference for each declared interpretability harness release fragment.",
       "minItems": 14,
       "maxItems": 14,
       "items": {
@@ -61,7 +62,219 @@
             "description": "Opaque content-addressed reference. This binding schema does not resolve the hash at validation time."
           }
         }
-      }
+      },
+      "allOf": [
+        {
+          "contains": {
+            "type": "object",
+            "required": [
+              "fragment_kind"
+            ],
+            "properties": {
+              "fragment_kind": {
+                "const": "ModelArtifact"
+              }
+            }
+          },
+          "minContains": 1,
+          "maxContains": 1
+        },
+        {
+          "contains": {
+            "type": "object",
+            "required": [
+              "fragment_kind"
+            ],
+            "properties": {
+              "fragment_kind": {
+                "const": "SAEArtifact"
+              }
+            }
+          },
+          "minContains": 1,
+          "maxContains": 1
+        },
+        {
+          "contains": {
+            "type": "object",
+            "required": [
+              "fragment_kind"
+            ],
+            "properties": {
+              "fragment_kind": {
+                "const": "FeatureArtifact"
+              }
+            }
+          },
+          "minContains": 1,
+          "maxContains": 1
+        },
+        {
+          "contains": {
+            "type": "object",
+            "required": [
+              "fragment_kind"
+            ],
+            "properties": {
+              "fragment_kind": {
+                "const": "FeatureExplanation"
+              }
+            }
+          },
+          "minContains": 1,
+          "maxContains": 1
+        },
+        {
+          "contains": {
+            "type": "object",
+            "required": [
+              "fragment_kind"
+            ],
+            "properties": {
+              "fragment_kind": {
+                "const": "FeatureActivationSet"
+              }
+            }
+          },
+          "minContains": 1,
+          "maxContains": 1
+        },
+        {
+          "contains": {
+            "type": "object",
+            "required": [
+              "fragment_kind"
+            ],
+            "properties": {
+              "fragment_kind": {
+                "const": "SteeringIntervention"
+              }
+            }
+          },
+          "minContains": 1,
+          "maxContains": 1
+        },
+        {
+          "contains": {
+            "type": "object",
+            "required": [
+              "fragment_kind"
+            ],
+            "properties": {
+              "fragment_kind": {
+                "const": "CausalTriad"
+              }
+            }
+          },
+          "minContains": 1,
+          "maxContains": 1
+        },
+        {
+          "contains": {
+            "type": "object",
+            "required": [
+              "fragment_kind"
+            ],
+            "properties": {
+              "fragment_kind": {
+                "const": "AttributionGraph"
+              }
+            }
+          },
+          "minContains": 1,
+          "maxContains": 1
+        },
+        {
+          "contains": {
+            "type": "object",
+            "required": [
+              "fragment_kind"
+            ],
+            "properties": {
+              "fragment_kind": {
+                "const": "OffTargetAudit"
+              }
+            }
+          },
+          "minContains": 1,
+          "maxContains": 1
+        },
+        {
+          "contains": {
+            "type": "object",
+            "required": [
+              "fragment_kind"
+            ],
+            "properties": {
+              "fragment_kind": {
+                "const": "ManifoldBaseline"
+              }
+            }
+          },
+          "minContains": 1,
+          "maxContains": 1
+        },
+        {
+          "contains": {
+            "type": "object",
+            "required": [
+              "fragment_kind"
+            ],
+            "properties": {
+              "fragment_kind": {
+                "const": "ImplementabilityCurve"
+              }
+            }
+          },
+          "minContains": 1,
+          "maxContains": 1
+        },
+        {
+          "contains": {
+            "type": "object",
+            "required": [
+              "fragment_kind"
+            ],
+            "properties": {
+              "fragment_kind": {
+                "const": "RobustnessCertificate"
+              }
+            }
+          },
+          "minContains": 1,
+          "maxContains": 1
+        },
+        {
+          "contains": {
+            "type": "object",
+            "required": [
+              "fragment_kind"
+            ],
+            "properties": {
+              "fragment_kind": {
+                "const": "BenchmarkResult"
+              }
+            }
+          },
+          "minContains": 1,
+          "maxContains": 1
+        },
+        {
+          "contains": {
+            "type": "object",
+            "required": [
+              "fragment_kind"
+            ],
+            "properties": {
+              "fragment_kind": {
+                "const": "PublicInterpretabilityNote"
+              }
+            }
+          },
+          "minContains": 1,
+          "maxContains": 1
+        }
+      ]
     },
     "bound_modes": {
       "type": "object",
