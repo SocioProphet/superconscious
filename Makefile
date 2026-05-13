@@ -1,4 +1,4 @@
-.PHONY: test smoke trust-surface artifact-validate canonicalize inspect validate m0-static m0-schema-fixtures m0-ci m1-5-static m1-5-schema-fixtures m1-5-ci tier2-binding-static tier2-binding-fixtures tier2-binding-ci m5-tier2-binding-static m5-tier2-binding-fixtures m5-tier2-binding-ci lawful-learning-trust-surface-tier2-binding-static lawful-learning-trust-surface-tier2-binding-fixtures lawful-learning-trust-surface-tier2-binding-ci lawful-learning-schema-static lawful-learning-schema-fixtures lawful-learning-schema-ci lawful-learning-checker-static lawful-learning-checker-fixtures lawful-learning-checker-trust-surface lawful-learning-ci v1-1-static v1-1-fixtures v1-1-cross-field v1-1-ci m1-source-lock m1a-generate m1-verify-source-lock m1-verify-source-lock-strict m1-verify-weights m1-feature-stage1 m1-static m1-schema-fixtures m1b-cross-width-smoke m1-ci m2-static m2-schema-fixtures m2-ci m3-static m3-schema-fixtures m3-ci m5-static m5-schema-fixtures m5-template-set m5-ci certificate-ci
+.PHONY: test smoke trust-surface artifact-validate canonicalize inspect validate m0-static m0-schema-fixtures m0-ci m1-5-static m1-5-schema-fixtures m1-5-ci tier2-binding-static tier2-binding-fixtures tier2-binding-ci m5-tier2-binding-static m5-tier2-binding-fixtures m5-tier2-binding-ci lawful-learning-trust-surface-tier2-binding-static lawful-learning-trust-surface-tier2-binding-fixtures lawful-learning-trust-surface-tier2-binding-ci lawful-learning-schema-static lawful-learning-schema-fixtures lawful-learning-schema-ci lawful-learning-checker-static lawful-learning-checker-fixtures lawful-learning-checker-trust-surface lawful-learning-ci neuronpedia-static neuronpedia-schema-fixtures neuronpedia-ci v1-1-static v1-1-fixtures v1-1-cross-field v1-1-ci m1-source-lock m1a-generate m1-verify-source-lock m1-verify-source-lock-strict m1-verify-weights m1-feature-stage1 m1-static m1-schema-fixtures m1b-cross-width-smoke m1-ci m2-static m2-schema-fixtures m2-ci m3-static m3-schema-fixtures m3-ci m5-static m5-schema-fixtures m5-template-set m5-ci certificate-ci
 
 test:
 	python3 -m pytest
@@ -207,6 +207,21 @@ lawful-learning-checker-trust-surface:
 
 lawful-learning-ci: lawful-learning-schema-ci lawful-learning-checker-static lawful-learning-checker-fixtures lawful-learning-checker-trust-surface
 
+neuronpedia-static:
+	python3 -m json.tool schemas/neuronpedia/artifact-source-lock.v0.1.json >/dev/null
+	python3 -m json.tool schemas/neuronpedia/provider-binding.v0.1.json >/dev/null
+	python3 -m json.tool schemas/neuronpedia/intervention-spec.v0.1.json >/dev/null
+
+neuronpedia-schema-fixtures:
+	python3 -m src.m1.validate_schema_instance schemas/neuronpedia/artifact-source-lock.v0.1.json tests/fixtures/neuronpedia/artifact-source-lock.synthetic.json
+	! python3 -m src.m1.validate_schema_instance schemas/neuronpedia/artifact-source-lock.v0.1.json tests/fixtures/neuronpedia/artifact-source-lock.mutable.invalid.synthetic.json
+	python3 -m src.m1.validate_schema_instance schemas/neuronpedia/provider-binding.v0.1.json tests/fixtures/neuronpedia/provider-binding.synthetic.json
+	! python3 -m src.m1.validate_schema_instance schemas/neuronpedia/provider-binding.v0.1.json tests/fixtures/neuronpedia/provider-binding.writeback.invalid.synthetic.json
+	python3 -m src.m1.validate_schema_instance schemas/neuronpedia/intervention-spec.v0.1.json tests/fixtures/neuronpedia/intervention-spec.synthetic.json
+	! python3 -m src.m1.validate_schema_instance schemas/neuronpedia/intervention-spec.v0.1.json tests/fixtures/neuronpedia/intervention-spec.execution.invalid.synthetic.json
+
+neuronpedia-ci: neuronpedia-static neuronpedia-schema-fixtures
+
 v1-1-static:
 	python3 -m json.tool schemas/pneumachinalis/microbeat-event.v1.1.json >/dev/null
 	python3 -m json.tool schemas/pneumachinalis/mesobeat-intent.v1.1.json >/dev/null
@@ -227,4 +242,4 @@ v1-1-cross-field:
 
 v1-1-ci: v1-1-static v1-1-fixtures v1-1-cross-field
 
-certificate-ci: m0-ci m1-ci m1-5-ci tier2-binding-ci m5-tier2-binding-ci lawful-learning-trust-surface-tier2-binding-ci lawful-learning-ci m2-ci m3-ci m5-ci v1-1-ci
+certificate-ci: m0-ci m1-ci m1-5-ci tier2-binding-ci m5-tier2-binding-ci lawful-learning-trust-surface-tier2-binding-ci lawful-learning-ci neuronpedia-ci m2-ci m3-ci m5-ci v1-1-ci
