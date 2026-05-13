@@ -1,0 +1,42 @@
+{
+  "schema_version": "0.1",
+  "kind": "intervention_spec",
+  "intervention_id": "neuronpedia.synthetic.intervention.v0",
+  "artifact_source_lock_ref": "neuronpedia.synthetic.feature-pack.v0",
+  "provider_binding_ref": "neuronpedia.synthetic.provider.binding.v0",
+  "intervention_type": "feature_observation",
+  "target": {
+    "model_ref": "synthetic-model",
+    "feature_ref": "feature-0001",
+    "layer_ref": "layer-0",
+    "prompt_ref": "synthetic-prompt-set"
+  },
+  "planned_effect": {
+    "effect_kind": "observe_only",
+    "effect_description": "Observe feature metadata from a locked synthetic artifact.",
+    "claim_status": "not_promoted"
+  },
+  "safety_bounds": {
+    "no_live_model_mutation": true,
+    "no_provider_writeback": true,
+    "requires_policy_admission": true,
+    "requires_human_review": false,
+    "max_scope": "single_feature"
+  },
+  "evidence_requirements": {
+    "requires_artifact_source_lock": true,
+    "requires_provider_binding": true,
+    "requires_result_receipt": true,
+    "receipt_schema_ref": "future:neuronpedia-intervention-receipt"
+  },
+  "execution_status": "review_required",
+  "review_notes": "Synthetic fixture; no execution authority.",
+  "non_claims": [
+    "no_execution_authority",
+    "no_live_model_mutation",
+    "no_provider_writeback",
+    "no_behavioral_claim_promotion",
+    "no_safety_claim",
+    "no_artifact_authenticity_claim"
+  ]
+}
