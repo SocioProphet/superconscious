@@ -1,0 +1,8 @@
+{
+  "claim_id": "claim.bad.mixed-no-demarcation.G",
+  "claim": "A monitor tracks stability. The monitor is analogous to May-Wigner.",
+  "tag": "G|T",
+  "status": "captured",
+  "governance_invariant_ref": "may_wigner_monitor_declared",
+  "typological_parallel_target": "May-Wigner stability criterion"
+}
