@@ -1,0 +1,31 @@
+# Valid training run declaration with all required Phase 6 invariant fields.
+may_wigner_monitor:
+  monitor_name: synthetic_stability_monitor
+  monitored_quantity: "sigma * sqrt(N * C) analogue on weight matrix"
+  checkpoint_interval: every_1000_steps
+  threshold_declaration: "0.8 warning, 1.0 halt"
+
+control_plane_components:
+  - mixture_router
+  - admission_gate
+
+data_plane_components:
+  - expert_mlp_0
+  - expert_mlp_1
+  - residual_stream
+
+boundary_interfaces: []
+
+expected_case_coverage: "standard benchmark eval suite"
+tail_allocation_strategy: "10% budget reserved for tail events"
+tail_scope_declaration: "adversarial, distribution-shift, low-frequency"
+
+continuation_rule: "Continue for 10% additional budget after first sufficient condition met"
+sufficient_conditions:
+  - condition_name: eval_pass_rate
+    condition_threshold: 0.95
+run_log:
+  sufficient_conditions_met: []
+  continuation_applied: false
+
+event_log: []
