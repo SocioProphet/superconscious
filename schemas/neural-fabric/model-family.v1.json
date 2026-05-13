@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.socioprophet.ai/neural-fabric/model-family.v1.json",
+  "title": "Neural Fabric Model Family",
+  "type": "object",
+  "required": ["family_id", "substrate", "structure", "target_loci", "intervention_types", "epistemic_status"],
+  "additionalProperties": false,
+  "properties": {
+    "family_id": {"type": "string", "pattern": "^[a-z0-9_.-]+$"},
+    "substrate": {
+      "type": "object",
+      "required": ["default", "allowed"],
+      "properties": {
+        "default": {"type": "string"},
+        "allowed": {"type": "array", "items": {"type": "string"}, "minItems": 1}
+      },
+      "additionalProperties": false
+    },
+    "structure": {
+      "type": "object",
+      "required": ["class", "replay_invariant"],
+      "properties": {
+        "class": {"type": "string"},
+        "replay_invariant": {"type": "string"}
+      },
+      "additionalProperties": true
+    },
+    "mixture_slots": {"type": "object", "additionalProperties": {"type": "array", "items": {"type": "string"}}},
+    "target_loci": {"type": "array", "items": {"type": "string"}, "minItems": 1},
+    "intervention_types": {"type": "array", "items": {"type": "string"}, "minItems": 1},
+    "may_wigner": {"type": "object", "additionalProperties": true},
+    "circuits": {"type": "object", "additionalProperties": true},
+    "epistemic_status": {"enum": ["doctrine", "toy_model_confirmed", "open_weight_validated", "production_validated"]}
+  }
+}
