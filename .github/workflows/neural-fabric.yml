@@ -1,0 +1,49 @@
+name: Neural Fabric CI
+
+on:
+  push:
+    branches: [main, neural-fabric-capture]
+    paths:
+      - "docs/neural-fabric/**"
+      - "research/activation-time-targeting/**"
+      - "schemas/neural-fabric/**"
+      - "packages/superconscious-core/superconscious_core/neural_fabric/**"
+      - "scripts/*neural-fabric*"
+      - "scripts/check-capacity-bounds.py"
+      - "tests/neural_fabric/**"
+      - "mk/neural-fabric.mk"
+      - ".github/workflows/neural-fabric.yml"
+  pull_request:
+    branches: [main]
+    paths:
+      - "docs/neural-fabric/**"
+      - "research/activation-time-targeting/**"
+      - "schemas/neural-fabric/**"
+      - "packages/superconscious-core/superconscious_core/neural_fabric/**"
+      - "scripts/*neural-fabric*"
+      - "scripts/check-capacity-bounds.py"
+      - "tests/neural_fabric/**"
+      - "mk/neural-fabric.mk"
+      - ".github/workflows/neural-fabric.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  neural-fabric:
+    name: Neural Fabric invariant suite
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install numerical stack
+        run: python -m pip install --upgrade pip pytest numpy scipy scikit-learn matplotlib
+
+      - name: Run Neural Fabric CI
+        run: make -f mk/neural-fabric.mk neural-fabric-ci
