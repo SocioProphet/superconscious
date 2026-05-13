@@ -1,4 +1,4 @@
-.PHONY: test smoke trust-surface artifact-validate canonicalize inspect validate m0-static m0-schema-fixtures m0-ci m1-5-static m1-5-schema-fixtures m1-5-ci v1-1-static v1-1-fixtures v1-1-cross-field v1-1-ci interpretability-harness-static interpretability-harness-schema-fixtures interpretability-harness-cross-field interpretability-harness-ci m1-source-lock m1a-generate m1-verify-source-lock m1-verify-source-lock-strict m1-verify-weights m1-feature-stage1 m1-static m1-schema-fixtures m1b-cross-width-smoke m1-ci m2-static m2-schema-fixtures m2-ci m3-static m3-schema-fixtures m3-ci m5-static m5-schema-fixtures m5-template-set m5-ci certificate-ci
+.PHONY: test smoke trust-surface artifact-validate canonicalize inspect validate m0-static m0-schema-fixtures m0-ci m1-5-static m1-5-schema-fixtures m1-5-ci tier2-binding-static tier2-binding-fixtures tier2-binding-ci m5-tier2-binding-static m5-tier2-binding-fixtures m5-tier2-binding-ci lawful-learning-trust-surface-tier2-binding-static lawful-learning-trust-surface-tier2-binding-fixtures lawful-learning-trust-surface-tier2-binding-ci lawful-learning-schema-static lawful-learning-schema-fixtures lawful-learning-schema-ci lawful-learning-checker-static lawful-learning-checker-fixtures lawful-learning-checker-trust-surface lawful-learning-ci v1-1-static v1-1-fixtures v1-1-cross-field v1-1-ci m1-source-lock m1a-generate m1-verify-source-lock m1-verify-source-lock-strict m1-verify-weights m1-feature-stage1 m1-static m1-schema-fixtures m1b-cross-width-smoke m1-ci m2-static m2-schema-fixtures m2-ci m3-static m3-schema-fixtures m3-ci m5-static m5-schema-fixtures m5-template-set m5-ci certificate-ci
 
 test:
 	python3 -m pytest
@@ -139,6 +139,74 @@ m1-5-schema-fixtures:
 
 m1-5-ci: m1-5-static m1-5-schema-fixtures
 
+tier2-binding-static:
+	python3 -m json.tool schemas/composition/m1-tier2-binding.v1.json >/dev/null
+
+tier2-binding-fixtures:
+	python3 -m src.m1.validate_schema_instance schemas/composition/m1-tier2-binding.v1.json tests/fixtures/composition/m1-tier2-binding.synthetic.json
+	python3 scripts/check-m1-tier2-binding.py tests/fixtures/composition/m1-tier2-binding.synthetic.json
+	! python3 -m src.m1.validate_schema_instance schemas/composition/m1-tier2-binding.v1.json tests/fixtures/composition/m1-tier2-binding.runtime-field.invalid.synthetic.json
+	! python3 scripts/check-m1-tier2-binding.py tests/fixtures/composition/m1-tier2-binding.runtime-field.invalid.synthetic.json
+
+tier2-binding-ci: tier2-binding-static tier2-binding-fixtures
+
+m5-tier2-binding-static:
+	python3 -m json.tool schemas/composition/m5-tier2-binding.v1.json >/dev/null
+
+m5-tier2-binding-fixtures:
+	python3 -m src.m1.validate_schema_instance schemas/composition/m5-tier2-binding.v1.json tests/fixtures/composition/m5-tier2-binding.synthetic.json
+	python3 scripts/check-m5-tier2-binding.py tests/fixtures/composition/m5-tier2-binding.synthetic.json
+	! python3 -m src.m1.validate_schema_instance schemas/composition/m5-tier2-binding.v1.json tests/fixtures/composition/m5-tier2-binding.runtime-field.invalid.synthetic.json
+	! python3 scripts/check-m5-tier2-binding.py tests/fixtures/composition/m5-tier2-binding.runtime-field.invalid.synthetic.json
+
+m5-tier2-binding-ci: m5-tier2-binding-static m5-tier2-binding-fixtures
+
+lawful-learning-trust-surface-tier2-binding-static:
+	python3 -m json.tool schemas/composition/lawful-learning-trust-surface-tier2-binding.v1.json >/dev/null
+
+lawful-learning-trust-surface-tier2-binding-fixtures:
+	python3 -m src.m1.validate_schema_instance schemas/composition/lawful-learning-trust-surface-tier2-binding.v1.json tests/fixtures/composition/lawful-learning-trust-surface-tier2-binding.synthetic.json
+	python3 scripts/check-lawful-learning-trust-surface-tier2-binding.py tests/fixtures/composition/lawful-learning-trust-surface-tier2-binding.synthetic.json
+	! python3 -m src.m1.validate_schema_instance schemas/composition/lawful-learning-trust-surface-tier2-binding.v1.json tests/fixtures/composition/lawful-learning-trust-surface-tier2-binding.runtime-field.invalid.synthetic.json
+	! python3 scripts/check-lawful-learning-trust-surface-tier2-binding.py tests/fixtures/composition/lawful-learning-trust-surface-tier2-binding.runtime-field.invalid.synthetic.json
+
+lawful-learning-trust-surface-tier2-binding-ci: lawful-learning-trust-surface-tier2-binding-static lawful-learning-trust-surface-tier2-binding-fixtures
+
+lawful-learning-schema-static:
+	python3 -m json.tool schemas/lawful-learning/claim-ledger-entry.v1.json >/dev/null
+	python3 -m json.tool schemas/lawful-learning/evidence-status.v1.json >/dev/null
+	python3 -m json.tool schemas/lawful-learning/decision-emission.v1.json >/dev/null
+	python3 -m json.tool schemas/lawful-learning/circuit-registry.v1.json >/dev/null
+	python3 -m json.tool schemas/lawful-learning/forbidden-circuits.v1.json >/dev/null
+	python3 -m json.tool schemas/lawful-learning/alignment-check.v1.json >/dev/null
+	python3 -m json.tool schemas/lawful-learning/lawful-learning-invariants.v1.json >/dev/null
+
+lawful-learning-schema-fixtures:
+	python3 -m src.m1.validate_schema_instance schemas/lawful-learning/claim-ledger-entry.v1.json tests/fixtures/lawful-learning/claim-ledger-entry.valid.json
+	python3 -m src.m1.validate_schema_instance schemas/lawful-learning/evidence-status.v1.json tests/fixtures/lawful-learning/evidence-status.valid.json
+	python3 -m src.m1.validate_schema_instance schemas/lawful-learning/decision-emission.v1.json tests/fixtures/lawful-learning/decision-emission.valid.json
+	python3 -m src.m1.validate_schema_instance schemas/lawful-learning/circuit-registry.v1.json tests/fixtures/lawful-learning/circuit-registry.valid.json
+	python3 -m src.m1.validate_schema_instance schemas/lawful-learning/forbidden-circuits.v1.json tests/fixtures/lawful-learning/forbidden-circuits.valid.json
+	python3 -m src.m1.validate_schema_instance schemas/lawful-learning/alignment-check.v1.json tests/fixtures/lawful-learning/alignment-check.valid.json
+	python3 -m src.m1.validate_schema_instance schemas/lawful-learning/lawful-learning-invariants.v1.json tests/fixtures/lawful-learning/lawful-learning-invariants.valid.json
+	! python3 -m src.m1.validate_schema_instance schemas/lawful-learning/claim-ledger-entry.v1.json tests/fixtures/lawful-learning/typological-to-mathematical.invalid.json
+	! python3 -m src.m1.validate_schema_instance schemas/lawful-learning/claim-ledger-entry.v1.json tests/fixtures/lawful-learning/speculative-to-empirical.invalid.json
+	! python3 -m src.m1.validate_schema_instance schemas/lawful-learning/claim-ledger-entry.v1.json tests/fixtures/lawful-learning/mixed-tags-without-demarcation.invalid.json
+	! python3 -m src.m1.validate_schema_instance schemas/lawful-learning/forbidden-circuits.v1.json tests/fixtures/lawful-learning/forbidden-circuit-without-enforcement.invalid.json
+
+lawful-learning-schema-ci: lawful-learning-schema-static lawful-learning-schema-fixtures
+
+lawful-learning-checker-static:
+	python3 -m py_compile scripts/check-lawful-learning.py
+
+lawful-learning-checker-fixtures:
+	python3 scripts/check-lawful-learning.py --fixtures tests/fixtures/lawful-learning --skip-trust-surface
+
+lawful-learning-checker-trust-surface:
+	python3 scripts/check-lawful-learning.py --trust-surface examples/TRUST_SURFACE.lawful-learning.yaml --skip-fixtures
+
+lawful-learning-ci: lawful-learning-schema-ci lawful-learning-checker-static lawful-learning-checker-fixtures lawful-learning-checker-trust-surface
+
 v1-1-static:
 	python3 -m json.tool schemas/pneumachinalis/microbeat-event.v1.1.json >/dev/null
 	python3 -m json.tool schemas/pneumachinalis/mesobeat-intent.v1.1.json >/dev/null
@@ -159,31 +227,4 @@ v1-1-cross-field:
 
 v1-1-ci: v1-1-static v1-1-fixtures v1-1-cross-field
 
-interpretability-harness-static:
-	python3 -m json.tool schemas/interpretability/provider-binding.v0.json >/dev/null
-	python3 -m json.tool schemas/interpretability/artifact-source-lock.v0.json >/dev/null
-	python3 -m json.tool schemas/interpretability/feature-registry-entry.v0.json >/dev/null
-	python3 -m json.tool schemas/interpretability/intervention-spec.v0.json >/dev/null
-	python3 -m py_compile scripts/check-interpretability-harness.py
-
-interpretability-harness-schema-fixtures:
-	python3 -m src.m1.validate_schema_instance schemas/interpretability/provider-binding.v0.json tests/fixtures/interpretability/provider-binding.gemma-white-box.synthetic.json
-	python3 -m src.m1.validate_schema_instance schemas/interpretability/provider-binding.v0.json tests/fixtures/interpretability/provider-binding.gemini-api-black-box.synthetic.json
-	python3 -m src.m1.validate_schema_instance schemas/interpretability/provider-binding.v0.json tests/fixtures/interpretability/provider-binding.neuronpedia-feature-registry.synthetic.json
-	! python3 -m src.m1.validate_schema_instance schemas/interpretability/provider-binding.v0.json tests/fixtures/interpretability/provider-binding.black-box-hidden-state.invalid.synthetic.json
-	python3 -m src.m1.validate_schema_instance schemas/interpretability/artifact-source-lock.v0.json tests/fixtures/interpretability/artifact-source-lock.gemma-model.synthetic.json
-	python3 -m src.m1.validate_schema_instance schemas/interpretability/artifact-source-lock.v0.json tests/fixtures/interpretability/artifact-source-lock.gemma-scope-sae.synthetic.json
-	python3 -m src.m1.validate_schema_instance schemas/interpretability/artifact-source-lock.v0.json tests/fixtures/interpretability/artifact-source-lock.neuronpedia-feature.synthetic.json
-	python3 -m src.m1.validate_schema_instance schemas/interpretability/artifact-source-lock.v0.json tests/fixtures/interpretability/artifact-source-lock.gemma-activation-cache.synthetic.json
-	python3 -m src.m1.validate_schema_instance schemas/interpretability/feature-registry-entry.v0.json tests/fixtures/interpretability/feature-registry-entry.neuronpedia.synthetic.json
-	python3 -m src.m1.validate_schema_instance schemas/interpretability/intervention-spec.v0.json tests/fixtures/interpretability/intervention-spec.feature-steering.synthetic.json
-	python3 -m src.m1.validate_schema_instance schemas/interpretability/intervention-spec.v0.json tests/fixtures/interpretability/intervention-spec.activation-patching.synthetic.json
-	python3 -m src.m1.validate_schema_instance schemas/interpretability/intervention-spec.v0.json tests/fixtures/interpretability/intervention-spec.prompt-only-black-box.synthetic.json
-	! python3 -m src.m1.validate_schema_instance schemas/interpretability/intervention-spec.v0.json tests/fixtures/interpretability/intervention-spec.feature-steering-missing-source-lock.invalid.synthetic.json
-
-interpretability-harness-cross-field:
-	python3 scripts/check-interpretability-harness.py tests/fixtures/interpretability
-
-interpretability-harness-ci: interpretability-harness-static interpretability-harness-schema-fixtures interpretability-harness-cross-field
-
-certificate-ci: m0-ci m1-ci m1-5-ci m2-ci m3-ci m5-ci v1-1-ci interpretability-harness-ci
+certificate-ci: m0-ci m1-ci m1-5-ci tier2-binding-ci m5-tier2-binding-ci lawful-learning-trust-surface-tier2-binding-ci lawful-learning-ci m2-ci m3-ci m5-ci v1-1-ci
