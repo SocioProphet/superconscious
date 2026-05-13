@@ -1,0 +1,53 @@
+{
+  "schema_version": "0.1.0",
+  "entry_kind": "feature-registry-entry",
+  "feature_entry_id": "fre-neuronpedia-gemma-feature-789",
+  "registry_source": {
+    "registry_name": "neuronpedia",
+    "provider_binding_id": "pb-neuronpedia-registry",
+    "registry_url": "https://www.neuronpedia.org/synthetic/gemma2-9b-it/feature-789",
+    "export_ref": "synthetic-registry-snapshot-2026-05-12"
+  },
+  "feature_identity": {
+    "model_id": "google/gemma-2-9b-it",
+    "sae_id": "google/gemma-scope-9b-it-res/layer_20/width_131k/average_l0_81",
+    "transcoder_id": null,
+    "probe_id": null,
+    "layer": 20,
+    "feature_index": 789,
+    "feature_id": "gemma2-9b-it@layer20-width131k-l0-81:789",
+    "feature_kind": "sae_feature"
+  },
+  "source_lock_refs": [
+    {
+      "source_lock_id": "asl-neuronpedia-gemma-feature-789",
+      "artifact_kind": "feature_registry_entry"
+    },
+    {
+      "source_lock_id": "asl-gemma-scope-9b-it-res-l20-131k-l0-81",
+      "artifact_kind": "sae"
+    }
+  ],
+  "explanation": {
+    "status": "registry_supplied",
+    "text": "Synthetic refusal / redirect feature used to test registry-only evidence flow.",
+    "explanation_authority": "registry",
+    "confidence": 0.42
+  },
+  "activation_evidence_summary": {
+    "top_examples_ref": "synthetic://activation-examples/top",
+    "negative_examples_ref": "synthetic://activation-examples/negative",
+    "activation_statistics_ref": "synthetic://activation-statistics",
+    "position_policy": "assistant response positions"
+  },
+  "evidence_refs": [
+    "asl-neuronpedia-gemma-feature-789",
+    "synthetic://neuronpedia-dashboard-ref"
+  ],
+  "claim_status": "candidate_only",
+  "replay_class": "registry_reference",
+  "non_claims": [
+    "Registry explanation is not a causal certificate.",
+    "Feature is not promoted to steering without M1B/M1C evidence."
+  ]
+}

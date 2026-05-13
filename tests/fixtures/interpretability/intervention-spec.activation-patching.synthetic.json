@@ -1,0 +1,56 @@
+{
+  "schema_version": "0.1.0",
+  "intervention_kind": "activation_patching",
+  "intervention_id": "iv-gemma-activation-patching-l20",
+  "provider_binding_ref": {
+    "provider_binding_id": "pb-gemma-white-box-local",
+    "access_mode": "white_box"
+  },
+  "target": {
+    "target_kind": "activation_site",
+    "model_id": "google/gemma-2-9b-it",
+    "source_lock_id": "asl-gemma-2-9b-it-model",
+    "feature_entry_id": null,
+    "layer": 20,
+    "position_selector": "end_of_prompt",
+    "description": "Synthetic activation patching target at layer 20 residual stream."
+  },
+  "coefficient_schedule": {
+    "schedule_kind": "single_alpha",
+    "alpha": 1.0,
+    "values": [],
+    "unit": "patch_fraction"
+  },
+  "position_policy": {
+    "policy_kind": "end_of_prompt",
+    "details": "Synthetic fixture; exact cache source must be recorded in runtime certificates."
+  },
+  "safety_policy": {
+    "policy_ref": "policy://interpretability/activation-patching/off-target-required",
+    "policy_decision_required": true,
+    "off_target_audit_required": true,
+    "human_review_required": false
+  },
+  "required_source_locks": [
+    {
+      "source_lock_id": "asl-gemma-2-9b-it-model",
+      "artifact_kind": "model"
+    },
+    {
+      "source_lock_id": "asl-gemma-activation-cache-synthetic",
+      "artifact_kind": "activation_cache"
+    }
+  ],
+  "expected_effect": "Measure causal sensitivity of a residual-stream activation site through a synthetic patching plan.",
+  "forbidden_effects": [
+    "Do not claim feature-level causal isolation from activation patching alone.",
+    "Do not claim runtime execution from this fixture.",
+    "Do not bypass policy admission for future live patching."
+  ],
+  "evaluation_plan_ref": "synthetic://eval-plans/activation-patching",
+  "replay_class": "synthetic_fixture",
+  "non_claims": [
+    "Synthetic fixture only; does not patch a live model.",
+    "Does not establish cross-layer robustness."
+  ]
+}

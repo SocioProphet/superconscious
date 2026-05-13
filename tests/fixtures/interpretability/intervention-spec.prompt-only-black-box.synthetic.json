@@ -1,0 +1,47 @@
+{
+  "schema_version": "0.1.0",
+  "intervention_kind": "prompt_only",
+  "intervention_id": "iv-gemini-prompt-only-behavior",
+  "provider_binding_ref": {
+    "provider_binding_id": "pb-gemini-api-black-box",
+    "access_mode": "black_box"
+  },
+  "target": {
+    "target_kind": "prompt",
+    "model_id": "google-gemini-hosted-api",
+    "source_lock_id": null,
+    "feature_entry_id": null,
+    "layer": null,
+    "position_selector": null,
+    "description": "Synthetic prompt-only behavior benchmark for hosted black-box API."
+  },
+  "coefficient_schedule": {
+    "schedule_kind": "none",
+    "alpha": null,
+    "values": [],
+    "unit": null
+  },
+  "position_policy": {
+    "policy_kind": "prompt_level",
+    "details": "Prompt-level comparison only; no token-internal intervention."
+  },
+  "safety_policy": {
+    "policy_ref": "policy://interpretability/black-box-behavior-benchmark",
+    "policy_decision_required": true,
+    "off_target_audit_required": false,
+    "human_review_required": false
+  },
+  "required_source_locks": [],
+  "expected_effect": "Measure output behavior under prompt-only variation.",
+  "forbidden_effects": [
+    "Do not claim hidden-state, SAE, or attribution-graph evidence.",
+    "Do not claim implementability envelope.",
+    "Do not treat black-box output as feature-level evidence."
+  ],
+  "evaluation_plan_ref": "synthetic://eval-plans/black-box-prompt-only",
+  "replay_class": "provider_behavior_only",
+  "non_claims": [
+    "Black-box prompt fixture only; no internal model access.",
+    "Does not support feature steering or activation patching claims."
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "schema_version": "0.1.0",
+  "binding_kind": "provider-binding",
+  "provider_binding_id": "pb-gemini-api-black-box",
+  "provider_name": "google-gemini-hosted-api",
+  "provider_display_name": "Gemini hosted API black-box fixture",
+  "access_mode": "black_box",
+  "provider_surface": {
+    "surface_kind": "hosted_model_api",
+    "execution_location": "remote_hosted",
+    "source_uri": "provider://google-gemini",
+    "terms_or_policy_ref": "provider terms and policy binding required outside this synthetic fixture"
+  },
+  "supported_observables": [
+    "outputs"
+  ],
+  "supported_interventions": [
+    "prompt_only"
+  ],
+  "governance_class": "remote_hosted_api",
+  "runtime_claims": {
+    "live_runtime_execution": false,
+    "internal_state_replay": false,
+    "white_box_replay_possible": false,
+    "runtime_evidence_ref": null
+  },
+  "evidence_requirements": [
+    "provider route receipt",
+    "prompt dataset hash",
+    "output behavior benchmark receipt",
+    "policy and egress admission"
+  ],
+  "authority_scope": [
+    "behavior_benchmark"
+  ],
+  "non_claims": [
+    "Black-box fixture; does not expose hidden states or SAE features.",
+    "Cannot support activation-manifold implementability claims."
+  ]
+}

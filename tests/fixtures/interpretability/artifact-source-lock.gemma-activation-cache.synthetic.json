@@ -1,0 +1,49 @@
+{
+  "schema_version": "0.1.0",
+  "lock_kind": "artifact-source-lock",
+  "source_lock_id": "asl-gemma-activation-cache-synthetic",
+  "artifact_kind": "activation_cache",
+  "artifact_identity": {
+    "artifact_id": "synthetic-gemma-layer20-activation-cache",
+    "name": "Synthetic Gemma layer 20 activation cache",
+    "model_family": "gemma-2-9b-it",
+    "layer": 20,
+    "width": null,
+    "average_l0": null,
+    "feature_index": null,
+    "registry_url": null
+  },
+  "provider_binding_ref": {
+    "provider_binding_id": "pb-gemma-white-box-local",
+    "access_mode": "white_box"
+  },
+  "immutable_reference": {
+    "source_type": "local_fixture",
+    "source": "tests/fixtures/interpretability",
+    "requested_ref": "synthetic",
+    "resolved_ref": "synthetic-activation-cache-v0",
+    "path": "synthetic-gemma-layer20-activation-cache.jsonl",
+    "retrieved_at": "2026-05-12T00:00:00Z"
+  },
+  "integrity": {
+    "content_sha256_status": "synthetic_fixture",
+    "content_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+    "metadata_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+    "size_bytes": null
+  },
+  "access_boundary": {
+    "download_required": false,
+    "credentials_required": false,
+    "egress_required": false,
+    "license_or_terms_ref": null
+  },
+  "replay_class": "synthetic_fixture",
+  "known_limitations": [
+    "Synthetic activation cache only.",
+    "No live model activations are included."
+  ],
+  "non_claims": [
+    "Does not prove activation capture has run.",
+    "Does not support public interpretability claims without runtime evidence."
+  ]
+}

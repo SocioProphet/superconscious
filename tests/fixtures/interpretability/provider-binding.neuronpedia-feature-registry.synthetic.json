@@ -1,0 +1,43 @@
+{
+  "schema_version": "0.1.0",
+  "binding_kind": "provider-binding",
+  "provider_binding_id": "pb-neuronpedia-registry",
+  "provider_name": "neuronpedia",
+  "provider_display_name": "Neuronpedia public feature registry fixture",
+  "access_mode": "registry_only",
+  "provider_surface": {
+    "surface_kind": "public_feature_registry",
+    "execution_location": "registry_only",
+    "source_uri": "https://www.neuronpedia.org/",
+    "terms_or_policy_ref": "public registry terms apply outside this synthetic fixture"
+  },
+  "supported_observables": [
+    "feature_dashboard",
+    "attribution_graph",
+    "registry_metadata",
+    "activation_examples"
+  ],
+  "supported_interventions": [
+    "none"
+  ],
+  "governance_class": "public_registry",
+  "runtime_claims": {
+    "live_runtime_execution": false,
+    "internal_state_replay": false,
+    "white_box_replay_possible": false,
+    "runtime_evidence_ref": null
+  },
+  "evidence_requirements": [
+    "registry entry source lock",
+    "export or dashboard reference",
+    "local runtime source lock before replay claim"
+  ],
+  "authority_scope": [
+    "candidate_discovery",
+    "public_note"
+  ],
+  "non_claims": [
+    "Registry-only evidence does not prove local runtime replay.",
+    "Registry explanations are candidate evidence until independently tested."
+  ]
+}
