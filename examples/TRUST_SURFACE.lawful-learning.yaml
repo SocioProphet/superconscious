@@ -1,0 +1,169 @@
+schema_version: "1.0"
+component: "lawful-learning-trust-surface-example"
+repo: "SocioProphet/superconscious"
+runtime_classes:
+  - "doctrine_only"
+  - "synthetic_example"
+authority_summary:
+  owns:
+    - "lawful_learning_doctrine"
+    - "claim_ledger_decisions"
+    - "categorical_foundation_specifications"
+    - "governance_invariant_specifications"
+  does_not_own:
+    - "canonical_schemas"
+    - "execution_evidence"
+    - "workspace_registry"
+    - "model_routing"
+    - "admission_decisions"
+    - "consent_and_promotion"
+entrypoints:
+  cli: []
+  api: []
+  documents:
+    - "docs/lawful-learning/01-framework-substrates-structures-circuits.md"
+    - "docs/lawful-learning/02-categorical-foundations.md"
+    - "docs/lawful-learning/03-lawful-learning-invariants.md"
+network:
+  inbound: []
+  outbound: []
+  plaintext_non_loopback_allowed: false
+credentials:
+  redaction_required: true
+  literal_secrets_allowed: false
+policy:
+  composition_binding: "schemas/composition/lawful-learning-trust-surface-tier2-binding.v1.json"
+  tier2_modes:
+    receipt_integration: "hash_bound_reference"
+    authority_scope_analysis: "declared_scope_lattice_v1"
+    non_claim_analysis: "explicit_propagate_or_resolve_v1"
+    monitor_independence_analysis: "declared_monitor_independence_v1"
+    evidence_freshness_analysis: "declared_evidence_freshness_v1"
+purge:
+  ephemeral_artifacts: []
+prove_clean:
+  status: "draft_example_not_runtime_claim"
+
+lawful_learning_trust_surface:
+  version: "0.1.0-draft"
+  status: "phase4_example"
+  description: >
+    Draft trust surface for a lawful-learning composition consisting of
+    substrate, structure, adapter DAG, circuit registry, audit-plan, and
+    claim-ledger components. Declares authority boundaries, composition
+    components, Tier 2 invariant bindings, lawful-learning invariants,
+    and non-claims.
+
+  authority_boundary:
+    owns:
+      - "lawful_learning_doctrine"
+      - "claim_ledger_decisions"
+      - "categorical_foundation_specifications"
+      - "governance_invariant_specifications"
+    does_not_own:
+      - "canonical_schemas"
+      - "execution_evidence"
+      - "workspace_registry"
+      - "model_routing"
+      - "admission_decisions"
+      - "consent_and_promotion"
+
+  composition_components:
+    substrate_component_ref: "claim.substrate.real-baseline.M"
+    structure_component_ref: "claim.structure.hopfield-modern-continuous.M"
+    mixture_slot_refs:
+      - "claim.structure.mixture-of-experts.M"
+    adapter_dag_ref:
+      adapter_ids:
+        - "adapter.shared-trunk-protocol"
+        - "adapter.lora-style-low-rank"
+      dependency_edges:
+        - from: "adapter.shared-trunk-protocol"
+          to: "adapter.lora-style-low-rank"
+    circuit_registry_ref: "claim.circuit.registry-governance.G"
+    claim_ledger_ref: "docs/lawful-learning/07-claim-ledger.md"
+
+  tier2_composition_invariants:
+    receipt_integration:
+      mode: "hash_bound_reference"
+      applies: true
+    non_claim_propagation:
+      analysis_mode: "explicit_propagate_or_resolve_v1"
+      applies: true
+    monitor_independence:
+      analysis_mode: "declared_monitor_independence_v1"
+      applies: true
+    evidence_freshness:
+      analysis_mode: "declared_evidence_freshness_v1"
+      applies: true
+    authority_scope:
+      analysis_mode: "declared_scope_lattice_v1"
+      applies: true
+
+  lawful_learning_invariants:
+    adapter_dag_acyclic:
+      applies: true
+      status: "structurally_satisfied"
+    black_boxing_composes:
+      applies: true
+      status: "declared_not_yet_checked"
+    replay_seal_for_composed_trace:
+      applies: true
+      status: "declared_not_yet_checked"
+    may_wigner_monitor_declared:
+      applies: true
+      status: "phase4_example_stub"
+      monitor_name: "synthetic_may_wigner_monitor"
+      monitored_quantity: "sigma_sqrt_nc_analogue_on_weight_matrix"
+      checkpoint_interval: "every_1000_steps"
+      threshold_declaration: "0.8_warning_1.0_halt"
+    control_data_plane_separation:
+      applies: true
+      status: "declared_not_yet_checked"
+      control_plane_components:
+        - "mixture_router"
+        - "admission_gate"
+      data_plane_components:
+        - "expert_mlp_0"
+        - "expert_mlp_1"
+        - "residual_stream"
+      boundary_interfaces: []
+    tail_audit_allocated:
+      applies: true
+      status: "phase4_example_stub"
+      expected_case_coverage: "standard_benchmark_eval_suite"
+      tail_allocation_strategy: "reserved_10_percent_audit_budget_for_tail_events"
+      tail_scope_declaration: "adversarial_distribution_shift_low_frequency"
+    emergent_discretization_logged:
+      applies: true
+      status: "phase4_example_stub"
+      declared_events: []
+    composition_superposition_declared:
+      applies: true
+      status: "phase4_example_stub"
+    anti_satisficing_continuation:
+      applies: true
+      status: "phase4_example_stub"
+      continuation_rule: "continue_for_10_percent_additional_budget_after_first_sufficient_condition"
+    epistemic_non_collapse:
+      applies: true
+      status: "enforced_by_claim_ledger"
+
+  non_claims:
+    - "no_runtime_receipt_lookup"
+    - "no_runtime_non_claim_verification"
+    - "no_runtime_monitor_attestation"
+    - "no_timestamp_authenticity"
+    - "opaque_hashes_not_resolved"
+    - "no_runtime_circuit_discovery"
+    - "no_runtime_ablation_verification"
+    - "no_tag_promotion_at_composition"
+    - "no_substrate_verification"
+    - "no_frontier_claim_promotion"
+
+  phase4_draft_non_claims:
+    - "draft_trust_surface_example_not_promoted_artifact"
+    - "synthetic_stubs_are_not_real_training_run_data"
+    - "phase6_checker_not_yet_active"
+    - "tier2_analysis_fields_declared_not_example_level_ci_checked"
+    - "phase5_schemas_not_yet_defined"
