@@ -34,6 +34,7 @@ interpretability-harness-schema-fixtures:
 	python3 -m src.m1.validate_schema_instance schemas/interpretability/intervention-spec.v0.json tests/fixtures/interpretability/intervention-spec.activation-patching.synthetic.json
 	python3 -m src.m1.validate_schema_instance schemas/interpretability/intervention-spec.v0.json tests/fixtures/interpretability/intervention-spec.prompt-only-black-box.synthetic.json
 	! python3 -m src.m1.validate_schema_instance schemas/interpretability/intervention-spec.v0.json tests/fixtures/interpretability/intervention-spec.feature-steering-missing-source-lock.invalid.synthetic.json
+	! python3 -m src.m1.validate_schema_instance schemas/interpretability/intervention-spec.v0.json tests/fixtures/interpretability/intervention-spec.neuronpedia-registry-steering.invalid.synthetic.json
 
 interpretability-harness-cross-field:
 	python3 scripts/check-interpretability-harness.py tests/fixtures/interpretability

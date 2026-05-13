@@ -1,0 +1,51 @@
+{
+  "schema_version": "0.1.0",
+  "intervention_kind": "feature_steering",
+  "intervention_id": "iv-neuronpedia-registry-steering-invalid",
+  "provider_binding_ref": {
+    "provider_binding_id": "pb-neuronpedia-registry",
+    "access_mode": "registry_only"
+  },
+  "target": {
+    "target_kind": "feature",
+    "model_id": "gemma-2-9b-it",
+    "source_lock_id": "asl-neuronpedia-gemma-feature-789",
+    "feature_entry_id": "fre-neuronpedia-gemma-feature-789",
+    "layer": 20,
+    "position_selector": "all_assistant_tokens",
+    "description": "Invalid: attempts to treat registry-only Neuronpedia evidence as a live steering substrate."
+  },
+  "coefficient_schedule": {
+    "schedule_kind": "single_alpha",
+    "alpha": 1.0,
+    "values": [],
+    "unit": "synthetic"
+  },
+  "position_policy": {
+    "policy_kind": "all_assistant_tokens",
+    "details": "Invalid registry-only steering fixture."
+  },
+  "safety_policy": {
+    "policy_ref": "policy-fabric:interpretability.steering.requires-white-box-runtime",
+    "policy_decision_required": true,
+    "off_target_audit_required": true,
+    "human_review_required": true
+  },
+  "required_source_locks": [
+    {
+      "source_lock_id": "asl-neuronpedia-gemma-feature-789",
+      "artifact_kind": "feature_registry_entry"
+    }
+  ],
+  "expected_effect": "Invalidly claims a registry feature can be used as live steering substrate.",
+  "forbidden_effects": [
+    "treating registry-only evidence as runtime replay",
+    "bypassing white-box source-lock requirement"
+  ],
+  "evaluation_plan_ref": null,
+  "replay_class": "non_replayable",
+  "non_claims": [
+    "This invalid fixture must fail because Neuronpedia registry-only evidence is not a steering runtime.",
+    "Feature steering requires a white-box model and SAE/transcoder/probe source lock."
+  ]
+}
