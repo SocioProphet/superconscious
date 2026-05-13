@@ -1,0 +1,27 @@
+{
+  "check_id": "alignment.synthetic.pre-publication",
+  "check_target_ref": "lawful-learning.trust-surface.synthetic",
+  "check_type": "pre_publication",
+  "check_result": "partial",
+  "checked_invariants": [
+    {
+      "invariant_name": "adapter_dag_acyclic",
+      "result": "pass",
+      "checker_version": "synthetic.v0"
+    },
+    {
+      "invariant_name": "black_boxing_composes",
+      "result": "deferred",
+      "checker_version": "synthetic.v0"
+    },
+    {
+      "invariant_name": "epistemic_non_collapse",
+      "result": "pass",
+      "checker_version": "synthetic.v0"
+    }
+  ],
+  "replay_seal": "sha256:6789abcdef0123456789abcdef0123456789abcdef0123456789abcdef012345",
+  "timestamp": "2026-05-13T00:00:00Z",
+  "checker_ref": "phase5.schema.fixture",
+  "non_claims": ["synthetic_alignment_check_not_runtime_checker"]
+}
