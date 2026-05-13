@@ -1,0 +1,24 @@
+# Invalid: sufficient condition was met but continuation was not applied.
+# Violates anti_satisficing_continuation.
+may_wigner_monitor:
+  monitor_name: synthetic_stability_monitor
+  monitored_quantity: "sigma * sqrt(N * C) analogue"
+  checkpoint_interval: every_1000_steps
+  threshold_declaration: "0.8 warning, 1.0 halt"
+control_plane_components:
+  - mixture_router
+data_plane_components:
+  - expert_mlp_0
+boundary_interfaces: []
+expected_case_coverage: "standard benchmark eval suite"
+tail_allocation_strategy: "tail audit allocation present"
+tail_scope_declaration: "tail events"
+continuation_rule: "continue after sufficient condition"
+sufficient_conditions:
+  - condition_name: eval_pass_rate
+    condition_threshold: 0.95
+run_log:
+  sufficient_conditions_met:
+    - eval_pass_rate
+  continuation_applied: false
+event_log: []
