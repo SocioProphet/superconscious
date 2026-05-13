@@ -1,0 +1,79 @@
+{
+  "composition_id": "superconscious.interpretability_harness.release_bundle",
+  "composition_kind": "certificate_fragment_composition",
+  "binding_doctrine_version": "v0.1",
+  "fragment_refs": [
+    {
+      "fragment_kind": "ModelArtifact",
+      "opaque_hash": "sha256:a724d752df8aac1149c96833952953e26bc5f09c7fa410dfcbda883b374e13f9"
+    },
+    {
+      "fragment_kind": "SAEArtifact",
+      "opaque_hash": "sha256:837d33ddb16f86e1b506ab5b5f602dc1e3d1112cce9930ab53cb4aea92e196fd"
+    },
+    {
+      "fragment_kind": "FeatureArtifact",
+      "opaque_hash": "sha256:5f7318ee2c0c5bf20219cbcb2433a6989b334038848d7c139c1f2b213ec47bdc"
+    },
+    {
+      "fragment_kind": "FeatureExplanation",
+      "opaque_hash": "sha256:17d9d99b63324fdf3ab165bf22848513bcd92c07e11347d49e2676ebad480f06"
+    },
+    {
+      "fragment_kind": "FeatureActivationSet",
+      "opaque_hash": "sha256:816a5c8895000896000b364391dece799e29eb2c6bc7a49953735e2420ce6378"
+    },
+    {
+      "fragment_kind": "SteeringIntervention",
+      "opaque_hash": "sha256:c20863120e5e0ca92259e3f759a5ebc68a56446d9c6da743b495dd197066813c"
+    },
+    {
+      "fragment_kind": "CausalTriad",
+      "opaque_hash": "sha256:27e34ff8c6c2de4b141717cead787786c9e0064973309a7f352056cccd42dc8f"
+    },
+    {
+      "fragment_kind": "AttributionGraph",
+      "opaque_hash": "sha256:2cfe4b5a99ad6bd9f28d28468db8e3880b4ddf8faa2a735f0378611a554dc72e"
+    },
+    {
+      "fragment_kind": "OffTargetAudit",
+      "opaque_hash": "sha256:3c8e482d0cbf19967e6c2aa1c08612244223b4c600d121774de41c0e33ee288d"
+    },
+    {
+      "fragment_kind": "ManifoldBaseline",
+      "opaque_hash": "sha256:f2ba626cd173e810f131492c6e6688c927f15f430330737501aa34160891eef7"
+    },
+    {
+      "fragment_kind": "ImplementabilityCurve",
+      "opaque_hash": "sha256:69d0fc55c2f5153f8d5acec45bfa698b32f5cab87979b1e8a3d07858cf2fb89c"
+    },
+    {
+      "fragment_kind": "RobustnessCertificate",
+      "opaque_hash": "sha256:5b3976e9ad3454c273d68d38648205b6f47883d9243e4e862a66520bf547fe07"
+    },
+    {
+      "fragment_kind": "BenchmarkResult",
+      "opaque_hash": "sha256:2aa70cc8404103423c15d7758297bc36377595371e6ee7f36e806424bc05bc5f"
+    }
+  ],
+  "bound_modes": {
+    "receipt_integration": "hash_bound_reference",
+    "authority_scope_analysis": "declared_scope_lattice_v1",
+    "non_claim_analysis": "explicit_propagate_or_resolve_v1",
+    "monitor_independence_analysis": "declared_monitor_independence_v1",
+    "evidence_freshness_analysis": "declared_evidence_freshness_v1"
+  },
+  "non_claims": [
+    "no_runtime_receipt_lookup",
+    "no_runtime_non_claim_verification",
+    "no_runtime_monitor_attestation",
+    "no_timestamp_authenticity",
+    "opaque_hashes_not_resolved",
+    "no_runtime_provider_access",
+    "no_runtime_feature_activation_claim",
+    "no_live_steering_execution",
+    "no_public_claim_promotion",
+    "no_neuronpedia_release_substitution"
+  ],
+  "runtime_provider_access": true
+}
