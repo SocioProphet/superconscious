@@ -1,0 +1,12 @@
+{
+  "decision_id": "decision.synthetic.claim-promote",
+  "decision_type": "claim_promote",
+  "decision_outcome": "deferred",
+  "evidence_status_refs": ["artifact.synthetic.causal-triad"],
+  "authority_ref": "authority.synthetic.lawful-learning",
+  "replay_seal": "sha256:123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0",
+  "timestamp": "2026-05-13T00:00:00Z",
+  "decision_rationale": "Synthetic promotion decision fixture with evidence binding.",
+  "affected_claim_ids": ["claim.structure.hopfield-modern-continuous.M"],
+  "non_claims": ["synthetic_decision_not_runtime_authority"]
+}

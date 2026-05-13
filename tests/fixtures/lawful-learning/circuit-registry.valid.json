@@ -1,0 +1,19 @@
+{
+  "circuit_id": "circuit.synthetic.composition-superposition",
+  "circuit_name": "Synthetic composition-superposition allocation circuit",
+  "description": "Synthetic fixture for lawful-learning circuit registry validation.",
+  "model_ref": "model.synthetic.lawful-learning",
+  "layer_range": {
+    "from_layer": 1,
+    "to_layer": 3
+  },
+  "discovery_evidence_ref": "sha256:23456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef01",
+  "ablation_evidence_ref": "sha256:3456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef012",
+  "allocation_type": "composition",
+  "allocation_evidence": "Synthetic structural evidence for composition allocation.",
+  "allocation_basis": "Distinct declared feature paths in the synthetic fixture.",
+  "registry_status": "candidate",
+  "claim_refs": ["claim.invariant.composition-superposition-allocation.G"],
+  "non_claims": ["synthetic_circuit_not_runtime_discovered"],
+  "replay_seal": "sha256:456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123"
+}

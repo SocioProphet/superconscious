@@ -1,0 +1,11 @@
+{
+  "forbidden_circuit_id": "forbidden.synthetic.sycophancy-amplifier",
+  "circuit_pattern": "attention head that monotonically increases sycophancy score",
+  "prohibition_basis": "alignment risk requiring deployment gate review",
+  "enforcement_mode": "deployment_gate",
+  "detection_method": "probe-based activation monitoring",
+  "severity": "S1",
+  "evidence_refs": ["sha256:56789abcdef0123456789abcdef0123456789abcdef0123456789abcdef01234"],
+  "escalation_path": "policy-fabric.deployment-gate.synthetic",
+  "non_claims": ["synthetic_forbidden_circuit_not_runtime_detected"]
+}

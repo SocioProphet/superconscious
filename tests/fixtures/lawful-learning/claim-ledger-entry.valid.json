@@ -1,0 +1,9 @@
+{
+  "claim_id": "claim.structure.hopfield-modern-continuous.m",
+  "claim": "Modern continuous Hopfield networks with log-sum-exp energy function have exponential storage capacity in the network dimension.",
+  "tag": "M",
+  "status": "captured",
+  "mathematical_dependency": "Ramsauer et al. 2020. log-sum-exp energy function E(xi) = -lse(beta * X^T * xi) + 0.5 * xi^T * xi + const. Exponential capacity follows from the structure of this energy function and fixed-point dynamics.",
+  "promotion_rule": "terminal; [M] cannot promote further",
+  "source_refs": ["src.hopfield.modern-continuous-2020"]
+}

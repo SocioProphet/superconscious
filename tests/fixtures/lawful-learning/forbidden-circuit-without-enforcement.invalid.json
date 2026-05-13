@@ -1,0 +1,6 @@
+{
+  "forbidden_circuit_id": "forbidden.bad.no-enforcement",
+  "circuit_pattern": "attention head that monotonically increases sycophancy score",
+  "prohibition_basis": "alignment risk",
+  "detection_method": "probe-based activation monitoring"
+}

@@ -1,0 +1,10 @@
+{
+  "artifact_id": "artifact.synthetic.causal-triad",
+  "evidence_class": "causal_triad",
+  "evidence_status": "complete_synthetic",
+  "receipt_ref": "sha256:0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+  "creation_time": "2026-05-13T00:00:00Z",
+  "evidence_scope": "Synthetic causal-triad fixture for schema validation only.",
+  "claim_refs": ["claim.invariant.epistemic-non-collapse.G"],
+  "non_claims": ["synthetic_fixture_not_runtime_evidence"]
+}
