@@ -1,0 +1,103 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://socioprophet.org/schemas/neuronpedia/artifact-source-lock.v0.1.json",
+  "title": "ArtifactSourceLock v0.1",
+  "description": "Locks an external or mirrored interpretability artifact to an immutable source reference. This is an evidence/provenance object only; it does not certify provider authenticity, model behavior, or causal validity.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "kind",
+    "artifact_id",
+    "source_ref",
+    "lock_reason",
+    "provenance_level",
+    "mutation_policy",
+    "non_claims"
+  ],
+  "properties": {
+    "schema_version": {"const": "0.1"},
+    "kind": {"const": "artifact_source_lock"},
+    "artifact_id": {
+      "type": "string",
+      "minLength": 3,
+      "pattern": "^[a-zA-Z0-9_.:-]+$"
+    },
+    "source_ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_kind", "source_uri", "retrieved_at", "source_hash"],
+      "properties": {
+        "source_kind": {
+          "type": "string",
+          "enum": [
+            "neuronpedia_api",
+            "neuronpedia_export",
+            "static_snapshot",
+            "content_addressed_mirror",
+            "manual_review_packet"
+          ]
+        },
+        "source_uri": {"type": "string", "minLength": 1},
+        "retrieved_at": {"type": "string", "format": "date-time"},
+        "source_hash": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "provider_artifact_ref": {"type": "string"},
+        "license_ref": {"type": "string"}
+      }
+    },
+    "lock_reason": {
+      "type": "string",
+      "enum": [
+        "provider_snapshot",
+        "public_artifact_snapshot",
+        "benchmark_fixture",
+        "intervention_trace_input",
+        "review_packet"
+      ]
+    },
+    "provenance_level": {
+      "type": "string",
+      "enum": [
+        "url_only",
+        "content_hash",
+        "content_hash_plus_metadata",
+        "content_hash_plus_replay"
+      ]
+    },
+    "mutation_policy": {"const": "append_only_new_lock"},
+    "frozen_fields": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "enum": [
+          "source_uri",
+          "retrieved_at",
+          "source_hash",
+          "provider_artifact_ref",
+          "license_ref"
+        ]
+      }
+    },
+    "review_notes": {"type": "string"},
+    "non_claims": {
+      "type": "array",
+      "minItems": 5,
+      "maxItems": 5,
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "no_runtime_fetch",
+          "no_authenticity_guarantee",
+          "no_provider_endorsement",
+          "no_unlocked_mutation",
+          "no_model_behavior_claim"
+        ]
+      }
+    }
+  }
+}
