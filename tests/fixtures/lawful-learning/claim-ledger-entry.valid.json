@@ -1,5 +1,5 @@
 {
-  "claim_id": "claim.structure.hopfield-modern-continuous.M",
+  "claim_id": "claim.structure.hopfield-modern-continuous.m",
   "claim": "Modern continuous Hopfield networks with log-sum-exp energy function have exponential storage capacity in the network dimension.",
   "tag": "M",
   "status": "captured",
