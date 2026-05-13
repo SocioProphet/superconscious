@@ -1,0 +1,11 @@
+# Invalid: circuit declares allocation_type but no allocation_evidence.
+# Violates composition_superposition_declared.
+circuit_id: circuit.bad.no-allocation-evidence
+circuit_name: Synthetic bad allocation circuit
+model_ref: model.synthetic.lawful-learning
+discovery_evidence_ref: sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+ablation_evidence_ref: sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+allocation_type: composition
+allocation_evidence: ""
+allocation_basis: "declared feature paths"
+registry_status: candidate
