@@ -28,3 +28,9 @@ jobs:
             exit 1
           fi
           echo "invalid An unified fixture correctly rejected"
+      - run: |
+          if python3 scripts/check-lawful-learning-t2-prime.py --d4 tests/fixtures/lawful-learning/d4-c7-prime-scoping.false-cyclic-center.invalid.json; then
+            echo "invalid D4 scalar-center fixture unexpectedly passed"
+            exit 1
+          fi
+          echo "invalid D4 scalar-center fixture correctly rejected"
