@@ -108,7 +108,7 @@ where `M_6` is a chosen lift of a 60-degree rotation block into `Spin(8)` acting
 
 ## 6. Proof obligations
 
-### 6.1 Faithful carrier
+### 6.1 Faithfulness convention: intentionally unsettled
 
 [M] The vector representation of `Spin(8)` has kernel `<epsilon>`, so if strict faithfulness of `Spin(8)` itself is required, the carrier must be adjusted.
 
@@ -119,7 +119,9 @@ B1: G_spatial = SO(8), V = 8_v is faithful
 B2: G_spatial = Spin(8), V = 8_v with auxiliary lift data explicitly retained
 ```
 
-[G] This document keeps `Spin(8)` as the structure carrier but flags the faithfulness convention as a proof obligation. A theorem statement must choose B1 or B2 explicitly.
+[G] This choice is intentionally unsettled. Both B1 and B2 are defensible at scoping stage. The correct choice depends on the D4 harness implementation, the triality policy, the lift-order pin, and the centralizer/conjugacy resolution. Do not force the choice before those downstream pins are available.
+
+[G] This is not cleanup. It is a scoping decision deliberately deferred so the theorem statement does not choose the wrong carrier prematurely.
 
 ### 6.2 Order-six witness
 
@@ -199,25 +201,47 @@ P8_representation_irreducibility_or_commutant_D4
 
 [S] The exact P5 predicate depends on the selected uniqueness argument.
 
-## 9. Open issues
+[G] These eight predicates collectively define the Strategy B property-test contract. A proposed Strategy B realization must pass all eight. Passing seven of eight is not sufficient.
 
-### 9.1 Faithfulness convention
+[G] The harness is a test of proposed Strategy B candidates, not a construction of Strategy B. It can falsify a proposed realization or certify that a proposed realization satisfies the declared properties, but it cannot by itself generate a realization or prove the D4 theorem.
 
-[G] Choose whether the theorem carrier is `SO(8)` for faithful vector action or `Spin(8)` with explicit auxiliary lift data.
+[G] The `P7_no_scalar_center_reuse_D4` predicate exists to prevent a purported Strategy B realization from collapsing back into a dressed-up Strategy A or scalar-center construction. It protects the non-scalar witness-object claim: a candidate that is only a scalar phase wrapped in matrix form is not a nontrivial Strategy B realization.
 
-### 9.2 Lift order
+## 9. Stokes terminology and observable boundary
+
+[G] In this D4 Strategy B lane, `Stokes observable` means **Stokes phenomenon / asymptotic analysis** in the singularity-theoretic sense, analogous to the A2 direct Stokes-side calculation.
+
+[G] It does **not** mean Stokes theorem for differential forms.
+
+[G] It does **not** mean Brownian-holonomy or Wilson-loop Stokes geometry, which live in separate Yang-Mills / Brownian-holonomy lanes.
+
+[T] Under Strategy B, the D4 Stokes observable changes type from scalar data to matrix/conjugacy-class data.
+
+[G] This is a type-level statement only. No specific matrix-valued D4 Stokes observable has been computed, and no conjugacy-class observable is certified until the centralizer/conjugacy resolution lands.
+
+## 10. Open issues
+
+### 10.1 Faithfulness convention
+
+[G] Choose whether the theorem carrier is `SO(8)` for faithful vector action or `Spin(8)` with explicit auxiliary lift data. This is intentionally unsettled at scoping stage.
+
+### 10.2 Lift order
 
 [S] The selected lift of `R_6` must be checked to have order 6 rather than order 12.
 
-### 9.3 Triality
+### 10.3 Triality
 
 [G] Decide whether the theorem is stated with a chosen triality slice or triality-equivariantly.
 
-### 9.4 Uniqueness
+### 10.4 Uniqueness
 
 [S] Replace scalar Schur uniqueness with a centralizer/conjugacy uniqueness argument for `M_6`.
 
-## 10. Recommended next deliverable
+### 10.5 Stokes observable declaration
+
+[G] Declare Poincare rank, leading spectrum, product constraint, conjugation gauge, and whether the observable is a single generator or a full Stokes tuple.
+
+## 11. Recommended next deliverable
 
 The next deliverable after this scoping document is:
 
@@ -228,7 +252,7 @@ harness/reference_reports/d4_strategy_b_report.v1.json
 
 with scaffold predicates for the selected `M_6` matrix model and explicit open markers for the Stokes-side observable.
 
-## 11. Non-claims
+## 12. Non-claims
 
 This document does not claim:
 
@@ -236,6 +260,7 @@ This document does not claim:
 D4 theorem proved
 B1 or B2 faithfulness convention settled
 M_6 certified in Spin(8)
+M_6 conjugacy class selected
 D4 Stokes-side observable computed
 D4 harness implemented
 triality-equivariant theorem completed
