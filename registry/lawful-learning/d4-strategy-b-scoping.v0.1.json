@@ -23,7 +23,8 @@
     "trialityConjugates": ["S+ = 8_s", "S- = 8_c"]
   },
   "faithfulnessConvention": {
-    "status": "unsettled",
+    "status": "intentionally_unsettled",
+    "rationale": "The choice between B1 (SO(8) faithful spatial carrier) and B2 (Spin(8) structural carrier with kernel/lift data) is deferred because both are defensible at scoping stage and the correct choice depends on the D4 harness implementation, triality policy, M_6 lift-order pin, and centralizer/conjugacy resolution. Do not force the choice before those downstream pins are available.",
     "options": [
       {
         "optionId": "B1",
@@ -106,7 +107,15 @@
     "blockingForUniquenessPredicate": true
   },
   "stokesObservablePin": {
-    "status": "undeclared",
+    "status": "terminology_pinned_observable_undeclared",
+    "terminology": {
+      "meaning": "Stokes phenomenon / asymptotic analysis in the singularity-theoretic sense, analogous to the A2 direct Stokes-side calculation.",
+      "notStokesTheoremDifferentialForms": true,
+      "notBrownianHolonomyOrWilsonLoopStokesGeometry": true,
+      "laneSeparation": "Brownian-holonomy and Wilson-loop Stokes geometry live in separate Yang-Mills/Brownian-holonomy lanes and are not the observable meant here."
+    },
+    "typeLevelClaim": "Under Strategy B the D4 Stokes observable changes type from scalar data to matrix/conjugacy-class data.",
+    "typeLevelNonClaim": "No specific matrix-valued D4 Stokes observable has been computed, and no conjugacy-class observable is certified until the centralizer/conjugacy resolution lands.",
     "dataShape": "tuple_with_cyclic_product_constraint_not_single_class_by_default",
     "requiredDeclarations": [
       "poincare_rank",
@@ -143,7 +152,12 @@
   },
   "harnessContract": {
     "status": "specified_not_implemented",
+    "role": "property_test_contract_for_candidate_realizations",
+    "allPredicatesRequired": true,
+    "constructionBoundary": "The D4 Strategy B harness tests proposed realizations against the Strategy B property contract. It does not construct a realization, and passing the harness confirms only that a proposed candidate satisfies the declared properties, not that Strategy B is proved.",
+    "candidateFailureRule": "A candidate passing seven of the eight predicates is not a Strategy B realization under this contract.",
     "replacesScalarCenterPredicates": true,
+    "noScalarCenterReuseRationale": "P7 exists to prevent a purported Strategy B realization from collapsing back into a dressed-up Strategy A/scalar-center construction. It checks that the non-scalar matrix witness is not merely a scalar-center phase wrapped in matrix form.",
     "proposedPredicates": [
       "P1_matrix_stokes_multiplier_D4",
       "P2_order_six_minimality_D4",
@@ -173,8 +187,8 @@
   "openIssues": [
     {
       "issueId": "faithfulness_convention",
-      "status": "open",
-      "description": "Choose SO(8) faithful vector action or Spin(8) structure carrier with explicit lift data."
+      "status": "intentionally_unsettled",
+      "description": "Do not choose SO(8) faithful vector action or Spin(8) structure carrier with explicit lift data until harness, triality, lift-order, and centralizer pins clarify which convention is needed."
     },
     {
       "issueId": "M6_lift_order",
