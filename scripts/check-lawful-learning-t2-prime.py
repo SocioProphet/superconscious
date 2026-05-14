@@ -22,9 +22,8 @@ T2_REQUIRED_PREDICATES = {
 T2_REQUIRED_NON_CLAIMS = {
     "does_not_update_runtime_harness",
     "does_not_recompute_hash_chain_head",
-    "does_not_prove_A2",
-    "does_not_identify_A2_spatial_group",
     "does_not_add_empirical_evidence",
+    "does_not_compute_A2_coxeter_jump_coefficient",
 }
 A2_REQUIRED_OPEN_ITEMS = {
     "coxeter_jump_coefficient_A2",
