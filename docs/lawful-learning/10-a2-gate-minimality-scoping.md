@@ -2,14 +2,14 @@
 
 **Status:** Draft v1, theorem framing under T2' faithful-frame doctrine.  
 **Date:** May 13, 2026.  
-**Scope:** A2 extension of the T2' faithful-frame theorem: spatial group, auxiliary group, polarization form, central element, and proof obligations.  
-**Claim class:** [M|T|G] as marked. The structural theorem is committed here; the Coxeter-jump coefficient remains a separate numerical harness deliverable.
+**Scope:** A2 extension of the T2' faithful-frame theorem: spatial group, auxiliary group, polarization form, central element, and harness baseline.  
+**Claim class:** [M|T|G] as marked. The structural theorem is committed here; the Coxeter-jump coefficient is scaffold-supported and still awaits direct Stokes-side verification.
 
 ## 0. Placement
 
-[G] This document belongs to Lawful Learning because it governs how a theorem-level structure enters the learning framework: scope declaration, witness-object discipline, predicate interpretation, non-claim propagation, and open harness-obligation tracking.
+[G] This document belongs to Lawful Learning because it governs how a theorem-level structure enters the learning framework: scope declaration, witness-object discipline, predicate interpretation, non-claim propagation, and harness-obligation tracking.
 
-[G] The A2 structural result is theorem-level doctrine. The open Coxeter-jump coefficient is a harness/numerical target, not a blocker for the group-theoretic and categorical theorem status.
+[G] The A2 structural result is theorem-level doctrine. The Coxeter-jump coefficient is now represented in the scaffold harness as `-27/4`, supported by Fuss-Catalan inverse-radius evidence, but the direct Stokes-side computation remains outstanding.
 
 ## 1. A2 setup
 
@@ -152,48 +152,65 @@ Then use the coherent loop condition to select the canonical branch.
 
 [M] Once candidate reduction and auxiliary uniqueness are established, minimality follows by the same structural shape as A1.
 
-## 8. Harness implications
+## 8. Harness baseline
 
-[T] The A1 harness predicates adapt as follows:
+[T] The A2 scaffold harness is now live at:
+
+```text
+harness/coxeter_a2_harness.py
+harness/reference_reports/coxeter_a2_report.v1.json
+harness/fuss_catalan_verification.py
+```
+
+[G] The supplied reference hash-chain head is:
+
+```text
+9f722df9ea3ec75769985b3c05bec6609c4a1d1741f4ca82c5314407219a3e1e
+```
+
+[T] The harness has eight predicates. All eight pass. Six are computed predicates; two remain scaffold values pending direct Stokes-side verification.
 
 | A1 predicate | A2 analog | A2 status |
 | --- | --- | --- |
-| `stokes_multiplier_observed == -1` | `stokes_multiplier_observed_A2 == omega` | structural target available |
-| `catalan_jump_coefficient ~= -4` | `coxeter_jump_coefficient_A2` | numerical harness target pending |
-| `pairing_preservation` | `hermitian_preservation_A2` | structural target available |
-| `commutator_norm` | `gellmann_commutator_norm_A2` | convention-dependent |
-| `zeta == -I_2` | `zeta_A2 == omega * I_3` | structural target available |
-| none | `zeta_A2^3 == I_3` | new A2 order predicate |
+| `stokes_multiplier_observed == -1` | `stokes_multiplier_observed_A2 == omega` | scaffold value, direct Stokes observable pending |
+| `catalan_jump_coefficient ~= -4` | `coxeter_jump_coefficient_A2 == -27/4` | scaffold-supported by Fuss-Catalan inverse-radius evidence; direct Stokes computation pending |
+| `pairing_preservation` | `hermitian_preservation_A2` | computed |
+| `commutator_norm` | `gellmann_commutator_norm_A2` | computed with convention lock |
+| `zeta == -I_2` | `zeta_A2 == omega * I_3` | computed |
+| none | `zeta_A2^3 == I_3` | computed order-three predicate |
+| none | `gellmann_45_commutator_to_8_direction` | computed rank-two predicate |
+| spinor irreducibility | `defining_rep_irreducibility` | computed |
 
-[G] The Coxeter-jump coefficient is the blocking numerical target for the A2 harness. Until it is computed, an A2 harness may have a skeleton but not a complete numerical regression target.
+[G] The direct Stokes-side computation remains the canonical witness for the Coxeter-jump coefficient. The Fuss-Catalan verification is independent inverse-radius evidence, not a replacement for the Stokes computation.
 
-## 9. Open numerical deliverable
+## 9. Open numerical deliverables
 
-[G] The first concrete A2 harness deliverable is:
+[G] The remaining A2 harness deliverables are:
 
 ```text
-compute coxeter_jump_coefficient_A2
+direct_stokes_side_coxeter_jump_computation
+direct_A2_stokes_multiplier_observable
 ```
 
-[T] This requires the Stokes-side calculation for order-3 monodromy and three anti-Stokes rays.
+[T] The Coxeter-jump computation requires the Stokes-side calculation for order-3 monodromy and three anti-Stokes rays.
 
-[G] The unknown Coxeter-jump coefficient does not demote the A2 structural theorem. It only blocks the numerical harness from having a completed regression target.
+[G] The unknown direct Stokes witness does not demote the A2 structural theorem. It only marks the numerical harness as scaffold-supported rather than Stokes-complete.
 
 ## 10. Non-claims
 
 This document does not claim:
 
 ```text
-coxeter_jump_coefficient_A2 computed
-A2 runtime harness implemented
+direct A2 Stokes-side Coxeter-jump computation completed
+direct A2 Stokes multiplier observable implemented
 A_n theorem proved
 D/E singularity series scoped
 ```
 
 ## 11. Next actions
 
-1. Compute `coxeter_jump_coefficient_A2`.
-2. Draft `coxeter_a2_harness.py` with structural predicates and placeholder numerical jump target.
-3. Write the expanded A2 proof note from this theorem skeleton.
+1. Compute the direct Stokes-side witness for `coxeter_jump_coefficient_A2`.
+2. Replace scaffold value status with direct computed status after that witness lands.
+3. Expand the A2 proof note if desired.
 4. State C-1'_A2 after the proof note stabilizes.
 5. Generalize to A_n after A2 harness and proof-note layers are settled.
