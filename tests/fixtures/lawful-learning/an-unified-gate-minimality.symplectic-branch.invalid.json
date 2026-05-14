@@ -1,0 +1,66 @@
+{
+  "schemaVersion": "lawful-learning.an-unified-gate-minimality.v0.1",
+  "recordType": "AnUnifiedGateMinimalityTheoremRecord",
+  "recordId": "lawful-learning:an-unified-gate-minimality:invalid-symplectic-branch",
+  "claimStatus": "structural_theorem_pattern",
+  "doctrineDocument": "docs/lawful-learning/11-an-unified-gate-minimality-theorem.md",
+  "buildsOn": [
+    "docs/proofs/a1-gate-minimality-faithful.md",
+    "docs/lawful-learning/10-a2-gate-minimality-scoping.md",
+    "registry/lawful-learning/a2-gate-minimality-scoping.v0.1.json"
+  ],
+  "a1ExceptionalBranch": {
+    "spatialGroup": "SO(3)",
+    "auxiliaryGroup": "Spin(3)=SU(2)",
+    "polarizationSpace": "C^2",
+    "formType": "symplectic",
+    "centralElement": "-I_2",
+    "reason": "SU(2) defining representation is quaternionic type."
+  },
+  "nGreaterEqualTwoBranch": {
+    "spatialGroupPattern": "PSU(n+1)",
+    "auxiliaryGroupPattern": "SU(n+1)",
+    "polarizationSpacePattern": "C^(n+1)",
+    "formType": "symplectic",
+    "centralElementPattern": "exp(2*pi*i/(n+1)) * I_(n+1)",
+    "loopClassPattern": "Z/(n+1)",
+    "jumpCoefficientPattern": "- (n+1)^(n+1) / n^n"
+  },
+  "parametricHarnessTargets": [
+    "stokes_multiplier_A_n",
+    "coxeter_jump_coefficient_A_n",
+    "polarization_preservation_A_n",
+    "zeta_A_n",
+    "zeta_A_n_order_check",
+    "rank_structure_predicates",
+    "irreducibility_predicate"
+  ],
+  "openItems": [
+    {
+      "itemId": "coxeter_an_harness_scaffold",
+      "status": "planned",
+      "deliverable": "Generate a parametric coxeter_an_harness.py."
+    },
+    {
+      "itemId": "direct_stokes_side_A2",
+      "status": "open",
+      "deliverable": "Compute direct A2 Stokes-side observables."
+    },
+    {
+      "itemId": "direct_stokes_side_A_n",
+      "status": "future_work",
+      "deliverable": "Generalize direct Stokes-side observables."
+    }
+  ],
+  "nonClaims": [
+    "does_not_compute_direct_stokes_coefficients",
+    "does_not_implement_parametric_runtime_harness",
+    "does_not_scope_D_or_E_series",
+    "does_not_supply_proof_assistant_formalization"
+  ],
+  "provenance": {
+    "createdBy": "assistant://gpt-5.5-thinking",
+    "createdAt": "2026-05-14T03:00:00Z",
+    "sourcePrompt": "invalid fixture for An Hermitian branch discipline"
+  }
+}
