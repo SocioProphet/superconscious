@@ -33,51 +33,61 @@
     "spatial triad to adjoint frame",
     "Z/2 loop class to Z/3 loop class"
   ],
+  "harness": {
+    "path": "harness/coxeter_a2_harness.py",
+    "referenceReport": "harness/reference_reports/coxeter_a2_report.v1.json",
+    "fussCatalanVerification": "harness/fuss_catalan_verification.py",
+    "hashChainHead": "9f722df9ea3ec75769985b3c05bec6609c4a1d1741f4ca82c5314407219a3e1e",
+    "status": "scaffold_live",
+    "passedPredicates": 8,
+    "computedPredicates": 6,
+    "scaffoldPredicates": 2
+  },
   "harnessPredicates": [
     {
       "predicateId": "stokes_multiplier_observed_A2",
       "target": "omega = exp(2*pi*i/3)",
-      "status": "structural_target_available"
+      "status": "scaffold_value_direct_stokes_pending"
     },
     {
       "predicateId": "coxeter_jump_coefficient_A2",
-      "target": "TBD",
-      "status": "numerical_target_pending",
-      "reason": "Requires A2 Stokes-side calculation with order-3 monodromy and three anti-Stokes rays. This is a harness/numerical deliverable, not a blocker for structural theorem status."
+      "target": "-27/4",
+      "status": "scaffold_supported_direct_stokes_pending",
+      "reason": "Supported by Fuss-Catalan inverse-radius evidence; direct A2 Stokes-side calculation remains outstanding."
     },
     {
       "predicateId": "hermitian_preservation_A2",
       "target": "sigma_def preserves H_std",
-      "status": "structural_target_available"
+      "status": "computed_machine_precision"
     },
     {
       "predicateId": "gellmann_commutator_norm_A2",
       "target": "convention-dependent",
-      "status": "structural_target_available_with_convention_lock"
+      "status": "computed_with_convention_lock"
     },
     {
       "predicateId": "zeta_A2",
       "target": "omega * I_3",
-      "status": "structural_target_available"
+      "status": "computed_machine_precision"
     },
     {
       "predicateId": "zeta_A2_order_check",
       "target": "zeta_A2^3 = I_3",
-      "status": "structural_target_available"
+      "status": "computed_machine_precision"
     }
   ],
   "openItems": [
     {
       "itemId": "coxeter_jump_coefficient_A2",
       "priority": 1,
-      "status": "numerical_harness_blocker",
-      "deliverable": "Compute the A2 Coxeter-jump coefficient."
+      "status": "direct_stokes_computation_pending",
+      "deliverable": "Compute the A2 Coxeter-jump coefficient by direct Stokes-side calculation."
     },
     {
       "itemId": "a2_harness_skeleton",
       "priority": 2,
-      "status": "planned",
-      "deliverable": "Draft coxeter_a2_harness.py with structural predicates and placeholder jump target."
+      "status": "complete",
+      "deliverable": "A2 scaffold harness and reference report are committed."
     },
     {
       "itemId": "a2_expanded_proof_note",
@@ -87,15 +97,15 @@
     }
   ],
   "nonClaims": [
-    "does_not_compute_coxeter_jump_coefficient",
-    "does_not_create_runtime_harness",
+    "does_not_complete_direct_stokes_computation",
+    "does_not_implement_direct_A2_stokes_observable",
     "does_not_prove_A_n_uniformity",
     "does_not_scope_D_or_E_series"
   ],
   "provenance": {
     "createdBy": "assistant://gpt-5.5-thinking",
     "createdAt": "2026-05-13T23:35:00Z",
-    "revisedAt": "2026-05-14T02:35:00Z",
-    "sourcePrompt": "A2 Gate Minimality: Scoping Document; user correction: No this is theorem"
+    "revisedAt": "2026-05-14T02:45:00Z",
+    "sourcePrompt": "A2 Gate Minimality harness scaffold and Fuss-Catalan verification"
   }
 }
