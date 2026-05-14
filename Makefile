@@ -215,6 +215,7 @@ neuronpedia-static:
 neuronpedia-schema-fixtures:
 	python3 -m src.m1.validate_schema_instance schemas/neuronpedia/artifact-source-lock.v0.1.json tests/fixtures/neuronpedia/artifact-source-lock.synthetic.json
 	! python3 -m src.m1.validate_schema_instance schemas/neuronpedia/artifact-source-lock.v0.1.json tests/fixtures/neuronpedia/artifact-source-lock.mutable.invalid.synthetic.json
+	! python3 -m src.m1.validate_schema_instance schemas/neuronpedia/artifact-source-lock.v0.1.json tests/fixtures/neuronpedia/artifact-source-lock.missing-decomposition.invalid.synthetic.json
 	python3 -m src.m1.validate_schema_instance schemas/neuronpedia/provider-binding.v0.1.json tests/fixtures/neuronpedia/provider-binding.synthetic.json
 	! python3 -m src.m1.validate_schema_instance schemas/neuronpedia/provider-binding.v0.1.json tests/fixtures/neuronpedia/provider-binding.writeback.invalid.synthetic.json
 	python3 -m src.m1.validate_schema_instance schemas/neuronpedia/intervention-spec.v0.1.json tests/fixtures/neuronpedia/intervention-spec.synthetic.json
