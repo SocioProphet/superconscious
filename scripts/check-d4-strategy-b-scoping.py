@@ -165,8 +165,23 @@ def validate_stokes_pin(record: dict[str, Any]) -> None:
     stokes = record.get("stokesObservablePin")
     if not isinstance(stokes, dict):
         raise ValidationError("stokesObservablePin must be present")
-    if stokes.get("status") != "undeclared":
-        raise ValidationError("D4 Stokes observable pin must remain undeclared")
+    if stokes.get("status") != "terminology_pinned_observable_undeclared":
+        raise ValidationError("D4 Stokes observable pin must have terminology pinned while observable remains undeclared")
+
+    terminology = stokes.get("terminology")
+    if not isinstance(terminology, dict):
+        raise ValidationError("stokesObservablePin.terminology must be present")
+    if "Stokes phenomenon / asymptotic analysis" not in terminology.get("meaning", ""):
+        raise ValidationError("Stokes terminology must mean asymptotic Stokes phenomenon")
+    if terminology.get("notStokesTheoremDifferentialForms") is not True:
+        raise ValidationError("Stokes terminology must exclude differential-forms Stokes theorem")
+    if terminology.get("notBrownianHolonomyOrWilsonLoopStokesGeometry") is not True:
+        raise ValidationError("Stokes terminology must exclude Brownian/Wilson-loop lanes")
+
+    if stokes.get("typeLevelClaim") != "Under Strategy B the D4 Stokes observable changes type from scalar data to matrix/conjugacy-class data.":
+        raise ValidationError("D4 Stokes type-level claim must be pinned")
+    if "No specific matrix-valued D4 Stokes observable has been computed" not in stokes.get("typeLevelNonClaim", ""):
+        raise ValidationError("D4 Stokes type-level non-claim must forbid computed-observable overclaim")
     if stokes.get("dataShape") != "tuple_with_cyclic_product_constraint_not_single_class_by_default":
         raise ValidationError("Stokes data shape must be tuple/product-constraint, not single class by default")
     declarations = set(stokes.get("requiredDeclarations", []))
@@ -213,8 +228,10 @@ def validate(record: dict[str, Any]) -> None:
         raise ValidationError("triality conjugates must be S+ and S-")
 
     faithfulness = record.get("faithfulnessConvention", {})
-    if faithfulness.get("status") != "unsettled":
-        raise ValidationError("faithfulnessConvention.status must remain unsettled")
+    if faithfulness.get("status") != "intentionally_unsettled":
+        raise ValidationError("faithfulnessConvention.status must be intentionally_unsettled")
+    if "Do not force the choice" not in faithfulness.get("rationale", ""):
+        raise ValidationError("faithfulnessConvention rationale must say not to force the choice yet")
     if faithfulness.get("blockingForTheorem") is not True:
         raise ValidationError("faithfulnessConvention must block theorem promotion")
     options = {item.get("optionId"): item for item in faithfulness.get("options", []) if isinstance(item, dict)}
@@ -269,8 +286,18 @@ def validate(record: dict[str, Any]) -> None:
     harness = record.get("harnessContract", {})
     if harness.get("status") != "specified_not_implemented":
         raise ValidationError("harnessContract.status must be specified_not_implemented")
+    if harness.get("role") != "property_test_contract_for_candidate_realizations":
+        raise ValidationError("harnessContract.role must define property-test contract role")
+    if harness.get("allPredicatesRequired") is not True:
+        raise ValidationError("all harness predicates must be required")
+    if "does not construct a realization" not in harness.get("constructionBoundary", ""):
+        raise ValidationError("harness constructionBoundary must state harness does not construct realizations")
+    if "seven of the eight" not in harness.get("candidateFailureRule", ""):
+        raise ValidationError("harness candidateFailureRule must reject 7-of-8 candidates")
     if harness.get("replacesScalarCenterPredicates") is not True:
         raise ValidationError("harness must replace scalar-center predicates")
+    if "dressed-up Strategy A" not in harness.get("noScalarCenterReuseRationale", ""):
+        raise ValidationError("P7 rationale must explain dressed-up Strategy A/scalar-center failure mode")
     predicates = set(harness.get("proposedPredicates", []))
     missing_predicates = REQUIRED_PREDICATES - predicates
     if missing_predicates:
