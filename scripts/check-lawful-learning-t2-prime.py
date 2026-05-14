@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate Lawful Learning T2' and A2 theorem doctrine artifacts.
+"""Validate Lawful Learning T2', A2, and unified A_n theorem artifacts.
 
 Structural checker only. It does not run mathematical harnesses, recompute
 hash chains, compute the direct A2 Stokes-side coefficient, or implement runtime services.
@@ -45,6 +45,26 @@ A2_REQUIRED_HARNESS_KEYS = {
     "passedPredicates",
     "computedPredicates",
     "scaffoldPredicates",
+}
+AN_REQUIRED_TARGETS = {
+    "stokes_multiplier_A_n",
+    "coxeter_jump_coefficient_A_n",
+    "polarization_preservation_A_n",
+    "zeta_A_n",
+    "zeta_A_n_order_check",
+    "rank_structure_predicates",
+    "irreducibility_predicate",
+}
+AN_REQUIRED_OPEN_ITEMS = {
+    "coxeter_an_harness_scaffold",
+    "direct_stokes_side_A2",
+    "direct_stokes_side_A_n",
+}
+AN_REQUIRED_NON_CLAIMS = {
+    "does_not_compute_direct_stokes_coefficients",
+    "does_not_implement_parametric_runtime_harness",
+    "does_not_scope_D_or_E_series",
+    "does_not_supply_proof_assistant_formalization",
 }
 
 
@@ -183,20 +203,75 @@ def validate_a2_registry(record: dict[str, Any]) -> None:
         raise ValidationError(f"A2 registry: missing nonClaims {sorted(missing_non_claims)}")
 
 
+def validate_an_registry(record: dict[str, Any]) -> None:
+    if record.get("schemaVersion") != "lawful-learning.an-unified-gate-minimality.v0.1":
+        raise ValidationError("An registry: unexpected schemaVersion")
+    if record.get("recordType") != "AnUnifiedGateMinimalityTheoremRecord":
+        raise ValidationError("An registry: unexpected recordType")
+    if record.get("claimStatus") != "structural_theorem_pattern":
+        raise ValidationError("An registry: claimStatus must be structural_theorem_pattern")
+
+    a1 = record.get("a1ExceptionalBranch", {})
+    if not isinstance(a1, dict):
+        raise ValidationError("An registry: a1ExceptionalBranch must be object")
+    expected_a1 = {
+        "spatialGroup": "SO(3)",
+        "auxiliaryGroup": "Spin(3)=SU(2)",
+        "polarizationSpace": "C^2",
+        "formType": "symplectic",
+        "centralElement": "-I_2",
+    }
+    for key, value in expected_a1.items():
+        if a1.get(key) != value:
+            raise ValidationError(f"An registry: a1ExceptionalBranch.{key} must be {value}")
+
+    branch = record.get("nGreaterEqualTwoBranch", {})
+    if not isinstance(branch, dict):
+        raise ValidationError("An registry: nGreaterEqualTwoBranch must be object")
+    expected_branch = {
+        "spatialGroupPattern": "PSU(n+1)",
+        "auxiliaryGroupPattern": "SU(n+1)",
+        "polarizationSpacePattern": "C^(n+1)",
+        "formType": "Hermitian",
+        "centralElementPattern": "exp(2*pi*i/(n+1)) * I_(n+1)",
+        "loopClassPattern": "Z/(n+1)",
+        "jumpCoefficientPattern": "- (n+1)^(n+1) / n^n",
+    }
+    for key, value in expected_branch.items():
+        if branch.get(key) != value:
+            raise ValidationError(f"An registry: nGreaterEqualTwoBranch.{key} must be {value}")
+
+    targets = set(record.get("parametricHarnessTargets", []))
+    missing_targets = AN_REQUIRED_TARGETS - targets
+    if missing_targets:
+        raise ValidationError(f"An registry: missing parametricHarnessTargets {sorted(missing_targets)}")
+
+    open_items = {item.get("itemId") for item in record.get("openItems", []) if isinstance(item, dict)}
+    missing_open = AN_REQUIRED_OPEN_ITEMS - open_items
+    if missing_open:
+        raise ValidationError(f"An registry: missing openItems {sorted(missing_open)}")
+
+    missing_non_claims = AN_REQUIRED_NON_CLAIMS - set(record.get("nonClaims", []))
+    if missing_non_claims:
+        raise ValidationError(f"An registry: missing nonClaims {sorted(missing_non_claims)}")
+
+
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Validate Lawful Learning T2'/A2 doctrine artifacts")
+    parser = argparse.ArgumentParser(description="Validate Lawful Learning T2'/A2/An doctrine artifacts")
     parser.add_argument("--t2", default="registry/lawful-learning/t2-prime-predicate-interpretation.v0.1.json")
     parser.add_argument("--a2", default="registry/lawful-learning/a2-gate-minimality-scoping.v0.1.json")
+    parser.add_argument("--an", default="registry/lawful-learning/an-unified-gate-minimality.v0.1.json")
     args = parser.parse_args()
 
     try:
         validate_t2_registry(load_json(Path(args.t2)))
         validate_a2_registry(load_json(Path(args.a2)))
+        validate_an_registry(load_json(Path(args.an)))
     except ValidationError as exc:
         print(f"ERR: {exc}", file=sys.stderr)
         return 2
 
-    print("OK: Lawful Learning T2'/A2 theorem doctrine artifacts validate")
+    print("OK: Lawful Learning T2'/A2/An theorem doctrine artifacts validate")
     return 0
 
 
