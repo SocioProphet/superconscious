@@ -1,0 +1,65 @@
+{
+  "schemaVersion": "lawful-learning.d4-c7-prime-scoping.v0.1",
+  "recordType": "D4C7PrimeScopingRecord",
+  "recordId": "lawful-learning:d4-c7-prime-scoping:invalid-false-cyclic-center",
+  "claimStatus": "research_scoping",
+  "doctrineDocument": "docs/lawful-learning/12-d4-c7-prime-scoping.md",
+  "buildsOn": [
+    "docs/lawful-learning/11-an-unified-gate-minimality-theorem.md",
+    "registry/lawful-learning/an-unified-gate-minimality.v0.1.json"
+  ],
+  "stressTestCase": "D4",
+  "structuralMismatch": {
+    "coxeterNumber": 6,
+    "naturalSimplyConnectedGroup": "Spin(8)",
+    "center": "Z/6",
+    "outerAutomorphismGroup": "S3 triality",
+    "reasonAnTemplateFails": "Invalid fixture: falsely treats Spin(8) as having cyclic center of order 6."
+  },
+  "candidateDirections": [
+    {
+      "directionId": "A_non_simple_extension",
+      "status": "tractable_but_ad_hoc",
+      "summary": "Use products or central extensions.",
+      "failureRisk": "Minimality becomes non-canonical."
+    },
+    {
+      "directionId": "B_non_scalar_auxiliary_element",
+      "status": "structural_shift",
+      "summary": "Use a non-scalar auxiliary witness.",
+      "failureRisk": "Scalar-center predicates fail."
+    },
+    {
+      "directionId": "C_graded_polarization",
+      "status": "deep_refactor_candidate",
+      "summary": "Use decomposable or graded polarization.",
+      "failureRisk": "Requires new category and harness."
+    }
+  ],
+  "recommendedNextDeliverable": {
+    "itemId": "d4_representation_triality_inventory",
+    "status": "next",
+    "documents": [
+      "docs/lawful-learning/13-d4-representation-inventory.md",
+      "registry/lawful-learning/d4-representation-inventory.v0.1.json"
+    ]
+  },
+  "invalidReuseRules": [
+    "Do not copy the A_n scalar-center predicate set into D4 unchanged.",
+    "Do not claim a D4 theorem before selecting the witness-object direction.",
+    "Do not treat triality as equivalent to a cyclic scalar center of order 6."
+  ],
+  "nonClaims": [
+    "does_not_prove_D4",
+    "does_not_select_D4_spatial_group",
+    "does_not_select_D4_auxiliary_group",
+    "does_not_implement_D4_harness",
+    "does_not_compute_D4_stokes_observable",
+    "does_not_scope_full_D_or_E_series"
+  ],
+  "provenance": {
+    "createdBy": "assistant://gpt-5.5-thinking",
+    "createdAt": "2026-05-14T03:10:00Z",
+    "sourcePrompt": "invalid fixture for D4 center mismatch discipline"
+  }
+}
