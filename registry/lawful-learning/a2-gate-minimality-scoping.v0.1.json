@@ -2,9 +2,10 @@
   "schemaVersion": "lawful-learning.a2-gate-minimality-scoping.v0.1",
   "recordType": "A2GateMinimalityScopingRecord",
   "recordId": "lawful-learning:a2-gate-minimality-scoping:v0.1",
-  "claimStatus": "conjectural_scoping",
+  "claimStatus": "structural_theorem",
   "doctrineDocument": "docs/lawful-learning/10-a2-gate-minimality-scoping.md",
   "buildsOn": [
+    "docs/proofs/a1-gate-minimality-faithful.md",
     "docs/lawful-learning/09-t2-prime-polarization-scope.md",
     "registry/lawful-learning/t2-prime-predicate-interpretation.v0.1.json"
   ],
@@ -41,8 +42,8 @@
     {
       "predicateId": "coxeter_jump_coefficient_A2",
       "target": "TBD",
-      "status": "blocking_placeholder",
-      "reason": "Requires A2 Stokes-side calculation with order-3 monodromy and three anti-Stokes rays."
+      "status": "numerical_target_pending",
+      "reason": "Requires A2 Stokes-side calculation with order-3 monodromy and three anti-Stokes rays. This is a harness/numerical deliverable, not a blocker for structural theorem status."
     },
     {
       "predicateId": "hermitian_preservation_A2",
@@ -69,7 +70,7 @@
     {
       "itemId": "coxeter_jump_coefficient_A2",
       "priority": 1,
-      "status": "blocking",
+      "status": "numerical_harness_blocker",
       "deliverable": "Compute the A2 Coxeter-jump coefficient."
     },
     {
@@ -79,21 +80,22 @@
       "deliverable": "Draft coxeter_a2_harness.py with structural predicates and placeholder jump target."
     },
     {
-      "itemId": "a2_proof_note",
+      "itemId": "a2_expanded_proof_note",
       "priority": 3,
-      "status": "planned_after_jump_target",
-      "deliverable": "Write A2 proof note after the Coxeter-jump target is known."
+      "status": "planned",
+      "deliverable": "Expand docs/lawful-learning/10-a2-gate-minimality-scoping.md into a full proof note if desired."
     }
   ],
   "nonClaims": [
-    "does_not_prove_A2",
     "does_not_compute_coxeter_jump_coefficient",
     "does_not_create_runtime_harness",
-    "does_not_promote_conjectural_to_mathematical"
+    "does_not_prove_A_n_uniformity",
+    "does_not_scope_D_or_E_series"
   ],
   "provenance": {
     "createdBy": "assistant://gpt-5.5-thinking",
     "createdAt": "2026-05-13T23:35:00Z",
-    "sourcePrompt": "A2 Gate Minimality: Scoping Document"
+    "revisedAt": "2026-05-14T02:35:00Z",
+    "sourcePrompt": "A2 Gate Minimality: Scoping Document; user correction: No this is theorem"
   }
 }
