@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""Validate Lawful Learning T2', A2, and unified A_n theorem artifacts.
+"""Validate Lawful Learning T2', A2, unified A_n, and D4 scoping artifacts.
 
 Structural checker only. It does not run mathematical harnesses, recompute
-hash chains, compute the direct A2 Stokes-side coefficient, or implement runtime services.
+hash chains, compute direct Stokes-side coefficients, or implement runtime services.
 """
 from __future__ import annotations
 
@@ -65,6 +65,19 @@ AN_REQUIRED_NON_CLAIMS = {
     "does_not_implement_parametric_runtime_harness",
     "does_not_scope_D_or_E_series",
     "does_not_supply_proof_assistant_formalization",
+}
+D4_REQUIRED_DIRECTIONS = {
+    "A_non_simple_extension",
+    "B_non_scalar_auxiliary_element",
+    "C_graded_polarization",
+}
+D4_REQUIRED_NON_CLAIMS = {
+    "does_not_prove_D4",
+    "does_not_select_D4_spatial_group",
+    "does_not_select_D4_auxiliary_group",
+    "does_not_implement_D4_harness",
+    "does_not_compute_D4_stokes_observable",
+    "does_not_scope_full_D_or_E_series",
 }
 
 
@@ -256,22 +269,68 @@ def validate_an_registry(record: dict[str, Any]) -> None:
         raise ValidationError(f"An registry: missing nonClaims {sorted(missing_non_claims)}")
 
 
+def validate_d4_registry(record: dict[str, Any]) -> None:
+    if record.get("schemaVersion") != "lawful-learning.d4-c7-prime-scoping.v0.1":
+        raise ValidationError("D4 registry: unexpected schemaVersion")
+    if record.get("recordType") != "D4C7PrimeScopingRecord":
+        raise ValidationError("D4 registry: unexpected recordType")
+    if record.get("claimStatus") != "research_scoping":
+        raise ValidationError("D4 registry: claimStatus must be research_scoping")
+    if record.get("stressTestCase") != "D4":
+        raise ValidationError("D4 registry: stressTestCase must be D4")
+
+    mismatch = record.get("structuralMismatch", {})
+    if not isinstance(mismatch, dict):
+        raise ValidationError("D4 registry: structuralMismatch must be object")
+    expected = {
+        "coxeterNumber": 6,
+        "naturalSimplyConnectedGroup": "Spin(8)",
+        "center": "Z/2 x Z/2",
+        "outerAutomorphismGroup": "S3 triality",
+    }
+    for key, value in expected.items():
+        if mismatch.get(key) != value:
+            raise ValidationError(f"D4 registry: structuralMismatch.{key} must be {value}")
+    require_nonempty(mismatch, "reasonAnTemplateFails", "D4 structuralMismatch")
+
+    directions = {item.get("directionId") for item in record.get("candidateDirections", []) if isinstance(item, dict)}
+    missing_directions = D4_REQUIRED_DIRECTIONS - directions
+    if missing_directions:
+        raise ValidationError(f"D4 registry: missing candidateDirections {sorted(missing_directions)}")
+
+    next_item = record.get("recommendedNextDeliverable", {})
+    if not isinstance(next_item, dict):
+        raise ValidationError("D4 registry: recommendedNextDeliverable must be object")
+    if next_item.get("itemId") != "d4_representation_triality_inventory":
+        raise ValidationError("D4 registry: next deliverable must be d4_representation_triality_inventory")
+
+    invalid_rules = record.get("invalidReuseRules", [])
+    if len(invalid_rules) < 3:
+        raise ValidationError("D4 registry: expected at least three invalid reuse rules")
+
+    missing_non_claims = D4_REQUIRED_NON_CLAIMS - set(record.get("nonClaims", []))
+    if missing_non_claims:
+        raise ValidationError(f"D4 registry: missing nonClaims {sorted(missing_non_claims)}")
+
+
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Validate Lawful Learning T2'/A2/An doctrine artifacts")
+    parser = argparse.ArgumentParser(description="Validate Lawful Learning T2'/A2/An/D4 doctrine artifacts")
     parser.add_argument("--t2", default="registry/lawful-learning/t2-prime-predicate-interpretation.v0.1.json")
     parser.add_argument("--a2", default="registry/lawful-learning/a2-gate-minimality-scoping.v0.1.json")
     parser.add_argument("--an", default="registry/lawful-learning/an-unified-gate-minimality.v0.1.json")
+    parser.add_argument("--d4", default="registry/lawful-learning/d4-c7-prime-scoping.v0.1.json")
     args = parser.parse_args()
 
     try:
         validate_t2_registry(load_json(Path(args.t2)))
         validate_a2_registry(load_json(Path(args.a2)))
         validate_an_registry(load_json(Path(args.an)))
+        validate_d4_registry(load_json(Path(args.d4)))
     except ValidationError as exc:
         print(f"ERR: {exc}", file=sys.stderr)
         return 2
 
-    print("OK: Lawful Learning T2'/A2/An theorem doctrine artifacts validate")
+    print("OK: Lawful Learning T2'/A2/An/D4 doctrine artifacts validate")
     return 0
 
 
