@@ -2,7 +2,7 @@
 """Validate Lawful Learning T2' and A2 theorem doctrine artifacts.
 
 Structural checker only. It does not run mathematical harnesses, recompute
-hash chains, compute the A2 Coxeter-jump coefficient, or implement runtime harnesses.
+hash chains, compute the direct A2 Stokes-side coefficient, or implement runtime services.
 """
 from __future__ import annotations
 
@@ -31,10 +31,20 @@ A2_REQUIRED_OPEN_ITEMS = {
     "a2_expanded_proof_note",
 }
 A2_REQUIRED_NON_CLAIMS = {
-    "does_not_compute_coxeter_jump_coefficient",
-    "does_not_create_runtime_harness",
+    "does_not_complete_direct_stokes_computation",
+    "does_not_implement_direct_A2_stokes_observable",
     "does_not_prove_A_n_uniformity",
     "does_not_scope_D_or_E_series",
+}
+A2_REQUIRED_HARNESS_KEYS = {
+    "path",
+    "referenceReport",
+    "fussCatalanVerification",
+    "hashChainHead",
+    "status",
+    "passedPredicates",
+    "computedPredicates",
+    "scaffoldPredicates",
 }
 
 
@@ -127,6 +137,19 @@ def validate_a2_registry(record: dict[str, Any]) -> None:
         if candidate.get(key) != value:
             raise ValidationError(f"A2 registry: candidate.{key} must be {value}")
 
+    harness = record.get("harness", {})
+    if not isinstance(harness, dict):
+        raise ValidationError("A2 registry: harness must be object")
+    missing_harness = A2_REQUIRED_HARNESS_KEYS - set(harness)
+    if missing_harness:
+        raise ValidationError(f"A2 registry: missing harness fields {sorted(missing_harness)}")
+    if harness.get("status") != "scaffold_live":
+        raise ValidationError("A2 registry: harness.status must be scaffold_live")
+    if harness.get("passedPredicates") != 8:
+        raise ValidationError("A2 registry: harness must report 8 passing predicates")
+    if harness.get("computedPredicates") != 6 or harness.get("scaffoldPredicates") != 2:
+        raise ValidationError("A2 registry: harness must report 6 computed and 2 scaffold predicates")
+
     predicates = record.get("harnessPredicates", [])
     if not isinstance(predicates, list):
         raise ValidationError("A2 registry: harnessPredicates must be list")
@@ -144,8 +167,11 @@ def validate_a2_registry(record: dict[str, Any]) -> None:
         raise ValidationError(f"A2 registry: missing harness predicates {sorted(missing_predicates)}")
     for item in predicates:
         if item.get("predicateId") == "coxeter_jump_coefficient_A2":
-            if item.get("status") != "numerical_target_pending":
-                raise ValidationError("A2 registry: Coxeter jump must be numerical_target_pending until computed")
+            if item.get("status") != "scaffold_supported_direct_stokes_pending":
+                raise ValidationError("A2 registry: Coxeter jump must be scaffold_supported_direct_stokes_pending")
+        if item.get("predicateId") == "stokes_multiplier_observed_A2":
+            if item.get("status") != "scaffold_value_direct_stokes_pending":
+                raise ValidationError("A2 registry: Stokes multiplier must be scaffold_value_direct_stokes_pending")
 
     open_items = {item.get("itemId") for item in record.get("openItems", []) if isinstance(item, dict)}
     missing_open = A2_REQUIRED_OPEN_ITEMS - open_items
