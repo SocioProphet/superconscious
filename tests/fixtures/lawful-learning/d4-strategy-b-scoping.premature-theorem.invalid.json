@@ -1,0 +1,71 @@
+{
+  "schemaVersion": "lawful-learning.d4-strategy-b-scoping.v0.1",
+  "recordType": "D4StrategyBScopingRecord",
+  "recordId": "lawful-learning:d4-strategy-b-scoping:invalid-premature-theorem",
+  "claimStatus": "structural_theorem",
+  "doctrineDocument": "docs/lawful-learning/14-d4-strategy-b-scoping.md",
+  "buildsOn": [
+    "docs/lawful-learning/12-d4-c7-prime-scoping.md",
+    "docs/lawful-learning/13-d4-representation-inventory.md",
+    "registry/lawful-learning/d4-representation-inventory.v0.1.json"
+  ],
+  "strategy": {
+    "label": "B",
+    "name": "non_scalar_auxiliary_element",
+    "summary": "Invalid fixture: prematurely promotes Strategy B to theorem."
+  },
+  "selectedInitialCarrier": {
+    "structureCarrier": "Spin(8)",
+    "polarizationRepresentation": "V = 8_v",
+    "formType": "orthogonal",
+    "trialityPolicy": "slice_policy_V_first",
+    "trialityConjugates": ["S+ = 8_s", "S- = 8_c"]
+  },
+  "faithfulnessConvention": {
+    "status": "settled",
+    "options": [
+      {"optionId": "B1", "spatialCarrier": "SO(8)", "rationale": "Vector representation is faithful."},
+      {"optionId": "B2", "spatialCarrier": "Spin(8)", "rationale": "Structure carrier with lift data."}
+    ],
+    "blockingForTheorem": false
+  },
+  "candidateWitness": {
+    "name": "M_6",
+    "type": "non_scalar_order_six_auxiliary_element",
+    "vectorRepresentationModel": "diag(R(pi/3), I_6)",
+    "matrixSize": "8x8",
+    "requiredChecks": [
+      "M_6^6 = I",
+      "M_6^k != I for 1 <= k < 6",
+      "M_6 preserves the orthogonal form"
+    ],
+    "status": "certified"
+  },
+  "candidateTheoremStatements": {
+    "T2_D4_strategy_B": {
+      "status": "theorem",
+      "minimalObjectSketch": "(Spin(8), 8_v, R^8, Q_std, M_6, triality_slice=V)",
+      "blockingObligations": []
+    }
+  },
+  "harnessContract": {
+    "status": "implemented",
+    "replacesScalarCenterPredicates": true,
+    "proposedPredicates": [
+      "P1_matrix_stokes_multiplier_D4",
+      "P2_order_six_minimality_D4",
+      "P3_orthogonal_preservation_D4",
+      "P4_nonabelian_so8_commutator_D4",
+      "P5_centralizer_or_conjugacy_class_D4",
+      "P6_triality_slice_declaration_D4",
+      "P7_no_scalar_center_reuse_D4",
+      "P8_representation_irreducibility_or_commutant_D4"
+    ]
+  },
+  "openIssues": [],
+  "nonClaims": [],
+  "provenance": {
+    "createdBy": "assistant://gpt-5.5-thinking",
+    "createdAt": "2026-05-14T03:25:00Z"
+  }
+}

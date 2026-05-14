@@ -1,0 +1,111 @@
+{
+  "schemaVersion": "lawful-learning.a2-gate-minimality-scoping.v0.1",
+  "recordType": "A2GateMinimalityScopingRecord",
+  "recordId": "lawful-learning:a2-gate-minimality-scoping:v0.1",
+  "claimStatus": "structural_theorem",
+  "doctrineDocument": "docs/lawful-learning/10-a2-gate-minimality-scoping.md",
+  "buildsOn": [
+    "docs/proofs/a1-gate-minimality-faithful.md",
+    "docs/lawful-learning/09-t2-prime-polarization-scope.md",
+    "registry/lawful-learning/t2-prime-predicate-interpretation.v0.1.json"
+  ],
+  "candidate": {
+    "spatialGroup": "PSU(3)",
+    "auxiliaryGroup": "SU(3)",
+    "polarizationSpace": "C^3",
+    "formType": "Hermitian",
+    "centralElement": "omega * I_3",
+    "loopClass": "Z/3",
+    "frameLanguage": "adjoint frame"
+  },
+  "structuralCarryOverFromA1": [
+    "spatial group plus auxiliary group pattern",
+    "central loop-class lift lives in auxiliary structure",
+    "projective action on polarization space",
+    "Schur-uniqueness style auxiliary-selection argument"
+  ],
+  "structuralChangesFromA1": [
+    "SO(3) to PSU(3)",
+    "Spin(3) to SU(3)",
+    "C^2 to C^3",
+    "symplectic form to Hermitian form",
+    "-I_2 to omega * I_3",
+    "spatial triad to adjoint frame",
+    "Z/2 loop class to Z/3 loop class"
+  ],
+  "harness": {
+    "path": "harness/coxeter_a2_harness.py",
+    "referenceReport": "harness/reference_reports/coxeter_a2_report.v1.json",
+    "fussCatalanVerification": "harness/fuss_catalan_verification.py",
+    "hashChainHead": "9f722df9ea3ec75769985b3c05bec6609c4a1d1741f4ca82c5314407219a3e1e",
+    "status": "scaffold_live",
+    "passedPredicates": 8,
+    "computedPredicates": 6,
+    "scaffoldPredicates": 2
+  },
+  "harnessPredicates": [
+    {
+      "predicateId": "stokes_multiplier_observed_A2",
+      "target": "omega = exp(2*pi*i/3)",
+      "status": "scaffold_value_direct_stokes_pending"
+    },
+    {
+      "predicateId": "coxeter_jump_coefficient_A2",
+      "target": "-27/4",
+      "status": "scaffold_supported_direct_stokes_pending",
+      "reason": "Supported by Fuss-Catalan inverse-radius evidence; direct A2 Stokes-side calculation remains outstanding."
+    },
+    {
+      "predicateId": "hermitian_preservation_A2",
+      "target": "sigma_def preserves H_std",
+      "status": "computed_machine_precision"
+    },
+    {
+      "predicateId": "gellmann_commutator_norm_A2",
+      "target": "convention-dependent",
+      "status": "computed_with_convention_lock"
+    },
+    {
+      "predicateId": "zeta_A2",
+      "target": "omega * I_3",
+      "status": "computed_machine_precision"
+    },
+    {
+      "predicateId": "zeta_A2_order_check",
+      "target": "zeta_A2^3 = I_3",
+      "status": "computed_machine_precision"
+    }
+  ],
+  "openItems": [
+    {
+      "itemId": "coxeter_jump_coefficient_A2",
+      "priority": 1,
+      "status": "direct_stokes_computation_pending",
+      "deliverable": "Compute the A2 Coxeter-jump coefficient by direct Stokes-side calculation."
+    },
+    {
+      "itemId": "a2_harness_skeleton",
+      "priority": 2,
+      "status": "complete",
+      "deliverable": "A2 scaffold harness and reference report are committed."
+    },
+    {
+      "itemId": "a2_expanded_proof_note",
+      "priority": 3,
+      "status": "planned",
+      "deliverable": "Expand docs/lawful-learning/10-a2-gate-minimality-scoping.md into a full proof note if desired."
+    }
+  ],
+  "nonClaims": [
+    "does_not_complete_direct_stokes_computation",
+    "does_not_implement_direct_A2_stokes_observable",
+    "does_not_prove_A_n_uniformity",
+    "does_not_scope_D_or_E_series"
+  ],
+  "provenance": {
+    "createdBy": "assistant://gpt-5.5-thinking",
+    "createdAt": "2026-05-13T23:35:00Z",
+    "revisedAt": "2026-05-14T02:45:00Z",
+    "sourcePrompt": "A2 Gate Minimality harness scaffold and Fuss-Catalan verification"
+  }
+}

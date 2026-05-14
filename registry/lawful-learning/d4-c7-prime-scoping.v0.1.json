@@ -1,0 +1,65 @@
+{
+  "schemaVersion": "lawful-learning.d4-c7-prime-scoping.v0.1",
+  "recordType": "D4C7PrimeScopingRecord",
+  "recordId": "lawful-learning:d4-c7-prime-scoping:v0.1",
+  "claimStatus": "research_scoping",
+  "doctrineDocument": "docs/lawful-learning/12-d4-c7-prime-scoping.md",
+  "buildsOn": [
+    "docs/lawful-learning/11-an-unified-gate-minimality-theorem.md",
+    "registry/lawful-learning/an-unified-gate-minimality.v0.1.json"
+  ],
+  "stressTestCase": "D4",
+  "structuralMismatch": {
+    "coxeterNumber": 6,
+    "naturalSimplyConnectedGroup": "Spin(8)",
+    "center": "Z/2 x Z/2",
+    "outerAutomorphismGroup": "S3 triality",
+    "reasonAnTemplateFails": "D4 Coxeter order 6 is not supplied by a cyclic scalar center of Spin(8)."
+  },
+  "candidateDirections": [
+    {
+      "directionId": "A_non_simple_extension",
+      "status": "tractable_but_ad_hoc",
+      "summary": "Use products or central extensions such as Spin(8) x U(1) modulo a relation to supply the missing cyclic phase.",
+      "failureRisk": "Minimality becomes non-canonical unless the polarization side forces the extension."
+    },
+    {
+      "directionId": "B_non_scalar_auxiliary_element",
+      "status": "structural_shift",
+      "summary": "Replace scalar central zeta with a finite-order non-scalar auxiliary witness object.",
+      "failureRisk": "A_n scalar-center harness predicates must be replaced."
+    },
+    {
+      "directionId": "C_graded_polarization",
+      "status": "deep_refactor_candidate",
+      "summary": "Treat V_D4 as graded or decomposable and let monodromy act as a tuple/operator rather than a scalar.",
+      "failureRisk": "Requires a new category, harness shape, and certificate surface."
+    }
+  ],
+  "recommendedNextDeliverable": {
+    "itemId": "d4_representation_triality_inventory",
+    "status": "next",
+    "documents": [
+      "docs/lawful-learning/13-d4-representation-inventory.md",
+      "registry/lawful-learning/d4-representation-inventory.v0.1.json"
+    ]
+  },
+  "invalidReuseRules": [
+    "Do not copy the A_n scalar-center predicate set into D4 unchanged.",
+    "Do not claim a D4 theorem before selecting the witness-object direction.",
+    "Do not treat triality as equivalent to a cyclic scalar center of order 6."
+  ],
+  "nonClaims": [
+    "does_not_prove_D4",
+    "does_not_select_D4_spatial_group",
+    "does_not_select_D4_auxiliary_group",
+    "does_not_implement_D4_harness",
+    "does_not_compute_D4_stokes_observable",
+    "does_not_scope_full_D_or_E_series"
+  ],
+  "provenance": {
+    "createdBy": "assistant://gpt-5.5-thinking",
+    "createdAt": "2026-05-14T03:05:00Z",
+    "sourcePrompt": "C-7' D4 / ADE extension scoping recommendation"
+  }
+}

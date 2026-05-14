@@ -1,0 +1,231 @@
+{
+  "schemaVersion": "lawful-learning.d4-strategy-b-scoping.v0.1",
+  "recordType": "D4StrategyBScopingRecord",
+  "recordId": "lawful-learning:d4-strategy-b-scoping:v0.1",
+  "claimStatus": "strategy_scoping",
+  "doctrineDocument": "docs/lawful-learning/14-d4-strategy-b-scoping.md",
+  "remediationDossier": "docs/lawful-learning/remediation/d4-strategy-b-remediation-dossier-v0.1.md",
+  "buildsOn": [
+    "docs/lawful-learning/12-d4-c7-prime-scoping.md",
+    "docs/lawful-learning/13-d4-representation-inventory.md",
+    "registry/lawful-learning/d4-representation-inventory.v0.1.json"
+  ],
+  "strategy": {
+    "label": "B",
+    "name": "non_scalar_auxiliary_element",
+    "summary": "Keep the natural D4 carrier and replace the A_n scalar-center witness with a non-scalar order-six matrix witness."
+  },
+  "selectedInitialCarrier": {
+    "structureCarrier": "Spin(8)",
+    "polarizationRepresentation": "V = 8_v",
+    "formType": "orthogonal",
+    "trialityPolicy": "slice_policy_V_first",
+    "trialityConjugates": ["S+ = 8_s", "S- = 8_c"]
+  },
+  "faithfulnessConvention": {
+    "status": "intentionally_unsettled",
+    "rationale": "The choice between B1 (SO(8) faithful spatial carrier) and B2 (Spin(8) structural carrier with kernel/lift data) is deferred because both are defensible at scoping stage and the correct choice depends on the D4 harness implementation, triality policy, M_6 lift-order pin, and centralizer/conjugacy resolution. Do not force the choice before those downstream pins are available.",
+    "options": [
+      {
+        "optionId": "B1",
+        "spatialCarrier": "SO(8)",
+        "rationale": "Vector representation is faithful after quotienting by the spin involution.",
+        "liftOrderPinStatus": "out_of_scope_for_harness",
+        "trialityPolicyShape": "residual_Out_SO8_Z2_not_full_triality",
+        "scalarCenterCheck": "test_against_plus_minus_I_only",
+        "hygieneObligationRef": "carrierPinCoupling.B1.hygieneObligation"
+      },
+      {
+        "optionId": "B2",
+        "spatialCarrier": "Spin(8)",
+        "rationale": "Keep Spin(8) as structure carrier with explicit auxiliary lift data, while recording the vector representation kernel.",
+        "liftOrderPinStatus": "load_bearing",
+        "trialityPolicyShape": "full_S3_triality_available",
+        "scalarCenterCheck": "test_against_full_ZSpin8",
+        "hygieneObligationRef": null
+      }
+    ],
+    "blockingForTheorem": true
+  },
+  "carrierPinCoupling": {
+    "upstreamPin": "faithfulnessConvention",
+    "B1": {
+      "liftOrder": "out_of_scope_for_harness",
+      "triality": "residual_Out_SO8_Z2_not_full_triality",
+      "scalarCenter": "plus_minus_I_only",
+      "hygieneObligation": {
+        "permittedCarriers": ["V_tensor_algebra"],
+        "forbiddenCarriers": ["half_spin_S_plus", "half_spin_S_minus", "triality_paired"],
+        "auditRule": "Any observable used under B1 must factor through SO(8); half-spin and triality-bridging quantities are out of scope."
+      }
+    },
+    "B2": {
+      "liftOrder": "load_bearing",
+      "triality": "full_S3_triality_available",
+      "scalarCenter": "full_ZSpin8_Z2xZ2",
+      "hygieneObligation": null
+    },
+    "forbiddenIncoherentStates": [
+      "B1_with_full_S3_triality",
+      "B1_with_lift_order_as_theorem_blocking_harness_pin",
+      "B2_with_plus_minus_I_only_scalar_center_check"
+    ]
+  },
+  "spin8Center": {
+    "center": "Z/2 x Z/2",
+    "kernelSpin8ToSO8": "<epsilon>",
+    "nontrivialCentralElements": [
+      {"id": "epsilon", "actsOnV": 1, "actsOnSPlus": -1, "actsOnSMinus": -1, "kernelOf": "Spin(8)->SO(8)"},
+      {"id": "epsilon_prime", "actsOnV": -1, "actsOnSPlus": 1, "actsOnSMinus": -1, "kernelOf": "Spin(8)->HSpin+(8)"},
+      {"id": "epsilon_double_prime", "actsOnV": -1, "actsOnSPlus": -1, "actsOnSMinus": 1, "kernelOf": "Spin(8)->HSpin-(8)"}
+    ],
+    "trialityAction": "S3_permutes_nontrivial_central_elements"
+  },
+  "candidateWitness": {
+    "name": "M_6",
+    "type": "non_scalar_order_six_auxiliary_element",
+    "vectorRepresentationModel": "diag(R(pi/3), I_6)",
+    "matrixSize": "8x8",
+    "requiredChecks": [
+      "M_6^6 = I",
+      "M_6^k != I for 1 <= k < 6",
+      "M_6 preserves the orthogonal form",
+      "lift order in Spin(8) is certified as 6 rather than 12"
+    ],
+    "status": "scoped_not_certified"
+  },
+  "orderSixConjugacyInventory": {
+    "so8DerivedClassCount": 26,
+    "verificationStatus": "derived_not_computer_algebra_verified",
+    "requiresIndependentVerificationBeforeRegistryCitation": true,
+    "namedCandidateRegions": [
+      {"id": "purely_primitive", "quadruple_k_j_m_n": [4, 0, 0, 0], "description": "All four blocks are primitive sixth-root rotation blocks."},
+      {"id": "coxeter_flavored", "quadruple_k_j_m_n": [1, 3, 0, 0], "description": "One primitive sixth-root pair and three primitive third-root pairs."},
+      {"id": "balanced", "quadruple_k_j_m_n": [2, 2, 0, 0], "description": "Two primitive sixth-root pairs and two primitive third-root pairs."}
+    ],
+    "selectedClassStatus": "undeclared",
+    "blockingForUniquenessPredicate": true
+  },
+  "stokesObservablePin": {
+    "status": "terminology_pinned_observable_undeclared",
+    "terminology": {
+      "meaning": "Stokes phenomenon / asymptotic analysis in the singularity-theoretic sense, analogous to the A2 direct Stokes-side calculation.",
+      "notStokesTheoremDifferentialForms": true,
+      "notBrownianHolonomyOrWilsonLoopStokesGeometry": true,
+      "laneSeparation": "Brownian-holonomy and Wilson-loop Stokes geometry live in separate Yang-Mills/Brownian-holonomy lanes and are not the observable meant here."
+    },
+    "typeLevelClaim": "Under Strategy B the D4 Stokes observable changes type from scalar data to matrix/conjugacy-class data.",
+    "typeLevelNonClaim": "No specific matrix-valued D4 Stokes observable has been computed, and no conjugacy-class observable is certified until the centralizer/conjugacy resolution lands.",
+    "dataShape": "tuple_with_cyclic_product_constraint_not_single_class_by_default",
+    "requiredDeclarations": [
+      "poincare_rank",
+      "leading_spectrum",
+      "product_constraint_convention",
+      "conjugation_gauge",
+      "single_generator_vs_full_tuple_observable"
+    ],
+    "blockingForHarnessObservable": true
+  },
+  "candidateTheoremStatements": {
+    "T1_D4_strategy_B": {
+      "status": "candidate",
+      "conditions": [
+        "compact Lie regularity",
+        "faithful eight-dimensional carrier action or explicit lift convention",
+        "non-abelian active Lie action",
+        "order-six non-scalar witness M_6",
+        "orthogonal polarization compatibility",
+        "triality policy declared"
+      ]
+    },
+    "T2_D4_strategy_B": {
+      "status": "candidate_not_theorem",
+      "minimalObjectSketch": "(Spin(8), 8_v, R^8, Q_std, M_6, triality_slice=V)",
+      "blockingObligations": [
+        "faithfulness convention B1_or_B2",
+        "certified M_6 lift",
+        "centralizer_or_conjugacy_uniqueness",
+        "triality policy finalization",
+        "stokes_observable_declaration"
+      ]
+    }
+  },
+  "harnessContract": {
+    "status": "specified_not_implemented",
+    "role": "property_test_contract_for_candidate_realizations",
+    "allPredicatesRequired": true,
+    "constructionBoundary": "The D4 Strategy B harness tests proposed realizations against the Strategy B property contract. It does not construct a realization, and passing the harness confirms only that a proposed candidate satisfies the declared properties, not that Strategy B is proved.",
+    "candidateFailureRule": "A candidate passing seven of the eight predicates is not a Strategy B realization under this contract.",
+    "replacesScalarCenterPredicates": true,
+    "noScalarCenterReuseRationale": "P7 exists to prevent a purported Strategy B realization from collapsing back into a dressed-up Strategy A/scalar-center construction. It checks that the non-scalar matrix witness is not merely a scalar-center phase wrapped in matrix form.",
+    "proposedPredicates": [
+      "P1_matrix_stokes_multiplier_D4",
+      "P2_order_six_minimality_D4",
+      "P3_orthogonal_preservation_D4",
+      "P4_nonabelian_so8_commutator_D4",
+      "P5_centralizer_or_conjugacy_class_D4",
+      "P6_triality_slice_declaration_D4",
+      "P7_no_scalar_center_reuse_D4",
+      "P8_representation_irreducibility_or_commutant_D4"
+    ],
+    "hiddenPredicateParameters": {
+      "P4_nonabelian_so8_commutator_D4": "requires_commutator_witness_W_as_input",
+      "P7_no_scalar_center_reuse_D4": "center_set_depends_on_B1_or_B2"
+    },
+    "nextImplementation": [
+      "harness/d4_strategy_b_harness.py",
+      "harness/reference_reports/d4_strategy_b_report.v1.json"
+    ]
+  },
+  "openQuestions": [
+    {"questionId": "Q1_C6_prime_content", "status": "open", "description": "Determine whether D4 Strategy B instantiates, extends, or contrasts with C-6'."},
+    {"questionId": "Q2_fuss_catalan_verifier_scope", "status": "open", "description": "Determine what identity the Fuss-Catalan inverse-radius verifier checks and which boundary it supports."},
+    {"questionId": "Q3_four_CI_lanes_scope", "status": "open", "description": "Record what each CI lane gates and what their conjunction asserts."},
+    {"questionId": "Q4_strategy_A_status", "status": "open", "description": "Determine whether Strategy A is failed/archived or parallel/live."},
+    {"questionId": "Q5_class_declaration_sufficiency", "status": "open", "description": "Determine whether the intended M_6 class is declared elsewhere or must be cut out by extra predicates."}
+  ],
+  "openIssues": [
+    {
+      "issueId": "faithfulness_convention",
+      "status": "intentionally_unsettled",
+      "description": "Do not choose SO(8) faithful vector action or Spin(8) structure carrier with explicit lift data until harness, triality, lift-order, and centralizer pins clarify which convention is needed."
+    },
+    {
+      "issueId": "M6_lift_order",
+      "status": "open",
+      "description": "Certify the chosen lift has order 6 in Spin(8), not 12. Carrier-dependent: out of harness scope under B1, load-bearing under B2."
+    },
+    {
+      "issueId": "triality_policy",
+      "status": "open",
+      "description": "Choose slice policy or triality-equivariant theorem form. Carrier-dependent: residual Out(SO(8)) under B1, full S3 under B2."
+    },
+    {
+      "issueId": "uniqueness_argument",
+      "status": "open",
+      "description": "Replace scalar Schur uniqueness with centralizer/conjugacy uniqueness for M_6; selected class remains undeclared."
+    },
+    {
+      "issueId": "stokes_observable_declaration",
+      "status": "open",
+      "description": "Declare Poincare rank, leading spectrum, product constraint, gauge, and single-generator vs full-tuple observable."
+    }
+  ],
+  "nonClaims": [
+    "does_not_prove_D4",
+    "does_not_settle_B1_or_B2_faithfulness",
+    "does_not_certify_M6_lift",
+    "does_not_select_M6_conjugacy_class",
+    "does_not_compute_D4_stokes_observable",
+    "does_not_implement_D4_harness",
+    "does_not_complete_triality_equivariant_theorem",
+    "does_not_computer_algebra_verify_26_class_count"
+  ],
+  "provenance": {
+    "createdBy": "assistant://gpt-5.5-thinking",
+    "createdAt": "2026-05-14T03:20:00Z",
+    "updatedAt": "2026-05-14T09:35:00Z",
+    "sourcePrompt": "go after D4 representation inventory; Strategy B scoping next deliverable",
+    "remediationSource": "d4-strategy-b-remediation-dossier-v0.1"
+  }
+}

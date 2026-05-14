@@ -1,0 +1,50 @@
+name: lawful-learning-t2-prime
+
+on: [push, pull_request]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 scripts/check-lawful-learning-t2-prime.py
+      - run: python3 scripts/check-d4-representation-inventory.py
+      - run: python3 scripts/check-d4-strategy-b-scoping.py
+      - run: python3 harness/coxeter_a2_harness.py --check
+      - run: python3 harness/fuss_catalan_verification.py --check
+      - run: |
+          if python3 scripts/check-lawful-learning-t2-prime.py --t2 tests/fixtures/lawful-learning/t2-prime-predicate-interpretation.missing-zeta.invalid.json; then
+            echo "invalid T2 prime fixture unexpectedly passed"
+            exit 1
+          fi
+          echo "invalid T2 prime fixture correctly rejected"
+      - run: |
+          if python3 scripts/check-lawful-learning-t2-prime.py --a2 tests/fixtures/lawful-learning/a2-gate-minimality-scoping.promoted.invalid.json; then
+            echo "invalid A2 scoping fixture unexpectedly passed"
+            exit 1
+          fi
+          echo "invalid A2 scoping fixture correctly rejected"
+      - run: |
+          if python3 scripts/check-lawful-learning-t2-prime.py --an tests/fixtures/lawful-learning/an-unified-gate-minimality.symplectic-branch.invalid.json; then
+            echo "invalid An unified fixture unexpectedly passed"
+            exit 1
+          fi
+          echo "invalid An unified fixture correctly rejected"
+      - run: |
+          if python3 scripts/check-lawful-learning-t2-prime.py --d4 tests/fixtures/lawful-learning/d4-c7-prime-scoping.false-cyclic-center.invalid.json; then
+            echo "invalid D4 scalar-center fixture unexpectedly passed"
+            exit 1
+          fi
+          echo "invalid D4 scalar-center fixture correctly rejected"
+      - run: |
+          if python3 scripts/check-d4-representation-inventory.py tests/fixtures/lawful-learning/d4-representation-inventory.false-6dim-faithful.invalid.json; then
+            echo "invalid D4 representation inventory fixture unexpectedly passed"
+            exit 1
+          fi
+          echo "invalid D4 representation inventory fixture correctly rejected"
+      - run: |
+          if python3 scripts/check-d4-strategy-b-scoping.py tests/fixtures/lawful-learning/d4-strategy-b-scoping.premature-theorem.invalid.json; then
+            echo "invalid D4 Strategy B fixture unexpectedly passed"
+            exit 1
+          fi
+          echo "invalid D4 Strategy B fixture correctly rejected"

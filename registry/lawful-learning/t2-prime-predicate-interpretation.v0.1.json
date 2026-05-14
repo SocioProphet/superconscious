@@ -1,0 +1,69 @@
+{
+  "schemaVersion": "lawful-learning.t2-prime-predicate-interpretation.v0.1",
+  "recordType": "T2PrimePredicateInterpretationTable",
+  "recordId": "lawful-learning:t2-prime-predicate-interpretation:v0.1",
+  "gateMinimalityScope": "T2'",
+  "principle": "same numerical predicate, different witness object",
+  "scopeReferences": {
+    "doctrineDocument": "docs/lawful-learning/09-t2-prime-polarization-scope.md",
+    "sourceFaithfulProofNote": "docs/proofs/a1-gate-minimality-faithful.md",
+    "sourceFollowOnNote": "t2-prime-followon.pdf"
+  },
+  "predicates": [
+    {
+      "predicateId": "stokes_multiplier_observed",
+      "numericalTarget": "-1",
+      "t2WitnessObject": "central -I inside G = SU(2)",
+      "t2PrimeWitnessObject": "lifted loop endpoint in auxiliary Spin(3)-structure on V_A",
+      "reuseRule": "Do not cite as an element of SO(3) under T2'."
+    },
+    {
+      "predicateId": "catalan_jump_coefficient",
+      "numericalTarget": "approximately -4",
+      "t2WitnessObject": "quantitative witness for the central sign in G",
+      "t2PrimeWitnessObject": "quantitative witness for auxiliary spin structure",
+      "reuseRule": "Numerical value is stable; theoretical carrier is version-dependent."
+    },
+    {
+      "predicateId": "pairing_preservation",
+      "numericalTarget": "true",
+      "t2WitnessObject": "G preserves Q_A on V_A",
+      "t2PrimeWitnessObject": "auxiliary sigma preserves Q_A while G acts projectively",
+      "reuseRule": "Under T2', do not treat this as a faithful linear G-action on V_A."
+    },
+    {
+      "predicateId": "commutator_norm",
+      "numericalTarget": "2*sqrt(2)",
+      "t2WitnessObject": "non-abelianness inside G = SU(2)",
+      "t2PrimeWitnessObject": "non-abelianness in auxiliary spin algebra compatible with so(3)",
+      "reuseRule": "Use as non-abelian witness only with declared carrier."
+    },
+    {
+      "predicateId": "zeta",
+      "numericalTarget": "-I",
+      "t2WitnessObject": "zeta is an element of G",
+      "t2PrimeWitnessObject": "zeta is auxiliary Spin(3) data on V_A, not an element of SO(3)",
+      "reuseRule": "Under T2', zeta must be cited as auxiliary polarization data."
+    }
+  ],
+  "hashChainPolicy": {
+    "headChangeRequired": true,
+    "headChangeReason": "Adding this interpretation table changes harness metadata once; numerical predicate targets are unchanged.",
+    "futureHeadChangeRule": "Change again only if harness source, numerical target, or interpretation table contents change."
+  },
+  "nonClaims": [
+    "does_not_update_runtime_harness",
+    "does_not_recompute_hash_chain_head",
+    "does_not_add_empirical_evidence",
+    "does_not_compute_A2_coxeter_jump_coefficient"
+  ],
+  "provenance": {
+    "createdBy": "assistant://gpt-5.5-thinking",
+    "createdAt": "2026-05-13T23:15:00Z",
+    "revisedAt": "2026-05-14T02:38:00Z",
+    "sourceUploads": [
+      "a1-gate-minimality-faithful(1).pdf",
+      "t2-prime-followon(1).pdf"
+    ]
+  }
+}

@@ -1,0 +1,107 @@
+{
+  "schemaVersion": "lawful-learning.coxeter-a2-harness-report.v0.1",
+  "recordType": "CoxeterA2HarnessReport",
+  "harness": "coxeter_a2_harness",
+  "version": "v1_scaffold",
+  "theorem_version": "T2_prime_A2_structural_theorem",
+  "legacy_source_theorem_version": "T2_prime_A2_conjectural",
+  "proof_reference": "docs/lawful-learning/10-a2-gate-minimality-scoping.md",
+  "central_element_location": "auxiliary_SU3_structure_on_V_A2",
+  "form_type": "Hermitian",
+  "monodromy_order": 3,
+  "summary": {
+    "all_predicates_pass": true,
+    "n_predicates": 8,
+    "n_scaffold_values": 2,
+    "n_computed_values": 6,
+    "scaffold_predicates": [
+      "stokes_multiplier",
+      "coxeter_jump_coefficient"
+    ],
+    "computed_predicates": [
+      "hermitian_preservation",
+      "gellmann_12_commutator_norm",
+      "zeta_central",
+      "zeta_cubed_equals_identity",
+      "gellmann_45_commutator_to_8_direction",
+      "defining_rep_irreducibility"
+    ]
+  },
+  "predicates": [
+    {
+      "name": "stokes_multiplier",
+      "expected_re": -0.4999999999999998,
+      "expected_im": 0.8660254037844387,
+      "observed_re": -0.4999999999999998,
+      "observed_im": 0.8660254037844387,
+      "error": 0.0,
+      "passes": true,
+      "status": "scaffold_value",
+      "note": "Stokes-side computation pending; structural value used in scaffold."
+    },
+    {
+      "name": "coxeter_jump_coefficient",
+      "expected": -6.75,
+      "observed": -6.75,
+      "error": 0.0,
+      "passes": true,
+      "status": "scaffold_value",
+      "note": "Structural prediction from Fuss-Catalan radius of convergence; direct Stokes-side computation pending."
+    },
+    {
+      "name": "hermitian_preservation",
+      "expected": 0.0,
+      "observed": 7.147801729532276e-15,
+      "error": 7.147801729532276e-15,
+      "passes": true,
+      "status": "computed",
+      "n_tests": 50
+    },
+    {
+      "name": "gellmann_12_commutator_norm",
+      "expected": 2.8284271247461903,
+      "observed": 2.8284271247461903,
+      "error": 0.0,
+      "passes": true,
+      "status": "computed"
+    },
+    {
+      "name": "zeta_central",
+      "expected_max_commutator": 0.0,
+      "observed_max_commutator": 0.0,
+      "error": 0.0,
+      "passes": true,
+      "status": "computed",
+      "zeta": "omega * I_3"
+    },
+    {
+      "name": "zeta_cubed_equals_identity",
+      "expected": "I_3",
+      "max_error": 6.599849357850325e-16,
+      "passes": true,
+      "status": "computed",
+      "note": "Order-3 structural check specific to A2 and higher A_n."
+    },
+    {
+      "name": "gellmann_45_commutator_to_8_direction",
+      "max_error": 0.0,
+      "passes": true,
+      "status": "computed",
+      "note": "Witnesses rank-2 structure of SU(3); no A1 analog."
+    },
+    {
+      "name": "defining_rep_irreducibility",
+      "expected_nullity": 1,
+      "observed_nullity": 1,
+      "passes": true,
+      "status": "computed",
+      "note": "Joint commutant of Gell-Mann matrices is 1-dimensional: multiples of I."
+    }
+  ],
+  "hash_chain_head": "9f722df9ea3ec75769985b3c05bec6609c4a1d1741f4ca82c5314407219a3e1e",
+  "hash_note": "Source-supplied hash-chain head from the uploaded reference report. The theorem-version label was corrected in this repository from conjectural to structural theorem per current Lawful Learning doctrine.",
+  "open_items": [
+    "direct_stokes_side_coxeter_jump_computation",
+    "direct_A2_stokes_multiplier_observable"
+  ]
+}
