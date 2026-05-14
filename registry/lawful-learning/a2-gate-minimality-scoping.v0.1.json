@@ -1,0 +1,99 @@
+{
+  "schemaVersion": "lawful-learning.a2-gate-minimality-scoping.v0.1",
+  "recordType": "A2GateMinimalityScopingRecord",
+  "recordId": "lawful-learning:a2-gate-minimality-scoping:v0.1",
+  "claimStatus": "conjectural_scoping",
+  "doctrineDocument": "docs/lawful-learning/10-a2-gate-minimality-scoping.md",
+  "buildsOn": [
+    "docs/lawful-learning/09-t2-prime-polarization-scope.md",
+    "registry/lawful-learning/t2-prime-predicate-interpretation.v0.1.json"
+  ],
+  "candidate": {
+    "spatialGroup": "PSU(3)",
+    "auxiliaryGroup": "SU(3)",
+    "polarizationSpace": "C^3",
+    "formType": "Hermitian",
+    "centralElement": "omega * I_3",
+    "loopClass": "Z/3",
+    "frameLanguage": "adjoint frame"
+  },
+  "structuralCarryOverFromA1": [
+    "spatial group plus auxiliary group pattern",
+    "central loop-class lift lives in auxiliary structure",
+    "projective action on polarization space",
+    "Schur-uniqueness style auxiliary-selection argument"
+  ],
+  "structuralChangesFromA1": [
+    "SO(3) to PSU(3)",
+    "Spin(3) to SU(3)",
+    "C^2 to C^3",
+    "symplectic form to Hermitian form",
+    "-I_2 to omega * I_3",
+    "spatial triad to adjoint frame",
+    "Z/2 loop class to Z/3 loop class"
+  ],
+  "harnessPredicates": [
+    {
+      "predicateId": "stokes_multiplier_observed_A2",
+      "target": "omega = exp(2*pi*i/3)",
+      "status": "structural_target_available"
+    },
+    {
+      "predicateId": "coxeter_jump_coefficient_A2",
+      "target": "TBD",
+      "status": "blocking_placeholder",
+      "reason": "Requires A2 Stokes-side calculation with order-3 monodromy and three anti-Stokes rays."
+    },
+    {
+      "predicateId": "hermitian_preservation_A2",
+      "target": "sigma_def preserves H_std",
+      "status": "structural_target_available"
+    },
+    {
+      "predicateId": "gellmann_commutator_norm_A2",
+      "target": "convention-dependent",
+      "status": "structural_target_available_with_convention_lock"
+    },
+    {
+      "predicateId": "zeta_A2",
+      "target": "omega * I_3",
+      "status": "structural_target_available"
+    },
+    {
+      "predicateId": "zeta_A2_order_check",
+      "target": "zeta_A2^3 = I_3",
+      "status": "structural_target_available"
+    }
+  ],
+  "openItems": [
+    {
+      "itemId": "coxeter_jump_coefficient_A2",
+      "priority": 1,
+      "status": "blocking",
+      "deliverable": "Compute the A2 Coxeter-jump coefficient."
+    },
+    {
+      "itemId": "a2_harness_skeleton",
+      "priority": 2,
+      "status": "planned",
+      "deliverable": "Draft coxeter_a2_harness.py with structural predicates and placeholder jump target."
+    },
+    {
+      "itemId": "a2_proof_note",
+      "priority": 3,
+      "status": "planned_after_jump_target",
+      "deliverable": "Write A2 proof note after the Coxeter-jump target is known."
+    }
+  ],
+  "nonClaims": [
+    "does_not_prove_A2",
+    "does_not_compute_coxeter_jump_coefficient",
+    "does_not_create_runtime_harness",
+    "does_not_promote_conjectural_to_mathematical"
+  ],
+  "provenance": {
+    "createdBy": "assistant://gpt-5.5-thinking",
+    "createdAt": "2026-05-13T23:35:00Z",
+    "sourcePrompt": "A2 Gate Minimality: Scoping Document"
+  }
+}
