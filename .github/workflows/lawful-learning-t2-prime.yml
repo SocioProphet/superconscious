@@ -8,6 +8,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: python3 scripts/check-lawful-learning-t2-prime.py
+      - run: python3 scripts/check-d4-representation-inventory.py
       - run: python3 harness/coxeter_a2_harness.py --check
       - run: python3 harness/fuss_catalan_verification.py --check
       - run: |
@@ -34,3 +35,9 @@ jobs:
             exit 1
           fi
           echo "invalid D4 scalar-center fixture correctly rejected"
+      - run: |
+          if python3 scripts/check-d4-representation-inventory.py tests/fixtures/lawful-learning/d4-representation-inventory.false-6dim-faithful.invalid.json; then
+            echo "invalid D4 representation inventory fixture unexpectedly passed"
+            exit 1
+          fi
+          echo "invalid D4 representation inventory fixture correctly rejected"
