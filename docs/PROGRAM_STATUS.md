@@ -2,7 +2,7 @@
 
 ## Status date
 
-2026-05-11
+2026-05-13
 
 ## Program role
 
@@ -15,9 +15,29 @@ It is a sibling program to `SocioProphet/ProCybernetica`. Superconscious produce
 ```text
 doctrine_complete: M1 -> M2 -> M3 -> M5
 ci_fixture_complete: M1 -> M2 -> M3 -> M5
+lawful_learning_phase_8_registration: complete
 runtime_executed: false
 empirical_claims: none
 ```
+
+## Lawful-learning pipeline status
+
+```text
+Phase 1-6: superconscious-internal doctrine, schemas, checker, and hardened fixtures  ✓
+Phase 7:   systems-learning-loops research evidence pack                             ✓
+Phase 8:   sociosphere cross-repo registration                                       ✓
+Phase 9:   agentplane runtime evidence integration                                   deferred
+```
+
+Phase 8 was completed by:
+
+```text
+SocioProphet/sociosphere#337
+registry/lawful-learning-lane.yaml
+docs/LAWFUL_LEARNING_PHASE8_REGISTRATION.md
+```
+
+Phase 8 registration is not schema promotion, runtime execution, evidence authenticity, monitor attestation, or frontier-claim promotion. It is a cross-repo governance registration that names final authority surfaces for lawful-learning lane discovery and future runtime integration.
 
 ## Completed doctrine/CI lanes
 
@@ -134,8 +154,12 @@ This repository currently does not claim:
 - an in-envelope or out-of-distribution steering classification;
 - cross-layer empirical robustness;
 - public empirical note readiness;
-- production governance runtime.
+- production governance runtime;
+- lawful-learning runtime evidence integration;
+- canonical schema promotion into `sourceos-spec`.
 
 ## Next bounded move
 
 Do not add more interpretability doctrine until local `make certificate-ci` has been run on a clean checkout and any failures have been corrected.
+
+For the lawful-learning lane, the next runtime-bearing move is Phase 9 in `SocioProphet/agentplane`, gated on runtime infrastructure and evidence/replay integration.
