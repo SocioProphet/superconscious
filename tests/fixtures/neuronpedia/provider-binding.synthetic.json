@@ -1,0 +1,35 @@
+{
+  "schema_version": "0.1",
+  "kind": "provider_binding",
+  "binding_id": "neuronpedia.synthetic.provider.binding.v0",
+  "provider": {
+    "provider_id": "neuronpedia",
+    "provider_name": "Neuronpedia",
+    "provider_kind": "external_public_provider",
+    "provider_homepage": "https://www.neuronpedia.org/"
+  },
+  "allowed_surfaces": [
+    "static_snapshot_review",
+    "benchmark_fixture_reference",
+    "intervention_trace_reference"
+  ],
+  "artifact_source_lock_refs": [
+    "neuronpedia.synthetic.feature-pack.v0"
+  ],
+  "authority_scope": {
+    "may_fetch_live": false,
+    "may_write_provider": false,
+    "may_promote_claims": false,
+    "requires_policy_admission": true,
+    "policy_ref": "policy-fabric:review-required"
+  },
+  "refresh_policy": "new_lock_required",
+  "review_notes": "Synthetic binding. Live fetch is disabled by default.",
+  "non_claims": [
+    "no_provider_trust_by_default",
+    "no_claim_promotion",
+    "no_writeback_authority",
+    "no_live_fetch_without_policy",
+    "no_model_intervention_authorization"
+  ]
+}

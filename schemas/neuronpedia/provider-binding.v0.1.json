@@ -1,0 +1,94 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://socioprophet.org/schemas/neuronpedia/provider-binding.v0.1.json",
+  "title": "ProviderBinding v0.1",
+  "description": "Declares the binding between a local review/integration surface and an external interpretability provider. This is a declared binding, not a grant to fetch live data or trust provider outputs as admitted claims.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "kind",
+    "binding_id",
+    "provider",
+    "allowed_surfaces",
+    "artifact_source_lock_refs",
+    "authority_scope",
+    "refresh_policy",
+    "non_claims"
+  ],
+  "properties": {
+    "schema_version": {"const": "0.1"},
+    "kind": {"const": "provider_binding"},
+    "binding_id": {
+      "type": "string",
+      "minLength": 3,
+      "pattern": "^[a-zA-Z0-9_.:-]+$"
+    },
+    "provider": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["provider_id", "provider_name", "provider_kind"],
+      "properties": {
+        "provider_id": {"type": "string", "minLength": 2},
+        "provider_name": {"type": "string", "minLength": 2},
+        "provider_kind": {
+          "type": "string",
+          "enum": ["external_public_provider", "external_api", "mirrored_dataset", "manual_packet"]
+        },
+        "provider_homepage": {"type": "string"}
+      }
+    },
+    "allowed_surfaces": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "artifact_lookup",
+          "static_snapshot_review",
+          "manual_annotation_review",
+          "intervention_trace_reference",
+          "benchmark_fixture_reference"
+        ]
+      }
+    },
+    "artifact_source_lock_refs": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {"type": "string", "minLength": 3}
+    },
+    "authority_scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["may_fetch_live", "may_write_provider", "may_promote_claims", "requires_policy_admission"],
+      "properties": {
+        "may_fetch_live": {"type": "boolean"},
+        "may_write_provider": {"const": false},
+        "may_promote_claims": {"const": false},
+        "requires_policy_admission": {"const": true},
+        "policy_ref": {"type": "string"}
+      }
+    },
+    "refresh_policy": {
+      "type": "string",
+      "enum": ["manual_only", "scheduled_review_required", "new_lock_required"]
+    },
+    "review_notes": {"type": "string"},
+    "non_claims": {
+      "type": "array",
+      "minItems": 5,
+      "maxItems": 5,
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "no_provider_trust_by_default",
+          "no_claim_promotion",
+          "no_writeback_authority",
+          "no_live_fetch_without_policy",
+          "no_model_intervention_authorization"
+        ]
+      }
+    }
+  }
+}
