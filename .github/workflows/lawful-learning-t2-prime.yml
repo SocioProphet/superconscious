@@ -8,6 +8,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: python3 scripts/check-lawful-learning-t2-prime.py
+      - run: python3 harness/coxeter_a2_harness.py --check
+      - run: python3 harness/fuss_catalan_verification.py --check
       - run: |
           if python3 scripts/check-lawful-learning-t2-prime.py --t2 tests/fixtures/lawful-learning/t2-prime-predicate-interpretation.missing-zeta.invalid.json; then
             echo "invalid T2 prime fixture unexpectedly passed"
