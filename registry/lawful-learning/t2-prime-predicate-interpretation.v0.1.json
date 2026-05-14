@@ -6,7 +6,7 @@
   "principle": "same numerical predicate, different witness object",
   "scopeReferences": {
     "doctrineDocument": "docs/lawful-learning/09-t2-prime-polarization-scope.md",
-    "sourceFaithfulProofNote": "a1-gate-minimality-faithful.pdf",
+    "sourceFaithfulProofNote": "docs/proofs/a1-gate-minimality-faithful.md",
     "sourceFollowOnNote": "t2-prime-followon.pdf"
   },
   "predicates": [
@@ -54,13 +54,13 @@
   "nonClaims": [
     "does_not_update_runtime_harness",
     "does_not_recompute_hash_chain_head",
-    "does_not_prove_A2",
-    "does_not_identify_A2_spatial_group",
-    "does_not_add_empirical_evidence"
+    "does_not_add_empirical_evidence",
+    "does_not_compute_A2_coxeter_jump_coefficient"
   ],
   "provenance": {
     "createdBy": "assistant://gpt-5.5-thinking",
     "createdAt": "2026-05-13T23:15:00Z",
+    "revisedAt": "2026-05-14T02:38:00Z",
     "sourceUploads": [
       "a1-gate-minimality-faithful(1).pdf",
       "t2-prime-followon(1).pdf"
