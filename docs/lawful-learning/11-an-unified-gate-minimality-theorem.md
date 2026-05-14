@@ -145,13 +145,43 @@ coxeter_jump = -27/4
 
 [G] The A2 harness has eight passing predicates, with six computed and two scaffold values pending direct Stokes-side verification.
 
-## 7. Open work
+## 7. Precedent: Basak / Allcock complex-hyperbolic reflection construction
+
+[T] Basak's complex-hyperbolic reflection construction supplies a large-scale precedent for the same discipline this document uses: start from a rigid arithmetic reflection substrate, extend a diagram through an over-determined system, and require uniqueness rather than accepting free parameters.
+
+[M] In the Basak/Allcock setting, the Eisenstein-integer lattice has signature `(1,13)`, the relevant complex hyperbolic space is `CH^13`, and the incidence graph `Inc(P^2(F_3))` supplies 26 order-three simple reflections. The 26 simple mirrors are characterized as closest mirrors to a distinguished Weyl vector, and Basak's 2007 theorem verifies the corresponding braid/commute relations in the mirror-complement orbifold fundamental group.
+
+[G] This is a precedent citation, not an import of the bimonster program into Lawful Learning. The active C-6' theorem remains the `A_n` faithful-frame structural theorem. The Basak/Allcock construction is cited only as evidence that the no-free-knob, closest-mirror/gate-minimality, and over-determined-extension methodology scales to large arithmetic reflection systems.
+
+[G] The parallel quaternionic construction — Hurwitz integers, `P^2(F_2)`, 14 order-four reflections, and an `M444`-type diagram — is a possible future stress-test lane because it is smaller than the 26-node Eisenstein construction and arithmetically closer to quaternionic tooling used elsewhere in the broader estate. It is not part of this PR.
+
+## 8. V2 26D framing boundary
+
+[G] No V2 26-dimensional Lawful Learning spec is edited by this PR because no matching V2 file was found in this repository during implementation.
+
+[G] Any future V2 document using a 26-dimensional allocation must state one of the following explicitly:
+
+```text
+CH13_modeling: true
+```
+
+meaning the 26 real dimensions are intentionally modeling `CH^13` / projectivized signature `(1,13)` complex-hyperbolic geometry; or
+
+```text
+CH13_modeling: false
+```
+
+meaning the 26 dimensions derive from internal spectral/unitary/Poincare-channel requirements and the Basak/Allcock `CH^13` / 26-mirror coincidence is parallel but independent.
+
+[G] Until such a declaration exists, no Lawful Learning artifact may cite the bimonster/`CH^13` construction as an explanation for a `22 + 1 + 3` dimensional split.
+
+## 9. Open work
 
 [G] The direct Stokes-side computation remains open for A2 and for the parametric `A_n` family.
 
 [G] The D and E singularity series are not covered by this theorem. Their Weyl groups and Lie-theoretic structures are not cyclic `A_n` extensions and require separate scoping.
 
-## 8. Non-claims
+## 10. Non-claims
 
 This document does not claim:
 
@@ -160,9 +190,12 @@ direct Stokes-side coefficients computed for all A_n
 A_n runtime harness implemented
 D_n or E_n series scoped
 proof-assistant formalization completed
+bimonster or Allcock conjecture work is active
+V2 26D allocation derives from CH13
+M444 quaternionic stress-test lane is active
 ```
 
-## 9. Handoff
+## 11. Handoff
 
 The next mechanical deliverable is a parametric `coxeter_an_harness.py` scaffold generated from the targets in Section 5, with A1 handled as an exceptional branch and `n >= 2` handled by the Hermitian-cyclic branch.
 
