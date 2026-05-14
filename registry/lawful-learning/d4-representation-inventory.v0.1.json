@@ -1,0 +1,176 @@
+{
+  "schema_version": "v0.1",
+  "doctrine": "lawful-learning",
+  "claim_id": "d4-representation-inventory",
+  "claim_status": "research_scoping",
+  "supersedes": null,
+  "depends_on": [
+    "d4-c7-prime-scoping.v0.1",
+    "an-unified-gate-minimality.v0.1"
+  ],
+  "document_reference": "docs/lawful-learning/13-d4-representation-inventory.md",
+  "group": {
+    "name": "Spin(8)",
+    "type": "compact_simple_simply_connected",
+    "rank": 4,
+    "dimension": 28,
+    "cartan_type": "D_4",
+    "coxeter_number": 6,
+    "weyl_group_order": 192,
+    "center": {
+      "type": "Klein_four_group",
+      "isomorphism": "Z/2 x Z/2",
+      "order": 4,
+      "is_cyclic": false,
+      "generators": ["epsilon", "delta"],
+      "elements": [
+        {"name": "1", "order": 1},
+        {"name": "epsilon", "order": 2, "description": "spin involution: kernel of Spin(8) -> SO(8)"},
+        {"name": "delta", "order": 2, "description": "lift of -I_SO(8) to Spin(8)"},
+        {"name": "epsilon_delta", "order": 2, "description": "product epsilon * delta"}
+      ]
+    },
+    "outer_automorphism_group": {
+      "name": "S_3",
+      "order": 6,
+      "generators": [
+        {"name": "triality", "order": 3, "description": "cyclically permutes V, S+, S-"},
+        {"name": "conjugation", "order": 2, "description": "exchanges S+ <-> S-, fixes V"}
+      ],
+      "is_exceptional": true,
+      "note": "Spin(8) is the unique compact simple Lie group with |Out| > 2."
+    }
+  },
+  "central_action_on_8dim_irreducibles": {
+    "description": "Action of each central element on the three 8-dim irreducibles V, S+, S-. Signs indicate trivial (+) or by -I (-) action.",
+    "table": [
+      {"element": "1", "on_V": "+", "on_S_plus": "+", "on_S_minus": "+"},
+      {"element": "epsilon", "on_V": "+", "on_S_plus": "-", "on_S_minus": "-"},
+      {"element": "delta", "on_V": "-", "on_S_plus": "+", "on_S_minus": "-"},
+      {"element": "epsilon_delta", "on_V": "-", "on_S_plus": "-", "on_S_minus": "+"}
+    ]
+  },
+  "quotients_by_central_subgroups": [
+    {"name": "Spin(8)", "central_subgroup": "{1}", "pi_1": "trivial", "dimension": 28, "notes": "simply connected"},
+    {"name": "SO(8)", "central_subgroup": "<epsilon>", "pi_1": "Z/2", "dimension": 28, "notes": "standard SO(8); kernel is the spin involution"},
+    {"name": "Ss(8)", "central_subgroup": "<delta>", "pi_1": "Z/2", "dimension": 28, "notes": "triality-conjugate to SO(8)"},
+    {"name": "Sc(8)", "central_subgroup": "<epsilon_delta>", "pi_1": "Z/2", "dimension": 28, "notes": "triality-conjugate to SO(8)"},
+    {"name": "PSO(8)", "central_subgroup": "<epsilon, delta>", "pi_1": "Z/2 x Z/2", "dimension": 28, "notes": "trivial center; no Z/6 in pi_1"}
+  ],
+  "structural_obstruction": {
+    "name": "no_cyclic_Z_6_in_center_or_pi_1",
+    "description": "Spin(8)'s center is Z/2 x Z/2 (Klein four-group), which has no element of order 3 or 6. Quotients by central subgroups have pi_1 in {trivial, Z/2, Z/2 x Z/2}; none have cyclic Z/6. The T2' template, which requires pi_1 containing a cyclic group of the monodromy order (6 for D_4), fails for Spin(8) and its quotients.",
+    "consequence": "Three resolution strategies (A non-simple extension, B non-scalar auxiliary, C graded polarization) considered; no scalar-central-element resolution is possible.",
+    "invalid_claim_rejected": "Spin(8) center is cyclic of order 6 (false; see fixture d4-c7-prime-scoping.false-cyclic-center.invalid.json)"
+  },
+  "representation_catalog": {
+    "description": "Spin(8) irreducible complex representations of dimension <= 350.",
+    "all_real_type": true,
+    "irreducibles": [
+      {"dim": 1, "highest_weight": [0,0,0,0], "name": "trivial", "fs_indicator": 1, "central_character": [1,1,1,1]},
+      {"dim": 8, "highest_weight": [1,0,0,0], "name": "V (vector)", "fs_indicator": 1, "central_character": [1,1,-1,-1]},
+      {"dim": 8, "highest_weight": [0,0,1,0], "name": "S+ (spinor+)", "fs_indicator": 1, "central_character": [1,-1,1,-1]},
+      {"dim": 8, "highest_weight": [0,0,0,1], "name": "S- (spinor-)", "fs_indicator": 1, "central_character": [1,-1,-1,1]},
+      {"dim": 28, "highest_weight": [0,1,0,0], "name": "adjoint", "fs_indicator": 1, "central_character": [1,1,1,1]},
+      {"dim": 35, "highest_weight": [2,0,0,0], "name": "S^2_0(V)", "fs_indicator": 1, "central_character": [1,1,1,1]},
+      {"dim": 35, "highest_weight": [0,0,2,0], "name": "S^2_0(S+)", "fs_indicator": 1, "central_character": [1,1,1,1]},
+      {"dim": 35, "highest_weight": [0,0,0,2], "name": "S^2_0(S-)", "fs_indicator": 1, "central_character": [1,1,1,1]},
+      {"dim": 56, "highest_weight": [1,0,1,0], "name": "V x S+ comp", "fs_indicator": 1, "central_character": [1,-1,-1,1]},
+      {"dim": 56, "highest_weight": [1,0,0,1], "name": "V x S- comp", "fs_indicator": 1, "central_character": [1,-1,1,-1]},
+      {"dim": 56, "highest_weight": [0,0,1,1], "name": "S+ x S- comp", "fs_indicator": 1, "central_character": [1,1,-1,-1]},
+      {"dim": 112, "highest_weight": [0,1,1,0], "name": "112_a", "fs_indicator": 1, "central_character": [1,-1,1,-1]},
+      {"dim": 160, "highest_weight": [1,1,0,0], "name": "160_a", "fs_indicator": 1, "central_character": [1,1,-1,-1]},
+      {"dim": 300, "highest_weight": [0,2,0,0], "name": "S^2_0(adj)", "fs_indicator": 1, "central_character": [1,1,1,1]},
+      {"dim": 350, "highest_weight": [1,0,2,0], "name": "350_a", "fs_indicator": 1, "central_character": [1,-1,-1,1]}
+    ],
+    "central_character_columns_order": ["1", "epsilon", "delta", "epsilon_delta"]
+  },
+  "dimension_6_question": {
+    "claim": "no_faithful_6_dim_complex_rep_of_Spin_8",
+    "rationale": "Smallest non-trivial irreducible has dim 8; a faithful 6-dim rep would have to be a direct sum of smaller irreducibles, but the only irreducibles of dim <= 6 are the 1-dim trivial rep. A direct sum of trivials is not faithful.",
+    "consequence": "The T2'_{A_n} dimensional pattern V_{A_n} = C^{n+1} = C^{h(A_n)} does not extend to D_4 with V_{D_4} = C^6."
+  },
+  "strategies": [
+    {
+      "label": "A",
+      "name": "non_simple_extension",
+      "G_spatial": "(Spin(8) x U(1)) / Z_diag",
+      "pi_1_target": "Z/6",
+      "construction": "Z_diag = <(epsilon, e^{pi*i/3})> as a Z/6 subgroup of Z(Spin(8)) x U(1)",
+      "V_dim_minimum": 8,
+      "form_type": "orthogonal",
+      "harness_P1_type": "scalar",
+      "ad_hoc_level": "medium",
+      "viable_polarization_candidates": [
+        {"rep": "V tensor chi_2", "dim": 8, "constraint": "epsilon even, chi_2 even"},
+        {"rep": "S+ tensor chi_1", "dim": 8, "constraint": "epsilon odd, chi_1 odd"},
+        {"rep": "S- tensor chi_1", "dim": 8, "constraint": "epsilon odd, chi_1 odd"}
+      ],
+      "verdict": "Resolves pi_1 obstruction, but no 6-dim faithful rep. Polarization remains 8-dim."
+    },
+    {
+      "label": "B",
+      "name": "non_scalar_auxiliary_element",
+      "G_spatial": "Spin(8)/Z_subgroup",
+      "pi_1_target": "Z/2 or Z/2 x Z/2",
+      "construction": "Stokes multiplier acts as a non-scalar order-6 element M_6 in Spin(8), not a central scalar.",
+      "V_dim_minimum": 8,
+      "form_type": "orthogonal",
+      "harness_P1_type": "8x8_matrix",
+      "ad_hoc_level": "low",
+      "viable_polarization_candidates": [
+        {"rep": "V (vector)", "dim": 8, "stokes_multiplier_eigenvalues": "{e^{i*pi/3}, e^{-i*pi/3}, e^{i*theta_2}, e^{-i*theta_2}, e^{i*theta_3}, e^{-i*theta_3}, 1, 1} for chosen theta_2, theta_3"},
+        {"rep": "S+ (spinor+)", "dim": 8, "stokes_multiplier_eigenvalues": "spin lift of above"},
+        {"rep": "S- (spinor-)", "dim": 8, "stokes_multiplier_eigenvalues": "spin lift of above"}
+      ],
+      "harness_modifications_required": [
+        "P1: scalar -> matrix-conjugacy check on the chosen 8-dim rep",
+        "P5: zeta_central -> M_6 commutes with chosen subgroup (centralizer check)",
+        "P6: zeta_cubed_equals_identity -> M_6^6 = I (order-6 check)"
+      ],
+      "verdict": "Cleanest representation-theoretically; harness contract changes are bounded and well-defined."
+    },
+    {
+      "label": "C",
+      "name": "graded_decomposable_polarization",
+      "G_spatial": "Spin(8) x H for some auxiliary group H",
+      "pi_1_target": "depends on H",
+      "construction": "V_{D_4} = V_1 oplus V_2 with monodromy acting on V_1 with order a, on V_2 with order b, lcm(a,b)=6.",
+      "V_dim_minimum": "varies",
+      "form_type": "mixed (orthogonal on V_1, depends on H on V_2)",
+      "harness_P1_type": "block_diagonal_matrix",
+      "ad_hoc_level": "high",
+      "viable_decompositions": [
+        {"a": 2, "b": 3, "V_1_dim": 2, "V_2_dim": 4, "total_dim": 6, "obstruction": "no 4-dim Spin(8)-rep with Z/3 central"},
+        {"a": 2, "b": 3, "V_1_dim": 2, "V_2_dim": 6, "total_dim": 8, "V_2_source": "SU(3) embedded in SO(6) subset Spin(8)"},
+        {"a": 2, "b": 6, "V_1_dim": 2, "V_2_dim": 8, "total_dim": 10, "V_2_source": "Spin(8) 8-dim rep with order-6 element acting"}
+      ],
+      "verdict": "Graded decomposition possible but ad hoc; natural dimensions do not align with h(D_4)=6 cleanly."
+    }
+  ],
+  "comparative_assessment": {
+    "primary_recommendation": "B",
+    "rationale": "Strategy B is cleanest representation-theoretically: it keeps Spin(8) as spatial group and a single 8-dim faithful representation as the polarization carrier. The harness contract changes from scalar checks to matrix checks, but those changes are bounded and well-defined.",
+    "backup_candidates": ["A", "C"],
+    "deferred_questions": [
+      "triality treatment",
+      "central element choice under triality",
+      "extension to higher D_n and E_n"
+    ]
+  },
+  "open_structural_questions": [
+    "triality_treatment",
+    "central_element_choice_under_triality",
+    "extension_to_higher_D_n_and_E_n"
+  ],
+  "next_concrete_deliverable": {
+    "filename": "docs/lawful-learning/14-d4-strategy-b-scoping.md",
+    "registry": "registry/lawful-learning/d4-strategy-b-scoping.v0.1.json",
+    "description": "D_4 scoping under Strategy B: commit to Spin(8) as spatial group with chosen 8-dim irreducible as polarization space and explicit order-6 element M_6 as non-scalar Stokes multiplier.",
+    "approximate_scale": "300 lines, comparable to A_2 scoping"
+  },
+  "rejected_invalid_claims_referenced": [
+    "spin_8_center_is_cyclic_Z_6",
+    "spin_8_has_faithful_6_dimensional_complex_representation"
+  ]
+}
