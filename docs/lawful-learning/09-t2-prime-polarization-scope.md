@@ -2,7 +2,7 @@
 
 **Status:** Phase 3 categorical-doctrine extension.  
 **Date:** May 13, 2026.  
-**Scope:** Places the T2' faithful-triad result inside Lawful Learning as a categorical and governance artifact: scope declaration, predicate interpretation, witness-object discipline, and non-promotion boundary.  
+**Scope:** Places the T2' faithful-triad result inside Lawful Learning as a categorical and governance artifact: scope declaration, predicate interpretation, witness-object discipline, and theorem reuse boundary.  
 **Claim class:** [M|T|G] where explicitly marked. No empirical claim is introduced.
 
 ## 0. Why this belongs in Lawful Learning
@@ -115,42 +115,36 @@ O(3) with compatible pin/spin auxiliary structure is the terminal admissible gro
 
 [G] This is a categorical doctrine statement for lawful composition and scope control. It does not create a new empirical claim.
 
-## 7. A2 boundary
+## 7. A2 theorem handoff
 
-[S] The A2 extension is conjectural.
-
-[T] T2' provides a template only:
+[M] Under the faithful-frame template, the A2 structural theorem is recorded separately in:
 
 ```text
-spatial-symmetry group + auxiliary group preserving the form on V_A
+docs/lawful-learning/10-a2-gate-minimality-scoping.md
+registry/lawful-learning/a2-gate-minimality-scoping.v0.1.json
 ```
 
-[S] For A2, the loop class is expected to be order three, the auxiliary group is conjecturally SU(3)-type, and the form is conjecturally Hermitian.
+[M] The A2 spatial group is `PSU(3)`, the auxiliary group is `SU(3)`, the polarization space is `C^3`, the form is Hermitian, and the central element is `omega * I_3`.
 
-[G] The spatial-symmetry group for A2 is not identified here. It is a research problem, not a mechanical extension of T2'.
+[G] The Coxeter-jump coefficient remains a numerical harness deliverable. It does not demote the A2 structural theorem.
 
 ## 8. Lawful Learning non-claims
 
 This document does not claim:
 
 ```text
-A2 theorem proved
-A2 spatial group identified
 runtime harness updated
 hash-chain head recomputed
 empirical evidence added
 all downstream documents patched
 production proof assistant formalization completed
+A2 Coxeter-jump coefficient computed
 ```
 
-[G] Those claims require future evidence, checker, or formalization lanes.
+[G] Those claims require future evidence, checker, harness, or formalization lanes.
 
 ## 9. Handoff
 
-The next mechanical step is to bind this document into Phase 6 checker coverage by adding a schema/checker rule requiring:
+The T2' interpretation table is the controlling doctrine for A1 predicate interpretation under faithful spatial action.
 
-```text
-if gate_minimality_scope is T2 or T2' then predicate_interpretation_table is present
-```
-
-Until then, this document is the controlling doctrine for T2' interpretation under Lawful Learning.
+The A2 theorem document is the controlling structural theorem for the A2 faithful-frame extension.
