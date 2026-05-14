@@ -22,3 +22,9 @@ jobs:
             exit 1
           fi
           echo "invalid A2 scoping fixture correctly rejected"
+      - run: |
+          if python3 scripts/check-lawful-learning-t2-prime.py --an tests/fixtures/lawful-learning/an-unified-gate-minimality.symplectic-branch.invalid.json; then
+            echo "invalid An unified fixture unexpectedly passed"
+            exit 1
+          fi
+          echo "invalid An unified fixture correctly rejected"
