@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://socioprophet.org/schemas/neuronpedia/artifact-source-lock.v0.1.json",
   "title": "ArtifactSourceLock v0.1",
-  "description": "Locks an external or mirrored interpretability artifact to an immutable source reference. This is an evidence/provenance object only; it does not certify provider authenticity, model behavior, or causal validity.",
+  "description": "Locks an external or mirrored interpretability artifact to an immutable source reference. This is an evidence/provenance object only; it does not certify provider authenticity, model behavior, decomposition correctness, or causal validity.",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -10,6 +10,7 @@
     "kind",
     "artifact_id",
     "source_ref",
+    "decomposition_type",
     "lock_reason",
     "provenance_level",
     "mutation_policy",
@@ -48,6 +49,20 @@
         "license_ref": {"type": "string"}
       }
     },
+    "decomposition_type": {
+      "type": "string",
+      "description": "Declared decomposition family for the locked artifact. This is metadata for boundary discipline, not a claim that the decomposition is correct or complete.",
+      "enum": [
+        "sae_feature_dictionary",
+        "transcoder_feature_dictionary",
+        "crosscoder_feature_dictionary",
+        "activation_cache",
+        "feature_explanation_set",
+        "steering_vector_set",
+        "manual_annotation_set",
+        "unknown_declared"
+      ]
+    },
     "lock_reason": {
       "type": "string",
       "enum": [
@@ -79,15 +94,16 @@
           "retrieved_at",
           "source_hash",
           "provider_artifact_ref",
-          "license_ref"
+          "license_ref",
+          "decomposition_type"
         ]
       }
     },
     "review_notes": {"type": "string"},
     "non_claims": {
       "type": "array",
-      "minItems": 5,
-      "maxItems": 5,
+      "minItems": 6,
+      "maxItems": 6,
       "uniqueItems": true,
       "items": {
         "enum": [
@@ -95,7 +111,8 @@
           "no_authenticity_guarantee",
           "no_provider_endorsement",
           "no_unlocked_mutation",
-          "no_model_behavior_claim"
+          "no_model_behavior_claim",
+          "no_decomposition_correctness_claim"
         ]
       }
     }
