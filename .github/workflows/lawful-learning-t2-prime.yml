@@ -1,0 +1,16 @@
+name: lawful-learning-t2-prime
+
+on: [push, pull_request]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 scripts/check-lawful-learning-t2-prime.py
+      - run: |
+          if python3 scripts/check-lawful-learning-t2-prime.py tests/fixtures/lawful-learning/t2-prime-predicate-interpretation.missing-zeta.invalid.json; then
+            echo "invalid T2 prime fixture unexpectedly passed"
+            exit 1
+          fi
+          echo "invalid T2 prime fixture correctly rejected"
