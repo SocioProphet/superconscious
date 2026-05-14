@@ -1,0 +1,31 @@
+{
+  "schema_version": "0.1",
+  "kind": "artifact_source_lock",
+  "artifact_id": "neuronpedia.synthetic.missing-decomposition",
+  "source_ref": {
+    "source_kind": "static_snapshot",
+    "source_uri": "https://example.invalid/neuronpedia/snapshot.json",
+    "retrieved_at": "2026-05-13T00:00:00Z",
+    "source_hash": "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+    "provider_artifact_ref": "neuronpedia:synthetic:missing-decomposition:v0",
+    "license_ref": "review-required"
+  },
+  "lock_reason": "benchmark_fixture",
+  "provenance_level": "content_hash_plus_metadata",
+  "mutation_policy": "append_only_new_lock",
+  "frozen_fields": [
+    "source_uri",
+    "retrieved_at",
+    "source_hash",
+    "provider_artifact_ref",
+    "license_ref"
+  ],
+  "non_claims": [
+    "no_runtime_fetch",
+    "no_authenticity_guarantee",
+    "no_provider_endorsement",
+    "no_unlocked_mutation",
+    "no_model_behavior_claim",
+    "no_decomposition_correctness_claim"
+  ]
+}
