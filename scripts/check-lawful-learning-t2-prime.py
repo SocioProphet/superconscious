@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""Validate Lawful Learning T2' and A2 scoping doctrine artifacts.
+"""Validate Lawful Learning T2' and A2 theorem doctrine artifacts.
 
 Structural checker only. It does not run mathematical harnesses, recompute
-hash chains, prove A2, or promote conjectural claims.
+hash chains, compute the A2 Coxeter-jump coefficient, or implement runtime harnesses.
 """
 from __future__ import annotations
 
@@ -29,13 +29,13 @@ T2_REQUIRED_NON_CLAIMS = {
 A2_REQUIRED_OPEN_ITEMS = {
     "coxeter_jump_coefficient_A2",
     "a2_harness_skeleton",
-    "a2_proof_note",
+    "a2_expanded_proof_note",
 }
 A2_REQUIRED_NON_CLAIMS = {
-    "does_not_prove_A2",
     "does_not_compute_coxeter_jump_coefficient",
     "does_not_create_runtime_harness",
-    "does_not_promote_conjectural_to_mathematical",
+    "does_not_prove_A_n_uniformity",
+    "does_not_scope_D_or_E_series",
 }
 
 
@@ -110,8 +110,8 @@ def validate_a2_registry(record: dict[str, Any]) -> None:
         raise ValidationError("A2 registry: unexpected schemaVersion")
     if record.get("recordType") != "A2GateMinimalityScopingRecord":
         raise ValidationError("A2 registry: unexpected recordType")
-    if record.get("claimStatus") != "conjectural_scoping":
-        raise ValidationError("A2 registry: claimStatus must remain conjectural_scoping")
+    if record.get("claimStatus") != "structural_theorem":
+        raise ValidationError("A2 registry: claimStatus must be structural_theorem")
 
     candidate = record.get("candidate", {})
     if not isinstance(candidate, dict):
@@ -132,12 +132,21 @@ def validate_a2_registry(record: dict[str, Any]) -> None:
     if not isinstance(predicates, list):
         raise ValidationError("A2 registry: harnessPredicates must be list")
     ids = {item.get("predicateId") for item in predicates if isinstance(item, dict)}
-    if "coxeter_jump_coefficient_A2" not in ids:
-        raise ValidationError("A2 registry: must include blocking coxeter_jump_coefficient_A2 predicate")
+    required_predicates = {
+        "stokes_multiplier_observed_A2",
+        "coxeter_jump_coefficient_A2",
+        "hermitian_preservation_A2",
+        "gellmann_commutator_norm_A2",
+        "zeta_A2",
+        "zeta_A2_order_check",
+    }
+    missing_predicates = required_predicates - ids
+    if missing_predicates:
+        raise ValidationError(f"A2 registry: missing harness predicates {sorted(missing_predicates)}")
     for item in predicates:
         if item.get("predicateId") == "coxeter_jump_coefficient_A2":
-            if item.get("status") != "blocking_placeholder":
-                raise ValidationError("A2 registry: Coxeter jump must remain blocking_placeholder until computed")
+            if item.get("status") != "numerical_target_pending":
+                raise ValidationError("A2 registry: Coxeter jump must be numerical_target_pending until computed")
 
     open_items = {item.get("itemId") for item in record.get("openItems", []) if isinstance(item, dict)}
     missing_open = A2_REQUIRED_OPEN_ITEMS - open_items
@@ -162,7 +171,7 @@ def main() -> int:
         print(f"ERR: {exc}", file=sys.stderr)
         return 2
 
-    print("OK: Lawful Learning T2'/A2 doctrine artifacts validate")
+    print("OK: Lawful Learning T2'/A2 theorem doctrine artifacts validate")
     return 0
 
 
