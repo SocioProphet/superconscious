@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://socioprophet.org/schemas/composition/m5-tier2-binding.v1.json",
   "title": "M5 Public Note — Tier 2 Invariant Binding",
-  "description": "Doctrine-only schema binding M5 public-note publication compositions to ProCybernetica Tier 2 invariant declared modes. Opaque hashes only; no runtime publication gate, peer-review substitution, or analysis execution.",
+  "description": "Layer 1 declaration-shape schema binding M5 public-note publication compositions to ProCybernetica Tier 2 declared modes. Opaque hashes only. This schema does not perform runtime receipt lookup, source hash resolution, artifact existence checks, monitor attestation, timestamp authenticity verification, runtime publication gating, peer-review substitution, semantic invariant verification, public claim promotion, proof review, or full ProCybernetica composition-certificate instantiation.",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -20,7 +20,7 @@
     "binding_doctrine_version": {
       "type": "string",
       "pattern": "^v[0-9]+\\.[0-9]+$",
-      "description": "Doctrine version under which this binding is declared. Pins the binding to a specific Tier 2 invariant binding revision."
+      "description": "Local binding doctrine version. This pins the declaration shape used by this repo; it is not a runtime verification, peer-review, publication approval, or proof-review claim."
     },
     "upstream_certificate_refs": {
       "type": "array",
@@ -37,7 +37,7 @@
           "opaque_hash": {
             "type": "string",
             "pattern": "^sha256:[0-9a-f]{64}$",
-            "description": "Opaque content-addressed reference. This binding schema does not resolve the hash at validation time."
+            "description": "Opaque content-addressed reference. This schema validates hash shape only and does not resolve the hash, fetch the certificate, or verify artifact existence."
           }
         }
       }
@@ -51,12 +51,13 @@
         "opaque_hash": {
           "type": "string",
           "pattern": "^sha256:[0-9a-f]{64}$",
-          "description": "Opaque content-addressed reference for the public-note artifact. This binding schema does not resolve the hash at validation time."
+          "description": "Opaque content-addressed reference for the public-note artifact. This schema validates hash shape only and does not resolve the hash, fetch the public note, verify publication, or substitute for peer review."
         }
       }
     },
     "bound_modes": {
       "type": "object",
+      "description": "Declared adoption of ProCybernetica Tier 2 mode names. This object does not execute the corresponding analyses.",
       "additionalProperties": false,
       "required": [
         "receipt_integration",
