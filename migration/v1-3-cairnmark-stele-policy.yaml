@@ -1,0 +1,52 @@
+schema_version: 1.0.0
+policy_kind: v1_3_cairnmark_to_stele_migration
+status: doctrine_only_replay
+origin_branch: turn4-cairnmark-stele-v13
+audit_disposition: replay_after_demotion
+migration_strategy: default_existing_strict_new
+
+h6_boundary:
+  schema_activation: false
+  validator_activation: false
+  fixture_migration_performed: false
+  stele_promotion_performed: false
+  authority_imported: false
+  notes:
+    - This policy is replayed as doctrine only.
+    - The v1.3 schema wrappers from the origin branch are held for separate schema review.
+    - This file does not prove Stele eligibility or activate institutional memory promotion.
+
+existing_fixture_defaults:
+  authority_layer: grounded_schema
+  promotion_state: candidate
+  reasoning_trace_ref: null
+  cadence_classification: certificate
+  v1_3_migration:
+    migration_mode: defaulted
+    migrated_from_schema_version: "1.2.x-or-earlier"
+
+strict_new_fixture_policy:
+  applies_to: new_fixtures_committed_after_v1_3_schema_review
+  require_explicit_fields: true
+  require_reasoning_trace_when:
+    - promoted_stele
+    - rejected
+    - superseded
+
+schema_path_notes:
+  common_additive_fields: schemas/_common/v1-3-additive-fields.json
+  procybernetica_safety_case_v1_3: schemas/procybernetica/case.v1.3.json
+  replay_note: These paths existed on the origin branch but are not activated by this doctrine-only replay.
+
+required_followup_before_schema_activation:
+  - reconcile_schema_authority_plane
+  - add_positive_and_negative_fixtures
+  - add_cross_field_validator
+  - prove_legacy_defaults_do_not_promote_existing_fixtures
+  - document_ProCybernetica_or_SourceOS_promotion_boundary
+
+non_claims:
+  - Migration defaults preserve historical fixture validity only after schema-review adoption.
+  - Migration defaults do not prove Stele eligibility.
+  - Strict mode is the preferred path for new empirical falsification work, but is not active from this file alone.
+  - This file does not activate v1.3 validation.
