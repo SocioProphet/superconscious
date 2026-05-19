@@ -1,8 +1,9 @@
-# A1 Gate Minimality: Faithful Triad Action Version
+# A1 Gate Minimality: Faithful Triad Action Proof-Review Candidate
 
-**Status:** Draft v1, parallel to the non-faithful version.  
+**Status:** Draft v1, proof-review-required candidate parallel to the non-faithful version.  
+**H4 gate:** This document is theorem-track / proof-review-required. It may define candidate objects, proof skeletons, and harness obligations, but it is not proof-reviewed theorem doctrine and must not be cited downstream as a proved theorem without a later proof-review record.  
 **Location target:** `docs/proofs/a1-gate-minimality-faithful.md`  
-**Relationship to non-faithful version:** This proof note holds when condition (ii) is strengthened from “induces a nontrivial action on the triad” to “acts faithfully on the triad.” Under that strengthening, the minimal element changes from `SU(2)` acting through `SO(3)` with kernel `{+I,-I}` to `SO(3)` with auxiliary spin data on `V_A`. The two versions are not in conflict; they answer different questions about where the central sign lives.
+**Relationship to non-faithful version:** This proof-review candidate applies when condition (ii) is strengthened from “induces a nontrivial action on the triad” to “acts faithfully on the triad.” Under that strengthening, the proposed minimal element changes from `SU(2)` acting through `SO(3)` with kernel `{+I,-I}` to `SO(3)` with auxiliary spin data on `V_A`. The two versions are not in conflict; they answer different questions about where the central sign lives.
 
 ## 0. Categorical setup
 
@@ -26,7 +27,7 @@ Morphisms preserve all six pieces of structure: group, spatial representation, p
 
 The key ontological move relative to the non-faithful version is that `V_A` and its symplectic action are not representations of `G` in `A'_1`. They are auxiliary data carrying their own `Spin(3)` symmetry, with `G` acting only through compatibility with that auxiliary symmetry. Under faithfulness, `G` cannot itself carry the `{+I,-I}` structure; that structure must come from the auxiliary spin frame.
 
-## 1. Theorem statements
+## 1. Candidate theorem statements
 
 ### T1' — Admissibility under faithfulness
 
@@ -40,7 +41,7 @@ An object `(G, rho_spatial, V_A, Q_A, S, gamma) in A'_1` realizes the A1 gate se
 
 ### T2' — Minimality under faithfulness
 
-The class `A'_1` has a unique minimal object up to isomorphism:
+The class `A'_1` is proposed to have a unique minimal object up to isomorphism:
 
 ```text
 (SO(3), id, C^2, epsilon, sigma_spinor, gamma_can)
@@ -48,9 +49,9 @@ The class `A'_1` has a unique minimal object up to isomorphism:
 
 where `sigma_spinor: Spin(3) -> SL(2,C)` is the canonical spinor representation and `gamma_can` generates `pi_1(SO(3)) = Z/2`.
 
-In particular, the central element `-I in Spin(3)` is the lift of `gamma`; the sign of the gate semantics resides in the auxiliary spin structure rather than in `G` itself; and `G = SO(3)` is the smallest connected compact Lie group satisfying T1'.
+In particular, the central element `-I in Spin(3)` is the lift of `gamma`; the sign of the gate semantics resides in the auxiliary spin structure rather than in `G` itself; and `G = SO(3)` is the proposed smallest connected compact Lie group satisfying T1'.
 
-## 2. Proof of T2'
+## 2. Proof skeleton for T2' — not proof-reviewed
 
 ### Step 1 — Reduce to candidates by faithfulness
 
@@ -76,7 +77,7 @@ For `G = SO(3)` with the canonical auxiliary spin structure:
 - The generator of `pi_1(SO(3))` lifts through the universal cover `Spin(3) -> SO(3)` to the nontrivial central element `-I`.
 - The spinor representation preserves the canonical symplectic form `Q_A = epsilon`, and the induced `SO(3)` action on `P(V_A) = CP^1` is well-defined because projectivization quotients out `{+I,-I}`.
 
-Thus the canonical tuple is admissible.
+Thus the canonical tuple is admissible under the candidate conditions.
 
 ### Step 4 — Necessity and uniqueness of the auxiliary spin structure
 
@@ -96,14 +97,14 @@ Thus the auxiliary spin structure is unique up to the central `Z/2`, and conditi
 
 ### Step 5 — Minimality
 
-Steps 1 and 2 force `G = SO(3)`. Step 4 forces the auxiliary spin structure to be canonical up to the central branch fixed by the loop condition. The remaining data are canonical. Hence the faithful admissible category has a unique minimal object up to isomorphism.
+Steps 1 and 2 force `G = SO(3)`. Step 4 forces the auxiliary spin structure to be canonical up to the central branch fixed by the loop condition. The remaining data are canonical. Hence the faithful admissible category is proposed to have a unique minimal object up to isomorphism.
 
 ## 3. Counterexamples when conditions are removed
 
 - Remove non-abelianness: `SO(2)` is faithful and connected but abelian.
 - Remove polarization compatibility: `SO(3)` acting only on its standard real triad lacks the two-dimensional symplectic spinor witness.
 - Remove loop coherence: the wrong auxiliary branch lifts the distinguished loop to `+I` rather than `-I`.
-- Remove faithfulness: the non-faithful theorem returns `SU(2)` with kernel `{+I,-I}` in the map to `SO(3)`.
+- Remove faithfulness: the non-faithful theorem-track branch returns `SU(2)` with kernel `{+I,-I}` in the map to `SO(3)`.
 - Remove connectedness: finite non-abelian subgroups and their binary covers enter, but they fail the connected Lie-group condition.
 
 ## 4. Structural notes
@@ -159,8 +160,20 @@ To make the categorical formulation nontrivial, broaden the category to admit di
 - Auxiliary spin: `Spin(3)` is auxiliary data on `V_A`; its identification with the universal cover of `SO(3)` is A1-specific and must not be overgeneralized.
 - Morphism preservation: morphisms preserve group, spatial representation, `V_A`, `Q_A`, auxiliary spin structure, and loop class.
 
-## 7. Summary
+## 7. Non-claims under H4 gate
 
-T2' states that under faithful action on the spatial triad, the minimal connected compact Lie group is `SO(3)`, with the A1 sign data carried by an auxiliary `Spin(3)` structure on `V_A`.
+This document does not claim:
 
-T2 and T2' are not competing theorems. They allocate the spin data differently.
+```text
+independent proof review completed
+formal proof assistant verification completed
+downstream theorem citation authorized
+non-faithful branch fully reconciled by proof review
+all representation-theoretic subclaims externally audited
+```
+
+## 8. Summary
+
+T2' candidate states that under faithful action on the spatial triad, the proposed minimal connected compact Lie group is `SO(3)`, with the A1 sign data carried by an auxiliary `Spin(3)` structure on `V_A`.
+
+T2 and T2' are not competing proof-reviewed theorems in this file. They are theorem-track branches that allocate the spin data differently and require proof-review records before downstream theorem citation.
