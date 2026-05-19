@@ -1,19 +1,20 @@
-# Lawful Learning C-6' — Unified A_n Gate-Minimality Theorem
+# Lawful Learning C-6' — Unified A_n Gate-Minimality Pattern
 
-**Status:** Draft v1, theorem-pattern statement under T2' faithful-frame doctrine.  
+**Status:** Draft v1, theorem-track candidate / theorem-pattern scaffold under T2' faithful-frame doctrine.  
+**H4 gate:** This document is theorem-track / proof-review-required. It may define candidate objects, proof skeletons, and harness obligations, but it is not proof-reviewed theorem doctrine and must not be cited downstream as a proved theorem without a later proof-review record.  
 **Date:** May 14, 2026.  
-**Scope:** Unified `A_n` structural theorem for `n >= 2`, with `A_1` retained as the exceptional symplectic base case.  
+**Scope:** Unified `A_n` structural theorem-pattern candidate for `n >= 2`, with `A_1` retained as the exceptional symplectic base case.  
 **Claim class:** [M|T|G] as marked. Direct Stokes-side coefficients remain harness/evidence obligations.
 
 ## 0. Placement
 
-[G] This document extends the committed Lawful Learning T2' / A2 theorem lane from individual A1 and A2 statements to the uniform `A_n` structural theorem pattern.
+[G] This document extends the Lawful Learning T2' / A2 theorem-track lane from individual A1 and A2 candidates to the uniform `A_n` structural theorem-pattern candidate.
 
-[G] It does not compute direct Stokes-side observables. It states the structural theorem pattern and the corresponding parametric harness targets.
+[G] It does not compute direct Stokes-side observables. It states the structural pattern and corresponding parametric harness targets. It does not, by itself, prove the `A_n` theorem family.
 
 ## 1. Exceptional base case: A1
 
-[M] Under T2', the faithful-frame A1 minimal object is:
+[M] Under T2', the faithful-frame A1 candidate minimal object is:
 
 ```text
 (SO(3), Ad/spatial triad, C^2, epsilon, Spin(3)=SU(2), gamma_can)
@@ -31,9 +32,9 @@
 
 [T] This is the exceptional low-rank case: `SU(2) ~= Sp(1)`, and the defining representation has invariant symplectic form.
 
-## 2. Unified statement for n >= 2
+## 2. Unified candidate statement for n >= 2
 
-[M] For `n >= 2`, the faithful-frame structural theorem has minimal object:
+[M] For `n >= 2`, the faithful-frame structural theorem-pattern candidate has proposed minimal object:
 
 ```text
 (PSU(n+1), Ad, C^(n+1), H_std, sigma_def, gamma_can)
@@ -64,7 +65,7 @@ A_n>=2:   Hermitian form on C^(n+1)
 
 [G] Any uniform `A_n` harness must branch on this dichotomy rather than mechanically copying the A1 symplectic predicate.
 
-## 4. Proof skeleton for n >= 2
+## 4. Proof skeleton for n >= 2 — not proof-reviewed
 
 ### 4.1 Candidate reduction
 
@@ -72,7 +73,7 @@ A_n>=2:   Hermitian form on C^(n+1)
 
 [M] `PSU(n+1)` has fundamental group `Z/(n+1)` and faithful adjoint action on `su(n+1)`.
 
-[T] The reduction step excludes lower-rank or abelian candidates that fail either non-abelianness, faithful adjoint-frame action, or the required cyclic loop class.
+[T] The reduction step is proposed to exclude lower-rank or abelian candidates that fail either non-abelianness, faithful adjoint-frame action, or the required cyclic loop class.
 
 ### 4.2 Admissibility
 
@@ -100,7 +101,7 @@ lambda^(n+1) = 1
 
 ### 4.5 Minimality
 
-[M] Candidate reduction plus auxiliary uniqueness identifies the minimal admissible object up to isomorphism:
+[M] If candidate reduction and auxiliary uniqueness are established under proof review, the proposed minimal admissible object is:
 
 ```text
 (PSU(n+1), Ad, C^(n+1), H_std, sigma_def, gamma_can)
@@ -147,11 +148,11 @@ coxeter_jump = -27/4
 
 ## 7. Precedent: Basak / Allcock complex-hyperbolic reflection construction
 
-[T] Basak's complex-hyperbolic reflection construction supplies a large-scale precedent for the same discipline this document uses: start from a rigid arithmetic reflection substrate, extend a diagram through an over-determined system, and require uniqueness rather than accepting free parameters.
+[T] Basak's complex-hyperbolic reflection construction supplies a precedent for a methodological pattern: start from a rigid arithmetic reflection substrate, extend a diagram through an over-determined system, and require uniqueness rather than accepting free parameters.
 
 [M] In the Basak/Allcock setting, the Eisenstein-integer lattice has signature `(1,13)`, the relevant complex hyperbolic space is `CH^13`, and the incidence graph `Inc(P^2(F_3))` supplies 26 order-three simple reflections. The 26 simple mirrors are characterized as closest mirrors to a distinguished Weyl vector, and Basak's 2007 theorem verifies the corresponding braid/commute relations in the mirror-complement orbifold fundamental group.
 
-[G] This is a precedent citation, not an import of the bimonster program into Lawful Learning. The active C-6' theorem remains the `A_n` faithful-frame structural theorem. The Basak/Allcock construction is cited only as evidence that the no-free-knob, closest-mirror/gate-minimality, and over-determined-extension methodology scales to large arithmetic reflection systems.
+[G] This is a precedent citation, not an import of the bimonster program into Lawful Learning. The active C-6' artifact remains the `A_n` faithful-frame structural theorem-pattern candidate. The Basak/Allcock construction is cited only as stress-test precedent for the no-free-knob, closest-mirror/gate-minimality, and over-determined-extension methodology.
 
 [G] The parallel quaternionic construction — Hurwitz integers, `P^2(F_2)`, 14 order-four reflections, and an `M444`-type diagram — is a possible future stress-test lane because it is smaller than the 26-node Eisenstein construction and arithmetically closer to quaternionic tooling used elsewhere in the broader estate. It is not part of this PR.
 
@@ -179,13 +180,15 @@ meaning the 26 dimensions derive from internal spectral/unitary/Poincare-channel
 
 [G] The direct Stokes-side computation remains open for A2 and for the parametric `A_n` family.
 
-[G] The D and E singularity series are not covered by this theorem. Their Weyl groups and Lie-theoretic structures are not cyclic `A_n` extensions and require separate scoping.
+[G] The D and E singularity series are not covered by this theorem-pattern candidate. Their Weyl groups and Lie-theoretic structures are not cyclic `A_n` extensions and require separate scoping.
 
 ## 10. Non-claims
 
 This document does not claim:
 
 ```text
+A_n theorem proved
+proof review completed
 direct Stokes-side coefficients computed for all A_n
 A_n runtime harness implemented
 D_n or E_n series scoped
@@ -200,3 +203,5 @@ M444 quaternionic stress-test lane is active
 The next mechanical deliverable is a parametric `coxeter_an_harness.py` scaffold generated from the targets in Section 5, with A1 handled as an exceptional branch and `n >= 2` handled by the Hermitian-cyclic branch.
 
 The next analytic deliverable remains the direct A2 Stokes-side computation, because it anchors the scaffold value `-27/4` to the canonical singularity-theoretic observable.
+
+A later proof-review PR must be added before this file or downstream consumers treat C-6' as proof-reviewed theorem doctrine.

@@ -1,15 +1,16 @@
-# Lawful Learning A2 Gate Minimality Theorem
+# Lawful Learning A2 Gate Minimality Candidate
 
-**Status:** Draft v1, theorem framing under T2' faithful-frame doctrine.  
+**Status:** Draft v1, theorem-track candidate under T2' faithful-frame doctrine.  
+**H4 gate:** This document is theorem-track / proof-review-required. It may define candidate objects, proof skeletons, and harness obligations, but it is not proof-reviewed theorem doctrine and must not be cited downstream as a proved theorem without a later proof-review record.  
 **Date:** May 13, 2026.  
-**Scope:** A2 extension of the T2' faithful-frame theorem: spatial group, auxiliary group, polarization form, central element, and harness baseline.  
-**Claim class:** [M|T|G] as marked. The structural theorem is committed here; the Coxeter-jump coefficient is scaffold-supported and still awaits direct Stokes-side verification.
+**Scope:** A2 extension candidate for the T2' faithful-frame branch: spatial group, auxiliary group, polarization form, central element, and harness baseline.  
+**Claim class:** [M|T|G] as marked. The structural statement is a candidate requiring proof review; the Coxeter-jump coefficient is scaffold-supported and still awaits direct Stokes-side verification.
 
 ## 0. Placement
 
-[G] This document belongs to Lawful Learning because it governs how a theorem-level structure enters the learning framework: scope declaration, witness-object discipline, predicate interpretation, non-claim propagation, and harness-obligation tracking.
+[G] This document belongs to Lawful Learning because it governs how a theorem-track structure enters the learning framework: scope declaration, witness-object discipline, predicate interpretation, non-claim propagation, and harness-obligation tracking.
 
-[G] The A2 structural result is theorem-level doctrine. The Coxeter-jump coefficient is now represented in the scaffold harness as `-27/4`, supported by Fuss-Catalan inverse-radius evidence, but the direct Stokes-side computation remains outstanding.
+[G] The A2 structural result is not recorded here as proof-reviewed theorem doctrine. It is recorded as a theorem-track candidate. The Coxeter-jump coefficient is represented in the scaffold harness as `-27/4`, supported by Fuss-Catalan inverse-radius evidence, but the direct Stokes-side computation remains outstanding.
 
 ## 1. A2 setup
 
@@ -25,9 +26,9 @@ f = x0^3 + x1^2 + ... + xk^2
 
 [M] The A2 loop-class structure therefore replaces the A1 `Z/2` structure with `Z/3`.
 
-## 2. Spatial group theorem
+## 2. Spatial group candidate
 
-[M] The A2 faithful-frame spatial-symmetry group is:
+[M] The proposed A2 faithful-frame spatial-symmetry group is:
 
 ```text
 G_A2 = PSU(3)
@@ -45,9 +46,9 @@ su(3) ~= R^8
 
 [G] General Lawful Learning documents should use `adjoint frame` or `spatial G_A_n-frame`, not `spatial triad`, outside A1.
 
-## 3. Auxiliary structure theorem
+## 3. Auxiliary structure candidate
 
-[M] The auxiliary group is `SU(3)`, acting on:
+[M] The proposed auxiliary group is `SU(3)`, acting on:
 
 ```text
 V_A2 = C^3
@@ -55,27 +56,27 @@ V_A2 = C^3
 
 via the defining representation.
 
-[M] The central element is:
+[M] The proposed central element is:
 
 ```text
 omega * I_3, where omega = exp(2*pi*i/3)
 ```
 
-[M] This replaces the A1 central element `-I_2`.
+[M] This replaces the A1 central element `-I_2` in the candidate structure.
 
-## 4. Form type theorem
+## 4. Form type candidate
 
 [M] The defining representation of `SU(2)` is quaternionic type and carries an invariant symplectic form.
 
 [M] The defining representation of `SU(3)` is complex type and does not carry a nonzero invariant bilinear form of the A1 kind.
 
-[M] The A2 polarization form is Hermitian, not symplectic.
+[M] The proposed A2 polarization form is Hermitian, not symplectic.
 
 [G] Any harness or doctrine artifact that copies A1 symplectic-pairing language into A2 without revision is invalid for A2 reuse.
 
-## 5. T1'_A2
+## 5. T1'_A2 candidate
 
-[M] Define the category `A'_A2` whose objects are tuples:
+[M] Define the candidate category `A'_A2` whose objects are tuples:
 
 ```text
 (G, rho_ad, V_A2, H, S_A2, gamma_A2)
@@ -90,7 +91,7 @@ where:
 - `gamma_A2` is a distinguished order-3 loop class;
 - the lifted endpoint acts as `omega * I_3`.
 
-Admissibility conditions:
+Candidate admissibility conditions:
 
 ```text
 (i) connected compact Lie regularity
@@ -100,9 +101,9 @@ Admissibility conditions:
 (v'_A2) Hermitian polarization compatibility
 ```
 
-## 6. T2'_A2
+## 6. T2'_A2 candidate
 
-[M] The minimal admissible A2 object is:
+[M] The proposed minimal admissible A2 object is:
 
 ```text
 (PSU(3), Ad, C^3, H_std, sigma_def, gamma_can)
@@ -112,13 +113,13 @@ where `sigma_def: SU(3) -> U(C^3, H_std)` is the defining representation and `ga
 
 [M] The central element `omega * I_3` is not in `G = PSU(3)`. It is in the auxiliary `SU(3)` acting on `V_A2`.
 
-## 7. Proof outline
+## 7. Proof skeleton — not proof-reviewed
 
-The proof has five steps.
+The candidate proof skeleton has five steps.
 
 ### 7.1 Candidate reduction
 
-[M] Connected compact non-abelian candidates carrying the required order-3 loop class reduce to `PSU(3)` under the declared admissibility conditions.
+[M] Connected compact non-abelian candidates carrying the required order-3 loop class are proposed to reduce to `PSU(3)` under the declared admissibility conditions.
 
 ### 7.2 Admissibility check
 
@@ -150,7 +151,7 @@ Then use the coherent loop condition to select the canonical branch.
 
 ### 7.5 Minimality
 
-[M] Once candidate reduction and auxiliary uniqueness are established, minimality follows by the same structural shape as A1.
+[M] If candidate reduction and auxiliary uniqueness are established under proof review, minimality would follow by the same structural shape as A1.
 
 ## 8. Harness baseline
 
@@ -194,13 +195,16 @@ direct_A2_stokes_multiplier_observable
 
 [T] The Coxeter-jump computation requires the Stokes-side calculation for order-3 monodromy and three anti-Stokes rays.
 
-[G] The unknown direct Stokes witness does not demote the A2 structural theorem. It only marks the numerical harness as scaffold-supported rather than Stokes-complete.
+[G] The unknown direct Stokes witness prevents numerical-harness promotion beyond scaffold-supported status. The structural candidate also remains proof-review-required until a later proof-review record lands.
 
 ## 10. Non-claims
 
 This document does not claim:
 
 ```text
+proof review completed
+A2 theorem proved
+downstream theorem citation authorized
 direct A2 Stokes-side Coxeter-jump computation completed
 direct A2 Stokes multiplier observable implemented
 A_n theorem proved
@@ -209,8 +213,9 @@ D/E singularity series scoped
 
 ## 11. Next actions
 
-1. Compute the direct Stokes-side witness for `coxeter_jump_coefficient_A2`.
-2. Replace scaffold value status with direct computed status after that witness lands.
-3. Expand the A2 proof note if desired.
-4. State C-1'_A2 after the proof note stabilizes.
-5. Generalize to A_n after A2 harness and proof-note layers are settled.
+1. Complete proof review or demote further to structural-doctrine-only.
+2. Compute the direct Stokes-side witness for `coxeter_jump_coefficient_A2`.
+3. Replace scaffold value status with direct computed status only after that witness lands.
+4. Expand the A2 proof note if desired.
+5. State C-1'_A2 only after the proof-note layer stabilizes.
+6. Generalize to A_n only after A2 harness and proof-review layers are settled.
