@@ -1,0 +1,116 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://socioprophet.org/schemas/neuronpedia/intervention-spec.v0.1.json",
+  "title": "InterventionSpec v0.1",
+  "description": "Declares a bounded interpretability intervention plan over locked artifacts and provider bindings. This is a specification and review object only; it does not authorize execution, model modification, provider calls, or behavioral claims.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "kind",
+    "intervention_id",
+    "artifact_source_lock_ref",
+    "provider_binding_ref",
+    "intervention_type",
+    "target",
+    "planned_effect",
+    "safety_bounds",
+    "evidence_requirements",
+    "execution_status",
+    "non_claims"
+  ],
+  "properties": {
+    "schema_version": {"const": "0.1"},
+    "kind": {"const": "intervention_spec"},
+    "intervention_id": {
+      "type": "string",
+      "minLength": 3,
+      "pattern": "^[a-zA-Z0-9_.:-]+$"
+    },
+    "artifact_source_lock_ref": {"type": "string", "minLength": 3},
+    "provider_binding_ref": {"type": "string", "minLength": 3},
+    "intervention_type": {
+      "type": "string",
+      "enum": [
+        "feature_observation",
+        "activation_patch_plan",
+        "steering_vector_plan",
+        "ablation_plan",
+        "counterfactual_prompt_plan",
+        "manual_review_probe"
+      ]
+    },
+    "target": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["model_ref", "feature_ref", "layer_ref"],
+      "properties": {
+        "model_ref": {"type": "string", "minLength": 1},
+        "feature_ref": {"type": "string", "minLength": 1},
+        "layer_ref": {"type": "string", "minLength": 1},
+        "prompt_ref": {"type": "string"},
+        "dataset_ref": {"type": "string"}
+      }
+    },
+    "planned_effect": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["effect_kind", "effect_description", "claim_status"],
+      "properties": {
+        "effect_kind": {
+          "type": "string",
+          "enum": ["observe_only", "hypothesis", "candidate_effect", "benchmark_probe"]
+        },
+        "effect_description": {"type": "string", "minLength": 1},
+        "claim_status": {"const": "not_promoted"}
+      }
+    },
+    "safety_bounds": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["no_live_model_mutation", "no_provider_writeback", "requires_policy_admission", "requires_human_review"],
+      "properties": {
+        "no_live_model_mutation": {"const": true},
+        "no_provider_writeback": {"const": true},
+        "requires_policy_admission": {"const": true},
+        "requires_human_review": {"type": "boolean"},
+        "max_scope": {
+          "type": "string",
+          "enum": ["single_feature", "single_layer", "single_prompt_set", "single_benchmark_fixture"]
+        }
+      }
+    },
+    "evidence_requirements": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["requires_artifact_source_lock", "requires_provider_binding", "requires_result_receipt"],
+      "properties": {
+        "requires_artifact_source_lock": {"const": true},
+        "requires_provider_binding": {"const": true},
+        "requires_result_receipt": {"const": true},
+        "receipt_schema_ref": {"type": "string"}
+      }
+    },
+    "execution_status": {
+      "type": "string",
+      "enum": ["draft", "review_required", "approved_for_fixture_only", "blocked", "superseded"]
+    },
+    "review_notes": {"type": "string"},
+    "non_claims": {
+      "type": "array",
+      "minItems": 6,
+      "maxItems": 6,
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "no_execution_authority",
+          "no_live_model_mutation",
+          "no_provider_writeback",
+          "no_behavioral_claim_promotion",
+          "no_safety_claim",
+          "no_artifact_authenticity_claim"
+        ]
+      }
+    }
+  }
+}
