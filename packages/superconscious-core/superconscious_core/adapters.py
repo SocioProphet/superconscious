@@ -206,3 +206,181 @@ class MockApprovalAdapter:
             summary="Nontrivial approval classes are blocked in M1 deterministic mode.",
             evidence={"approvalClass": approval_class, "reason": reason},
         )
+
+
+# ---------------------------------------------------------------------------
+# Cognition loop adapter protocols (cognition.observe / reflect / propose / …)
+# ---------------------------------------------------------------------------
+
+
+class WorkspaceOperationObserveAdapter(Protocol):
+    """Observe a WorkspaceOperation event (read-only; no mutation)."""
+
+    def observe(self, operation: Dict[str, Any]) -> AdapterDecision: ...
+
+
+class ReflectionAdapter(Protocol):
+    """Generate a governed reflection/evaluation artifact for an observed operation."""
+
+    def reflect(self, operation: Dict[str, Any], observation: AdapterDecision) -> AdapterDecision: ...
+
+
+class RemediationProposalAdapter(Protocol):
+    """Propose remediation through AgentPlane / OperationContract (never direct-write)."""
+
+    def propose(self, run_id: str, reflection: AdapterDecision) -> AdapterDecision: ...
+
+
+class LearningLoopAdapter(Protocol):
+    """Record evidence to the systems-learning-loop."""
+
+    def record(self, run_id: str, reflection: AdapterDecision) -> AdapterDecision: ...
+
+
+class RiskSignalAdapter(Protocol):
+    """Emit an auditable risk signal for downstream review."""
+
+    def emit(self, run_id: str, reflection: AdapterDecision) -> AdapterDecision: ...
+
+
+class PolicyReviewAdapter(Protocol):
+    """Request a policy review through Policy Fabric / Guardrail Fabric."""
+
+    def request(self, run_id: str, reflection: AdapterDecision, reason: str) -> AdapterDecision: ...
+
+
+# ---------------------------------------------------------------------------
+# Mock implementations for the cognition loop adapters
+# ---------------------------------------------------------------------------
+
+_ELEVATED_SIDE_EFFECT_CLASSES = {"durable-write", "destructive"}
+
+
+class MockWorkspaceOperationObserveAdapter:
+    def observe(self, operation: Dict[str, Any]) -> AdapterDecision:
+        return AdapterDecision(
+            adapter="MockWorkspaceOperationObserveAdapter",
+            decision="observed-read-only",
+            summary="Observed WorkspaceOperation event without mutation.",
+            evidence={
+                "operationId": operation.get("operationId"),
+                "type": operation.get("type"),
+                "status": operation.get("status"),
+                "sideEffectClass": operation.get("sideEffectClass"),
+                "sideEffectsApplied": False,
+            },
+        )
+
+
+class MockReflectionAdapter:
+    def reflect(self, operation: Dict[str, Any], observation: AdapterDecision) -> AdapterDecision:
+        risk_score = (
+            "medium"
+            if operation.get("sideEffectClass") in _ELEVATED_SIDE_EFFECT_CLASSES
+            else "low"
+        )
+        remediation = "review-suggested" if risk_score != "low" else "none-required"
+        return AdapterDecision(
+            adapter="MockReflectionAdapter",
+            decision="reflected",
+            summary="Generated governed reflection artifact for workspace operation.",
+            evidence={
+                "operationId": operation.get("operationId"),
+                "evaluationSummary": "Operation completed within expected policy bounds.",
+                "riskScore": risk_score,
+                "remediation": remediation,
+                "admissionState": "proposed",
+            },
+        )
+
+
+class MockRemediationProposalAdapter:
+    def propose(self, run_id: str, reflection: AdapterDecision) -> AdapterDecision:
+        remediation = reflection.evidence.get("remediation", "none-required")
+        if remediation == "none-required":
+            return AdapterDecision(
+                adapter="MockRemediationProposalAdapter",
+                decision="no-action-required",
+                summary="No remediation required for this operation.",
+                evidence={
+                    "runId": run_id,
+                    "routedThrough": "agentplane",
+                    "actionType": "none",
+                    "directMutation": False,
+                },
+            )
+        return AdapterDecision(
+            adapter="MockRemediationProposalAdapter",
+            decision="proposal-emitted",
+            summary="Emitted remediation proposal through AgentPlane; no direct mutation.",
+            evidence={
+                "runId": run_id,
+                "routedThrough": "agentplane",
+                "actionType": "review-request",
+                "proposalRef": f"urn:srcos:remediation-proposal:{run_id.rsplit(':', 1)[-1]}",
+                "directMutation": False,
+            },
+        )
+
+
+class MockLearningLoopAdapter:
+    def record(self, run_id: str, reflection: AdapterDecision) -> AdapterDecision:
+        return AdapterDecision(
+            adapter="MockLearningLoopAdapter",
+            decision="recorded-local-stub",
+            summary="Recorded reflection evidence for systems-learning-loop (stub).",
+            evidence={
+                "runId": run_id,
+                "learningLoopRef": "urn:socioprophet:systems-learning-loop:stub",
+                "riskScore": reflection.evidence.get("riskScore"),
+                "admissionState": "proposed",
+            },
+        )
+
+
+class MockRiskSignalAdapter:
+    def emit(self, run_id: str, reflection: AdapterDecision) -> AdapterDecision:
+        risk_score = reflection.evidence.get("riskScore", "low")
+        if risk_score == "low":
+            return AdapterDecision(
+                adapter="MockRiskSignalAdapter",
+                decision="no-signal",
+                summary="Risk score is low; no risk signal emitted.",
+                evidence={"runId": run_id, "riskScore": risk_score, "signalEmitted": False},
+            )
+        return AdapterDecision(
+            adapter="MockRiskSignalAdapter",
+            decision="signal-emitted",
+            summary="Emitted auditable risk signal for downstream review.",
+            evidence={
+                "runId": run_id,
+                "riskScore": risk_score,
+                "signalEmitted": True,
+                "signalRef": f"urn:srcos:risk-signal:{run_id.rsplit(':', 1)[-1]}",
+                "auditTrail": "ledger-facing",
+            },
+        )
+
+
+class MockPolicyReviewAdapter:
+    def request(self, run_id: str, reflection: AdapterDecision, reason: str) -> AdapterDecision:
+        remediation = reflection.evidence.get("remediation", "none-required")
+        if remediation == "none-required":
+            return AdapterDecision(
+                adapter="MockPolicyReviewAdapter",
+                decision="not-required",
+                summary="Policy review not required for this operation.",
+                evidence={"runId": run_id, "reason": reason, "reviewRequested": False},
+            )
+        return AdapterDecision(
+            adapter="MockPolicyReviewAdapter",
+            decision="review-requested",
+            summary="Requested policy review through Policy Fabric / Guardrail Fabric.",
+            evidence={
+                "runId": run_id,
+                "reason": reason,
+                "reviewRequested": True,
+                "reviewRef": f"urn:srcos:policy-review:{run_id.rsplit(':', 1)[-1]}",
+                "policyFabric": "guardrail-fabric",
+            },
+        )
