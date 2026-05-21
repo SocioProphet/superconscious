@@ -11,6 +11,7 @@
     "artifact_id",
     "source_ref",
     "decomposition_type",
+    "frozen_metadata",
     "lock_reason",
     "provenance_level",
     "mutation_policy",
@@ -63,6 +64,21 @@
         "unknown_declared"
       ]
     },
+    "frozen_metadata": {
+      "type": "object",
+      "description": "Frozen decomposition metadata for the declared decomposition type. These fields identify the declared artifact shape; they do not certify decomposition correctness.",
+      "additionalProperties": false,
+      "properties": {
+        "model_ref": {"type": "string", "minLength": 1},
+        "layer_ref": {"type": "string", "minLength": 1},
+        "sae_version": {"type": "string", "minLength": 1},
+        "dictionary_size": {"type": "integer", "minimum": 1},
+        "feature_count": {"type": "integer", "minimum": 1},
+        "site_ref": {"type": "string", "minLength": 1},
+        "method_ref": {"type": "string", "minLength": 1},
+        "declared_by": {"type": "string", "minLength": 1}
+      }
+    },
     "lock_reason": {
       "type": "string",
       "enum": [
@@ -95,7 +111,8 @@
           "source_hash",
           "provider_artifact_ref",
           "license_ref",
-          "decomposition_type"
+          "decomposition_type",
+          "frozen_metadata"
         ]
       }
     },
@@ -116,5 +133,28 @@
         ]
       }
     }
-  }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "decomposition_type": {"const": "sae_feature_dictionary"}
+        },
+        "required": ["decomposition_type"]
+      },
+      "then": {
+        "properties": {
+          "frozen_metadata": {
+            "required": [
+              "model_ref",
+              "layer_ref",
+              "sae_version",
+              "dictionary_size",
+              "feature_count"
+            ]
+          }
+        }
+      }
+    }
+  ]
 }
