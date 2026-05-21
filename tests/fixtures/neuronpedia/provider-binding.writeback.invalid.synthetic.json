@@ -1,0 +1,26 @@
+{
+  "schema_version": "0.1",
+  "kind": "provider_binding",
+  "binding_id": "neuronpedia.synthetic.provider.bad",
+  "provider": {
+    "provider_id": "neuronpedia",
+    "provider_name": "Neuronpedia",
+    "provider_kind": "external_public_provider"
+  },
+  "allowed_surfaces": ["artifact_lookup"],
+  "artifact_source_lock_refs": ["neuronpedia.synthetic.feature-pack.v0"],
+  "authority_scope": {
+    "may_fetch_live": true,
+    "may_write_provider": true,
+    "may_promote_claims": false,
+    "requires_policy_admission": true
+  },
+  "refresh_policy": "manual_only",
+  "non_claims": [
+    "no_provider_trust_by_default",
+    "no_claim_promotion",
+    "no_writeback_authority",
+    "no_live_fetch_without_policy",
+    "no_model_intervention_authorization"
+  ]
+}

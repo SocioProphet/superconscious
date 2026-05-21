@@ -1,6 +1,6 @@
 include Makefile
 
-.PHONY: interpretability-harness-tier2-binding-static interpretability-harness-tier2-binding-fixtures interpretability-harness-tier2-binding-ci interpretability-harness-static interpretability-harness-schema-fixtures interpretability-harness-cross-field interpretability-harness-ci
+.PHONY: interpretability-harness-tier2-binding-static interpretability-harness-tier2-binding-fixtures interpretability-harness-tier2-binding-ci interpretability-harness-static interpretability-harness-schema-fixtures interpretability-harness-cross-field interpretability-harness-ci neuronpedia-static neuronpedia-schema-fixtures neuronpedia-ci
 
 interpretability-harness-tier2-binding-static:
 	python3 -m json.tool schemas/composition/interpretability-harness-tier2-binding.v1.json >/dev/null
@@ -41,4 +41,20 @@ interpretability-harness-cross-field:
 
 interpretability-harness-ci: interpretability-harness-static interpretability-harness-schema-fixtures interpretability-harness-cross-field
 
-certificate-ci: interpretability-harness-tier2-binding-ci interpretability-harness-ci
+neuronpedia-static:
+	python3 -m json.tool schemas/neuronpedia/artifact-source-lock.v0.1.json >/dev/null
+	python3 -m json.tool schemas/neuronpedia/provider-binding.v0.1.json >/dev/null
+	python3 -m json.tool schemas/neuronpedia/intervention-spec.v0.1.json >/dev/null
+
+neuronpedia-schema-fixtures:
+	python3 -m src.m1.validate_schema_instance schemas/neuronpedia/artifact-source-lock.v0.1.json tests/fixtures/neuronpedia/artifact-source-lock.synthetic.json
+	! python3 -m src.m1.validate_schema_instance schemas/neuronpedia/artifact-source-lock.v0.1.json tests/fixtures/neuronpedia/artifact-source-lock.empty.invalid.synthetic.json
+	! python3 -m src.m1.validate_schema_instance schemas/neuronpedia/artifact-source-lock.v0.1.json tests/fixtures/neuronpedia/artifact-source-lock.mutable.invalid.synthetic.json
+	! python3 -m src.m1.validate_schema_instance schemas/neuronpedia/artifact-source-lock.v0.1.json tests/fixtures/neuronpedia/artifact-source-lock.missing-decomposition.invalid.synthetic.json
+	! python3 -m src.m1.validate_schema_instance schemas/neuronpedia/artifact-source-lock.v0.1.json tests/fixtures/neuronpedia/artifact-source-lock.frozen-metadata-incomplete-for-sae.invalid.synthetic.json
+	python3 -m src.m1.validate_schema_instance schemas/neuronpedia/provider-binding.v0.1.json tests/fixtures/neuronpedia/provider-binding.synthetic.json
+	! python3 -m src.m1.validate_schema_instance schemas/neuronpedia/provider-binding.v0.1.json tests/fixtures/neuronpedia/provider-binding.writeback.invalid.synthetic.json
+
+neuronpedia-ci: neuronpedia-static neuronpedia-schema-fixtures
+
+certificate-ci: interpretability-harness-tier2-binding-ci interpretability-harness-ci neuronpedia-ci
