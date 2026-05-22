@@ -30,6 +30,29 @@ emits:
 .runs/<run-id>/benchmark-result.json
 ```
 
+## M1.5 — Governed cognition loop over Workspace Operations
+
+Status: core implementation landed in `#52` / `4b5545922d5844d4567feea10f791422947ecc04`.
+
+Goal: run the Superconscious cognition loop over Workspace Operation task input in read / reflect / propose posture, while keeping runtime mutation, network access, browser control, terminal control, and host mutation out of scope.
+
+Deliverables:
+
+- `packages/superconscious-core/superconscious_core/cognition_loop.py`;
+- deterministic cognition adapters;
+- `schemas/cognition-operation.draft.schema.json`;
+- `examples/workspace-operation-observe/task.json`;
+- tests for the cognition-loop artifact path;
+- `cognition-smoke` Makefile target for the merged example.
+
+Exit criteria:
+
+```text
+make cognition-smoke
+```
+
+emits deterministic local cognition artifacts from the Workspace Operation observe fixture without external calls or live workspace mutation.
+
 ## M2 — Contract promotion
 
 - Promote local draft artifact shapes into `SourceOS-Linux/sourceos-spec`.
