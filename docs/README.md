@@ -12,6 +12,9 @@ Superconscious is the visible governed cognition loop for recursive agents. It c
 - [`../ROADMAP.md`](../ROADMAP.md) — M1 through M7 roadmap.
 - [`trust-surface-protocol.md`](trust-surface-protocol.md) — SourceOS Trust Surface Protocol.
 - [`adapter-boundary-matrix.md`](adapter-boundary-matrix.md) — Superconscious adapter boundaries and final-authority split.
+- [`neurosymbolic-cognition-position.md`](neurosymbolic-cognition-position.md) — Superconscious posture for CHRONOS-aligned neuro-symbolic cognition.
+- [`neurosymbolic-capability-role-matrix.md`](neurosymbolic-capability-role-matrix.md) — allowed and forbidden roles for neuro-symbolic method families.
+- [`neurosymbolic-failure-modes.md`](neurosymbolic-failure-modes.md) — authority-drift failure modes that must route to risk or policy review.
 
 ## Review priority
 
@@ -22,6 +25,13 @@ For changes that introduce new runtime authority, review in this order:
 3. `ARCHITECTURE.md`
 4. `docs/adapter-boundary-matrix.md`
 5. affected adapter or runtime code
+
+For neuro-symbolic capability changes, additionally review:
+
+1. `docs/neurosymbolic-cognition-position.md`
+2. `docs/neurosymbolic-capability-role-matrix.md`
+3. `docs/neurosymbolic-failure-modes.md`
+4. any affected CHRONOS, evidence, policy, schema, or ontology handoff artifact
 
 ## Current boundary
 
