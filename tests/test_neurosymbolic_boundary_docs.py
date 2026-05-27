@@ -33,7 +33,7 @@ REQUIRED_FAILURE_MODES = [
 
 REQUIRED_BOUNDARIES = [
     "Superconscious coordinates and records. It does not authorize.",
-    "soft score",
+    "fuzzy score",
     "neural output",
     "learned rule",
     "symbolic derivation",
