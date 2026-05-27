@@ -1,6 +1,6 @@
 # Neuro-Symbolic Capability Role Matrix
 
-Status: v0.1 boundary matrix.
+Status: v0.2 boundary matrix.
 
 This matrix defines what Superconscious may do with neuro-symbolic capabilities and what it must not do.
 
@@ -13,11 +13,11 @@ The matrix is aligned with the existing adapter boundary rule: Superconscious co
 | `NSR-FOUNDATION-LOGIC` | formal logic / annotated logic / fuzzy operators | schema/vocabulary lookup | logic substrate reference | claim theorem-grade entailment without proof assumptions | sourceos-spec / Ontogenesis |
 | `NSR-TAXONOMY` | Kautz-style NSR classification | method classification | capability role label | treat class as maturity, safety, or authority grade | SocioSphere for integration vocabulary |
 | `NSR-SOFT-CONSTRAINT` | LTN-style semantic loss | soft constraint evaluation | satisfaction score and caveats | promote score to truth, policy admission, or evidence | policy / AgentPlane / sourceos-spec as applicable |
-| `NSR-TRUTH-BOUND` | LNN-style truth bounds | bound/inconsistency assessment | lower/upper bounds and formula trace | claim global consistency or arbitrary entailment correctness | policy / Ontogenesis / sourceos-spec as applicable |
-| `NSR-SYMBOLIC-ADJUDICATION` | NeurASP-style neural atoms + ASP | symbolic adjudication request | stable-model summary and policy request | execute, route, remember, or authorize from stable model alone | AgentPlane / policy fabric |
-| `NSR-DIFFERENTIABLE-CONSTRAINT-LEARNING` | SATNet-style learned constraints | grounding-risk assessment | leakage/transduction risk report | accept apparent grounding without anti-leakage validation | AgentPlane / policy fabric / Ontogenesis |
-| `NSR-RULE-LEARNING` | dILP-style learned rules | candidate rule review | rule candidate proposal | promote rule to schema, ontology, policy, or runtime authority | Ontogenesis / sourceos-spec / policy fabric |
-| `NSR-ONTOLOGY-INFERENCE` | RRN / Deep Ontological Networks | ontology-delta review | relation candidate and embedding inference report | treat embeddings as ontology authority | Ontogenesis / sourceos-spec |
+| `NSR-TRUTH-BOUND` | LNN-style truth bounds | bound/inconsistency assessment | lower/upper bounds, truth-region calibration, and formula trace | claim global consistency, arbitrary entailment correctness, or hard truth from thresholded intervals | policy / Ontogenesis / sourceos-spec as applicable |
+| `NSR-SYMBOLIC-ADJUDICATION` | NeurASP-style neural atoms + ASP | symbolic adjudication request | stable-model summary, grounding assessment request, and policy request | execute, route, remember, or authorize from stable model alone | AgentPlane / policy fabric |
+| `NSR-DIFFERENTIABLE-CONSTRAINT-LEARNING` | SATNet-style learned constraints | grounding-risk assessment | leakage/transduction risk report | accept apparent grounding without anti-leakage validation, masked-output evaluation, and transduction certificate | AgentPlane / policy fabric / Ontogenesis |
+| `NSR-RULE-LEARNING` | dILP-style learned rules | candidate rule review | rule candidate proposal and clause-space provenance | promote rule to schema, ontology, policy, or runtime authority | Ontogenesis / sourceos-spec / policy fabric |
+| `NSR-ONTOLOGY-INFERENCE` | RRN / Deep Ontological Networks | ontology-delta review | relation candidate, embedding inference report, and visualization caveat | treat embeddings or t-SNE-style visualizations as evidence or ontology authority | Ontogenesis / sourceos-spec |
 | `NSR-SYMBOLIC-POLICY` | DSR / DSP | symbolic policy review | controller candidate and objective-alignment report | run policy as controller before admission | policy fabric / AgentPlane / runtime plane |
 
 ## Event posture
@@ -63,6 +63,18 @@ Future NSR traces should include:
 }
 ```
 
+Visual-pattern traces may additionally need:
+
+```json
+{
+  "transductionAssessment": "pending",
+  "maskedOutputEvaluation": "pending",
+  "heldOutGroundingValidation": "pending",
+  "truthRegionCalibrationRef": "pending",
+  "visualizationAuthority": "inspection-only"
+}
+```
+
 ## Mandatory rejection conditions
 
 Superconscious must emit risk or policy review rather than promotion when any of the following appears:
@@ -73,9 +85,12 @@ Superconscious must emit risk or policy review rather than promotion when any of
 - `symbolic_derivation_as_policy_admission`
 - `carrier_missing_provenance`
 - `embedding_as_ontology_authority`
+- `visual_embedding_as_evidence`
 - `symbolic_policy_as_live_controller`
 - `label_leakage_grounding_failure`
 - `transduction_unvalidated`
+- `transduction_certificate_missing`
+- `thresholded_interval_as_hard_truth`
 
 ## Non-goal
 

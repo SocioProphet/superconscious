@@ -1,6 +1,6 @@
 # Neuro-Symbolic Failure Modes
 
-Status: v0.1 failure-mode ledger.
+Status: v0.2 failure-mode ledger.
 
 This document records neuro-symbolic failure modes that Superconscious must treat as risk signals or policy-review triggers.
 
@@ -78,6 +78,17 @@ Required response:
 - route to Ontogenesis;
 - prohibit canonical schema or ontology mutation.
 
+### visual_embedding_as_evidence
+
+A visualization of an embedding space, t-SNE plot, cluster picture, graph layout, or neighborhood diagram is treated as evidence for an ontology, claim, or relation.
+
+Required response:
+
+- record visualization as an inspection artifact only;
+- require source provenance and replayable verification;
+- route ontology implications to Ontogenesis;
+- prohibit evidence or ontology promotion from visualization alone.
+
 ### symbolic_policy_as_live_controller
 
 A symbolic regression or deep symbolic policy output is used as a live controller without objective alignment, safety envelope, governance admission, and replay.
@@ -108,6 +119,28 @@ Required response:
 - mark grounding status as pending;
 - request validation;
 - block admission if carrier depends on grounding.
+
+### transduction_certificate_missing
+
+A perception-to-symbol mapping is treated as verified even though the carrier lacks a transduction assessment, masked-output evaluation, held-out grounding validation, or evidence/replay authority reference.
+
+Required response:
+
+- mark grounding status as certificate-missing;
+- request a `SymbolGroundingAssessment` or equivalent downstream artifact;
+- emit risk signal if the carrier was proposed for action, memory, schema, ontology, or policy use;
+- block admission until the missing certificate is supplied and reviewed.
+
+### thresholded_interval_as_hard_truth
+
+An interval-valued truth bound, fuzzy confidence range, or calibrated truth region is collapsed into hard truth without recording the threshold policy, alpha value, contradiction state, and decision-threshold provenance.
+
+Required response:
+
+- record the interval as an interval;
+- require `TruthRegionCalibration` or equivalent threshold provenance;
+- preserve contradiction and uncertainty states;
+- prohibit policy or schema promotion from thresholded values alone.
 
 ## Superconscious invariant
 
