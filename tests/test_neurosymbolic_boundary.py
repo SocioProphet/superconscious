@@ -80,6 +80,21 @@ def test_role_matrix_declares_all_expected_method_families() -> None:
         assert family in text
 
 
+def test_role_matrix_declares_visual_pattern_rejection_conditions() -> None:
+    text = _read(ROLE_MATRIX)
+
+    required = [
+        "visual_embedding_as_evidence",
+        "transduction_certificate_missing",
+        "thresholded_interval_as_hard_truth",
+        "masked-output evaluation",
+        "truth-region calibration",
+        "visualizationAuthority",
+    ]
+    for phrase in required:
+        assert phrase in text
+
+
 def test_failure_modes_cover_authority_drift_cases() -> None:
     text = _read(FAILURE_MODES)
 
@@ -90,12 +105,30 @@ def test_failure_modes_cover_authority_drift_cases() -> None:
         "symbolic_derivation_as_policy_admission",
         "carrier_missing_provenance",
         "embedding_as_ontology_authority",
+        "visual_embedding_as_evidence",
         "symbolic_policy_as_live_controller",
         "label_leakage_grounding_failure",
         "transduction_unvalidated",
+        "transduction_certificate_missing",
+        "thresholded_interval_as_hard_truth",
     ]
     for failure_mode in failure_modes:
         assert failure_mode in text
+
+
+def test_visual_failure_modes_require_certificates_not_promotion() -> None:
+    text = _read(FAILURE_MODES)
+
+    required = [
+        "record visualization as an inspection artifact only",
+        "request a `SymbolGroundingAssessment`",
+        "require `TruthRegionCalibration`",
+        "prohibit evidence or ontology promotion from visualization alone",
+        "block admission until the missing certificate is supplied and reviewed",
+        "prohibit policy or schema promotion from thresholded values alone",
+    ]
+    for phrase in required:
+        assert phrase in text
 
 
 def test_failure_modes_route_to_risk_or_review_not_mutation() -> None:
