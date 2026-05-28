@@ -44,6 +44,28 @@ scripts/validate-trust-surface.py
 
 The first target is not bureaucracy. The target is inspectability, purgeability, and provable cleanup across local agent runtimes.
 
+## SVF validation-history consumer
+
+Superconscious may consume Sovereign Validation Fabric validation history as memory input for recursive agency planning. Subconscious is part of Superconscious in this lane: it may optimize inference over validation history, failure patterns, missing observations, and plan usefulness, but it is not a separate authority plane.
+
+This consumer is read-only. It may remember validation debt, recommend observed validation before autonomous continuation, bias planning toward report-only behavior, and route summaries to AgentPlane evidence or Sociosphere backlog records.
+
+It must not execute SVF Actions, run Sociosphere commands, issue or verify receipts, promote advisory validation to blocking validation, mutate policy, override guardrails, or grant agent autonomy from validation history alone.
+
+Relevant files:
+
+```text
+docs/SVF_VALIDATION_HISTORY_CONSUMER.md
+examples/svf-validation-history-event.selected-missing-observation.json
+scripts/validate-svf-validation-history.py
+```
+
+Validate locally:
+
+```bash
+make validate-svf-validation-history
+```
+
 ## What this repo owns
 
 - Reference recursive reasoning loop implementation.
@@ -53,6 +75,7 @@ The first target is not bureaucracy. The target is inspectability, purgeability,
 - Example reasoning runs and benchmark fixtures.
 - Product-facing cognition-console semantics.
 - Trust-surface protocol seed, examples, and validation workflow until canonical schema ownership moves to `SourceOS-Linux/sourceos-spec`.
+- Read-only SVF validation-history memory consumer fixtures and validation.
 
 ## What this repo does not own
 
@@ -64,6 +87,7 @@ The first target is not bureaucracy. The target is inspectability, purgeability,
 - Model promotion, consent, and personalization authority: owned by `SocioProphet/model-governance-ledger` and `SociOS-Linux/socios`.
 - Policy authority: owned by Guardrail / Policy Fabric.
 - Agent identity and grants: owned by Agent Registry.
+- SVF authority, validation execution, receipt issuance, and receipt certification.
 
 ## M1 deliverable
 
@@ -91,12 +115,15 @@ superconscious/
   TRUST_SURFACE.yaml
   docs/
     trust-surface-protocol.md
+    SVF_VALIDATION_HISTORY_CONSUMER.md
   schemas/
     trust-surface.schema.json
   examples/
     TRUST_SURFACE.node-commander.yaml
+    svf-validation-history-event.selected-missing-observation.json
   scripts/
     validate-trust-surface.py
+    validate-svf-validation-history.py
   packages/superconscious-core/
   tests/
 ```
