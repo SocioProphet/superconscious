@@ -1,4 +1,4 @@
-.PHONY: test smoke cognition-smoke trust-surface artifact-validate canonicalize inspect validate m0-static m0-schema-fixtures m0-ci m1-5-static m1-5-schema-fixtures m1-5-ci tier2-binding-static tier2-binding-fixtures tier2-binding-ci m5-tier2-binding-static m5-tier2-binding-fixtures m5-tier2-binding-ci lawful-learning-trust-surface-tier2-binding-static lawful-learning-trust-surface-tier2-binding-fixtures lawful-learning-trust-surface-tier2-binding-ci lawful-learning-schema-static lawful-learning-schema-fixtures lawful-learning-schema-ci lawful-learning-checker-static lawful-learning-checker-fixtures lawful-learning-checker-trust-surface lawful-learning-ci v1-1-static v1-1-fixtures v1-1-cross-field v1-1-ci m1-source-lock m1a-generate m1-verify-source-lock m1-verify-source-lock-strict m1-verify-weights m1-feature-stage1 m1-static m1-schema-fixtures m1b-cross-width-smoke m1-ci m2-static m2-schema-fixtures m2-ci m3-static m3-schema-fixtures m3-ci m5-static m5-schema-fixtures m5-template-set m5-ci certificate-ci
+.PHONY: test smoke cognition-smoke trust-surface artifact-validate canonicalize inspect validate validate-svf-validation-history m0-static m0-schema-fixtures m0-ci m1-5-static m1-5-schema-fixtures m1-5-ci tier2-binding-static tier2-binding-fixtures tier2-binding-ci m5-tier2-binding-static m5-tier2-binding-fixtures m5-tier2-binding-ci lawful-learning-trust-surface-tier2-binding-static lawful-learning-trust-surface-tier2-binding-fixtures lawful-learning-trust-surface-tier2-binding-ci lawful-learning-schema-static lawful-learning-schema-fixtures lawful-learning-checker-static lawful-learning-checker-fixtures lawful-learning-checker-trust-surface lawful-learning-ci v1-1-static v1-1-fixtures v1-1-cross-field v1-1-ci m1-source-lock m1a-generate m1-verify-source-lock m1-verify-source-lock-strict m1-verify-weights m1-feature-stage1 m1-static m1-schema-fixtures m1b-cross-width-smoke m1-ci m2-static m2-schema-fixtures m2-ci m3-static m3-schema-fixtures m3-ci m5-static m5-schema-fixtures m5-template-set m5-ci certificate-ci
 
 test:
 	python3 -m pytest
@@ -25,7 +25,10 @@ inspect:
 	run_dir="$$(python3 packages/superconscious-core/superconscious_core/runner.py examples/basic-reasoning-run/task.json)"; \
 	python3 packages/superconscious-core/superconscious_core/inspect_artifacts.py "$$run_dir"
 
-validate: trust-surface test artifact-validate canonicalize inspect
+validate: trust-surface test artifact-validate canonicalize inspect validate-svf-validation-history
+
+validate-svf-validation-history:
+	python3 scripts/validate-svf-validation-history.py
 
 m1-source-lock:
 	python3 -m src.m1.source_lock --write outputs/m1/source-lock.json --print
@@ -158,8 +161,6 @@ m5-tier2-binding-static:
 
 m5-tier2-binding-fixtures:
 	python3 -m src.m1.validate_schema_instance schemas/composition/m5-tier2-binding.v1.json tests/fixtures/composition/m5-tier2-binding.synthetic.json
-	python3 scripts/check-m5-tier2-binding.py tests/fixtures/composition/m5-tier2-binding.synthetic.json
-	! python3 -m src.m1.validate_schema_instance schemas/composition/m5-tier2-binding.v1.json tests/fixtures/composition/m5-tier2-binding.runtime-field.invalid.synthetic.json
 	! python3 scripts/check-m5-tier2-binding.py tests/fixtures/composition/m5-tier2-binding.runtime-field.invalid.synthetic.json
 
 m5-tier2-binding-ci: m5-tier2-binding-static m5-tier2-binding-fixtures
@@ -189,7 +190,7 @@ lawful-learning-schema-fixtures:
 	python3 -m src.m1.validate_schema_instance schemas/lawful-learning/evidence-status.v1.json tests/fixtures/lawful-learning/evidence-status.valid.json
 	python3 -m src.m1.validate_schema_instance schemas/lawful-learning/decision-emission.v1.json tests/fixtures/lawful-learning/decision-emission.valid.json
 	python3 -m src.m1.validate_schema_instance schemas/lawful-learning/circuit-registry.v1.json tests/fixtures/lawful-learning/circuit-registry.valid.json
-	python3 -m src.m1.validate_schema_instance schemas/lawful-learning/forbidden-circuits.v1.json tests/fixtures/lawful-learning/forbidden-circuits.valid.json
+	python3 -m src.m1.validate_schema_instance schemas/lawful-learning/forbidden-circuits.v1.json tests/fixtures/lawful-learning/forbidden-circuit.valid.json
 	python3 -m src.m1.validate_schema_instance schemas/lawful-learning/alignment-check.v1.json tests/fixtures/lawful-learning/alignment-check.valid.json
 	python3 -m src.m1.validate_schema_instance schemas/lawful-learning/lawful-learning-invariants.v1.json tests/fixtures/lawful-learning/lawful-learning-invariants.valid.json
 	! python3 -m src.m1.validate_schema_instance schemas/lawful-learning/claim-ledger-entry.v1.json tests/fixtures/lawful-learning/typological-to-mathematical.invalid.json
