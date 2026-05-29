@@ -1,0 +1,29 @@
+{
+  "schema_version": "superconscious.tritfabric-advisory-consumption/v1",
+  "integration_id": "tritfabric-advisory-v0",
+  "mode": "coordinator-advisory-only",
+  "authority_boundaries": {
+    "superconscious": "advisory-coordinator",
+    "tritfabric": "implementation-contract-owner",
+    "ontogenesis": "vocabulary-shacl-owner",
+    "sociosphere": "estate-registration-owner",
+    "prophet_platform": "product-consumer"
+  },
+  "allowed_uses": [
+    "mentor-learner-context-labeling",
+    "missing-gate-advisory-warning",
+    "catalog-status-advisory-reference",
+    "readiness-reporting-reference",
+    "authority-plane-routing"
+  ],
+  "prohibited_authority": [
+    "model-promotion",
+    "community-eligibility-final-authority",
+    "adapter-validation",
+    "economic-credit-creation",
+    "serve-deployment",
+    "contract-override",
+    "execution-authorization"
+  ],
+  "claim_boundary": "Superconscious consumes TritFabric-derived semantics as advisory context only. It does not own promotion, eligibility, adapter validation, economic credit, Serve deployment, or contract override authority."
+}
