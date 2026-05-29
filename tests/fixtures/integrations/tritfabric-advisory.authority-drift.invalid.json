@@ -1,0 +1,23 @@
+{
+  "schema_version": "superconscious.tritfabric-advisory-consumption/v1",
+  "integration_id": "tritfabric-advisory-invalid-authority-drift",
+  "mode": "coordinator-advisory-only",
+  "authority_boundaries": {
+    "superconscious": "authority-plane",
+    "tritfabric": "implementation-contract-owner",
+    "ontogenesis": "vocabulary-shacl-owner",
+    "sociosphere": "estate-registration-owner",
+    "prophet_platform": "product-consumer"
+  },
+  "allowed_uses": ["authority-plane-routing"],
+  "prohibited_authority": [
+    "model-promotion",
+    "community-eligibility-final-authority",
+    "adapter-validation",
+    "economic-credit-creation",
+    "serve-deployment",
+    "contract-override",
+    "execution-authorization"
+  ],
+  "claim_boundary": "Invalid fixture: Superconscious incorrectly claims authority-plane status."
+}
