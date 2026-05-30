@@ -1,0 +1,50 @@
+{
+  "schema_version": "1.0",
+  "event_id": "environment:state-memory-event:failed:scope-d-example",
+  "owner": {
+    "plane": "superconscious",
+    "subsystem": "subconscious",
+    "repo": "SocioProphet/superconscious"
+  },
+  "source": {
+    "state_authority": "Sociosphere",
+    "workspace_ref": "workspace://scope-d/main",
+    "environment_profile_id": "environment-sandbox:profile:sociosphere.control-plane-readout",
+    "environment_state": "environment_failed",
+    "prophet_platform_response_ref": "environment:validate-change-v2-response:failed:scope-d-example",
+    "agentplane_sandbox_run_ref": "agentplane:sandbox-run:failed:scope-d-example",
+    "evidence_refs": [
+      "evidence://agentplane/sandbox-run/scope-d-example/synthetic-failed"
+    ],
+    "receipt_refs": [
+      "receipt://agentplane/sandbox-run/scope-d-example/synthetic-failed"
+    ],
+    "warning_codes": [
+      "environment_validation_failed"
+    ],
+    "failure_codes": [
+      "synthetic_validation_failed"
+    ]
+  },
+  "memory_action": {
+    "memory_disposition": "remember_failed_environment_state",
+    "recommended_next_action": "request_human_review_before_continuation",
+    "planning_bias": "report_only_after_failed_environment_validation",
+    "may_route_to_agentplane_evidence": true,
+    "may_route_to_sociosphere_backlog": true
+  },
+  "authority_limits": {
+    "may_execute_environment_actions": false,
+    "may_run_sociosphere_commands": false,
+    "may_issue_or_verify_receipts": false,
+    "may_promote_synthetic_to_runtime_parity": false,
+    "may_grant_agent_autonomy": false,
+    "subconscious_is_separate_authority_plane": false
+  },
+  "non_claims": [
+    "Does not implement a live memory backend.",
+    "Does not issue or verify receipts.",
+    "Does not authorize execution.",
+    "Does not certify runtime parity."
+  ]
+}
