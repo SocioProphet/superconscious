@@ -1,0 +1,40 @@
+{
+  "schema_version": "superconscious.sourceos-interaction-boundary/v1",
+  "binding_id": "urn:srcos:superconscious:interaction-boundary:invalid-authority-drift",
+  "mode": "task-boundary-reference-binding",
+  "authority_boundaries": {
+    "superconscious": "policy-admission-authority",
+    "sourceos_spec": "canonical-schema-owner",
+    "policy_fabric": "policy-admission-authority",
+    "agent_registry": "identity-grant-authority",
+    "memory_mesh": "memory-context-pack-authority",
+    "agentplane": "execution-evidence-replay-authority",
+    "model_router": "sourceos-routing-authority"
+  },
+  "source_interaction_event_ref": "urn:srcos:interaction-event:noetica-standalone-complete-0001",
+  "result_interaction_event_ref": "urn:srcos:interaction-event:superconscious-boundary-accepted-0001",
+  "payload_mode": "ref-only",
+  "session_ref": "noetica-session-local",
+  "workroom_ref": null,
+  "topic_ref": null,
+  "actor_ref": "urn:srcos:subject:user:operator",
+  "policy_decision_refs": [],
+  "grant_refs": [],
+  "memory_scope_ref": null,
+  "context_pack_refs": [],
+  "agentplane_run_ref": null,
+  "evidence_refs": [],
+  "replay_ref": null,
+  "redaction_refs": [],
+  "source_event_summary": {
+    "surface_kind": "noetica",
+    "event_class": "interaction.task_completed",
+    "task_status": "success"
+  },
+  "result_event_summary": {
+    "surface_kind": "superconscious",
+    "event_class": "interaction.task_completed",
+    "task_status": "accepted"
+  },
+  "claim_boundary": "Invalid fixture: Superconscious incorrectly claims policy authority."
+}
