@@ -1,0 +1,46 @@
+{
+  "schema_version": "superconscious.sourceos-interaction-boundary/v1",
+  "binding_id": "urn:srcos:superconscious:interaction-boundary:noetica-local-demo-0001",
+  "mode": "task-boundary-reference-binding",
+  "authority_boundaries": {
+    "superconscious": "task-cognition-coordinator",
+    "sourceos_spec": "canonical-schema-owner",
+    "policy_fabric": "policy-admission-authority",
+    "agent_registry": "identity-grant-authority",
+    "memory_mesh": "memory-context-pack-authority",
+    "agentplane": "execution-evidence-replay-authority",
+    "model_router": "sourceos-routing-authority"
+  },
+  "source_interaction_event_ref": "urn:srcos:interaction-event:noetica-standalone-complete-0001",
+  "result_interaction_event_ref": "urn:srcos:interaction-event:superconscious-boundary-accepted-0001",
+  "payload_mode": "ref-only",
+  "session_ref": "noetica-session-local",
+  "workroom_ref": "urn:srcos:workroom:professional-intelligence-demo",
+  "topic_ref": "urn:srcos:topic:professional-intelligence",
+  "actor_ref": "urn:srcos:subject:user:operator",
+  "policy_decision_refs": [
+    "urn:srcos:decision:noetica-standalone-admit-0001"
+  ],
+  "grant_refs": [
+    "call:openai"
+  ],
+  "memory_scope_ref": "noetica-session-local",
+  "context_pack_refs": [],
+  "agentplane_run_ref": null,
+  "evidence_refs": [
+    "urn:srcos:evidence:noetica-standalone-0001"
+  ],
+  "replay_ref": "urn:srcos:replay:noetica-standalone-0001",
+  "redaction_refs": [],
+  "source_event_summary": {
+    "surface_kind": "noetica",
+    "event_class": "interaction.task_completed",
+    "task_status": "success"
+  },
+  "result_event_summary": {
+    "surface_kind": "superconscious",
+    "event_class": "interaction.task_completed",
+    "task_status": "accepted"
+  },
+  "claim_boundary": "Superconscious binds SourceOSInteractionEvent references as bounded task context only. It does not own policy admission, agent grants, memory writeback, model routing, AgentPlane evidence, or replay authority."
+}
