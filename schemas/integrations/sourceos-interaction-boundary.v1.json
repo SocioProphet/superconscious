@@ -1,0 +1,87 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://socioprophet.ai/superconscious/schemas/integrations/sourceos-interaction-boundary.v1.json",
+  "title": "SourceOSInteractionEvent Task Boundary Binding",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "binding_id",
+    "mode",
+    "authority_boundaries",
+    "source_interaction_event_ref",
+    "result_interaction_event_ref",
+    "payload_mode",
+    "session_ref",
+    "actor_ref",
+    "policy_decision_refs",
+    "grant_refs",
+    "context_pack_refs",
+    "evidence_refs",
+    "redaction_refs",
+    "claim_boundary"
+  ],
+  "properties": {
+    "schema_version": {"const": "superconscious.sourceos-interaction-boundary/v1"},
+    "binding_id": {"type": "string", "pattern": "^urn:srcos:superconscious:interaction-boundary:"},
+    "mode": {"const": "task-boundary-reference-binding"},
+    "authority_boundaries": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "superconscious",
+        "sourceos_spec",
+        "policy_fabric",
+        "agent_registry",
+        "memory_mesh",
+        "agentplane",
+        "model_router"
+      ],
+      "properties": {
+        "superconscious": {"const": "task-cognition-coordinator"},
+        "sourceos_spec": {"const": "canonical-schema-owner"},
+        "policy_fabric": {"const": "policy-admission-authority"},
+        "agent_registry": {"const": "identity-grant-authority"},
+        "memory_mesh": {"const": "memory-context-pack-authority"},
+        "agentplane": {"const": "execution-evidence-replay-authority"},
+        "model_router": {"const": "sourceos-routing-authority"}
+      }
+    },
+    "source_interaction_event_ref": {"type": "string", "pattern": "^urn:srcos:interaction-event:"},
+    "result_interaction_event_ref": {"type": "string", "pattern": "^urn:srcos:interaction-event:"},
+    "payload_mode": {"type": "string", "enum": ["metadata-only", "summary", "ref-only", "inline-bounded", "redacted"]},
+    "session_ref": {"type": "string", "minLength": 1},
+    "workroom_ref": {"type": ["string", "null"]},
+    "topic_ref": {"type": ["string", "null"]},
+    "actor_ref": {"type": "string", "minLength": 1},
+    "policy_decision_refs": {"type": "array", "items": {"type": "string"}},
+    "grant_refs": {"type": "array", "items": {"type": "string"}},
+    "memory_scope_ref": {"type": ["string", "null"]},
+    "context_pack_refs": {"type": "array", "items": {"type": "string"}},
+    "agentplane_run_ref": {"type": ["string", "null"]},
+    "evidence_refs": {"type": "array", "items": {"type": "string"}},
+    "replay_ref": {"type": ["string", "null"]},
+    "redaction_refs": {"type": "array", "items": {"type": "string"}},
+    "source_event_summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["surface_kind", "event_class", "task_status"],
+      "properties": {
+        "surface_kind": {"type": "string", "minLength": 1},
+        "event_class": {"type": "string", "minLength": 1},
+        "task_status": {"type": "string", "minLength": 1}
+      }
+    },
+    "result_event_summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["surface_kind", "event_class", "task_status"],
+      "properties": {
+        "surface_kind": {"type": "string", "minLength": 1},
+        "event_class": {"type": "string", "minLength": 1},
+        "task_status": {"type": "string", "minLength": 1}
+      }
+    },
+    "claim_boundary": {"type": "string", "minLength": 1}
+  }
+}
