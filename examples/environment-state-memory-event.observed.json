@@ -1,0 +1,45 @@
+{
+  "schema_version": "1.0",
+  "event_id": "environment:state-memory-event:observed:scope-d-example",
+  "owner": {
+    "plane": "superconscious",
+    "subsystem": "subconscious",
+    "repo": "SocioProphet/superconscious"
+  },
+  "source": {
+    "state_authority": "Sociosphere",
+    "workspace_ref": "workspace://scope-d/main",
+    "environment_profile_id": "environment-sandbox:profile:sociosphere.control-plane-readout",
+    "environment_state": "environment_observed",
+    "prophet_platform_response_ref": "environment:validate-change-v2-response:observed:scope-d-example",
+    "agentplane_sandbox_run_ref": "agentplane:sandbox-run:observed:scope-d-example",
+    "evidence_refs": [
+      "evidence://agentplane/sandbox-run/scope-d-example/synthetic-observed"
+    ],
+    "receipt_refs": [
+      "receipt://agentplane/sandbox-run/scope-d-example/synthetic-observed"
+    ],
+    "warning_codes": []
+  },
+  "memory_action": {
+    "memory_disposition": "remember_observed_environment_state",
+    "recommended_next_action": "continue_with_advisory_autonomy_and_deterministic_verification",
+    "planning_bias": "advisory_until_runtime_parity",
+    "may_route_to_agentplane_evidence": true,
+    "may_route_to_sociosphere_backlog": true
+  },
+  "authority_limits": {
+    "may_execute_environment_actions": false,
+    "may_run_sociosphere_commands": false,
+    "may_issue_or_verify_receipts": false,
+    "may_promote_synthetic_to_runtime_parity": false,
+    "may_grant_agent_autonomy": false,
+    "subconscious_is_separate_authority_plane": false
+  },
+  "non_claims": [
+    "Does not implement a live memory backend.",
+    "Does not issue or verify receipts.",
+    "Does not authorize execution.",
+    "Does not certify runtime parity."
+  ]
+}
