@@ -1,0 +1,62 @@
+{
+  "taskId": "task.neurosymbolic-chronos-boundary.v0",
+  "title": "Record neuro-symbolic CHRONOS carrier boundary posture",
+  "agent": {
+    "id": "agent.superconscious.reference",
+    "role": "governed-cognition-loop"
+  },
+  "workspace": {
+    "id": "workspace.socioprophet.neurosymbolic-capture",
+    "authorityPlane": "SocioProphet/sociosphere"
+  },
+  "workspaceOperation": {
+    "operationId": "urn:srcos:workspace-operation:neurosymbolic-chronos-boundary-v0",
+    "operationType": "cognition.reflect.run",
+    "sourceRef": "SocioProphet/sociosphere#388",
+    "summary": "ASU neuro-symbolic method map captured as CHRONOS evidence-loop doctrine with authority-boundary fixtures.",
+    "methodFamilies": [
+      "NSR-FOUNDATION-LOGIC",
+      "NSR-TAXONOMY",
+      "NSR-SOFT-CONSTRAINT",
+      "NSR-TRUTH-BOUND",
+      "NSR-SYMBOLIC-ADJUDICATION",
+      "NSR-DIFFERENTIABLE-CONSTRAINT-LEARNING",
+      "NSR-RULE-LEARNING",
+      "NSR-ONTOLOGY-INFERENCE",
+      "NSR-SYMBOLIC-POLICY"
+    ],
+    "cognitionPosture": "read-reflect-propose",
+    "authorityBoundary": {
+      "superconsciousRole": "coordinate-record-request",
+      "schemaAuthority": "SourceOS-Linux/sourceos-spec",
+      "semanticVocabularyDraft": "SocioProphet/ontogenesis",
+      "evidenceReplayAuthority": "SocioProphet/agentplane",
+      "policyAdmissionAuthority": "SocioProphet/policy-fabric",
+      "routingAuthority": "SocioProphet/model-router",
+      "modelGovernanceAuthority": "SocioProphet/model-governance-ledger"
+    },
+    "forbiddenPromotions": [
+      "soft_score_as_truth",
+      "neural_output_as_evidence",
+      "learned_rule_as_schema",
+      "symbolic_derivation_as_policy_admission",
+      "carrier_missing_provenance",
+      "embedding_as_ontology_authority",
+      "symbolic_policy_as_live_controller",
+      "label_leakage_grounding_failure",
+      "transduction_unvalidated"
+    ]
+  },
+  "expected": {
+    "requiredArtifacts": [
+      "cognition-events.jsonl",
+      "cognition-run.json",
+      "cognition-reflection.json",
+      "cognition-remediation-proposal.json",
+      "cognition-risk-signal.json",
+      "cognition-policy-review-request.json",
+      "cognition-learning-loop-record.json",
+      "cognition-benchmark-result.json"
+    ]
+  }
+}
