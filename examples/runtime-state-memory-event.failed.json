@@ -1,0 +1,57 @@
+{
+  "schema_version": "1.0",
+  "event_id": "runtime:state-memory-event:failed:scope-d-example",
+  "owner": {
+    "plane": "superconscious",
+    "subsystem": "subconscious",
+    "repo": "SocioProphet/superconscious"
+  },
+  "source": {
+    "state_authority": "Sociosphere",
+    "workspace_ref": "workspace://scope-d/main",
+    "environment_profile_id": "environment-sandbox:profile:sociosphere.control-plane-readout",
+    "runtime_state": "runtime_failed",
+    "runtime_run_ref": "agentplane:runtime-sandbox-run:failed:scope-d-example",
+    "environment_ref": "environment://runtime/scope-d-example/failed",
+    "evidence_refs": [
+      "evidence://agentplane/runtime-sandbox-run/scope-d-example/failed"
+    ],
+    "receipt_refs": [
+      "receipt://agentplane/runtime-sandbox-run/scope-d-example/failed"
+    ],
+    "blocking_gaps": [
+      "runtime_allocation_failed",
+      "teardown_failed",
+      "leak_check_failed"
+    ],
+    "warning_codes": [
+      "runtime_validation_failed",
+      "runtime_parity_not_certified"
+    ],
+    "failure_codes": [
+      "runtime_allocation_failed"
+    ],
+    "runtime_parity_certified": false
+  },
+  "memory_action": {
+    "memory_disposition": "remember_runtime_failed_not_certified",
+    "recommended_next_action": "request_operator_review_before_continuation",
+    "planning_bias": "report_only_after_runtime_failure",
+    "may_route_to_agentplane_evidence": true,
+    "may_route_to_sociosphere_backlog": true
+  },
+  "authority_limits": {
+    "may_execute_environment_actions": false,
+    "may_run_sociosphere_commands": false,
+    "may_issue_or_verify_receipts": false,
+    "may_certify_runtime_parity": false,
+    "may_grant_agent_autonomy": false,
+    "subconscious_is_separate_authority_plane": false
+  },
+  "non_claims": [
+    "Does not implement a live memory backend.",
+    "Does not issue or verify receipts.",
+    "Does not authorize execution.",
+    "Does not certify runtime parity."
+  ]
+}
