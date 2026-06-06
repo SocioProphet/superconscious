@@ -1,0 +1,86 @@
+{
+  "schema_version": "superconscious.behavior.organism-wiring/v1",
+  "organism_id": "urn:socioprophet:superconscious:organism:tiny-governed-loop-v0",
+  "kind": "OrganismWiring",
+  "determinism": "deterministic-v0",
+  "modules": [
+    {
+      "module_id": "perceive",
+      "proc_ref": "urn:socioprophet:proc:perceive-demo",
+      "input_type": "Raw",
+      "output_type": "Features",
+      "state_type": "S_perceive",
+      "allowed_topics": ["raw", "features"]
+    },
+    {
+      "module_id": "workspace",
+      "proc_ref": "urn:socioprophet:proc:workspace-router-demo",
+      "input_type": "Features",
+      "output_type": "Belief",
+      "state_type": "S_workspace",
+      "allowed_topics": ["features", "belief", "action"]
+    },
+    {
+      "module_id": "policy",
+      "proc_ref": "urn:socioprophet:proc:policy-demo",
+      "input_type": "Belief",
+      "output_type": "Action",
+      "state_type": "S_policy",
+      "allowed_topics": ["belief", "action"]
+    }
+  ],
+  "wires": [
+    {
+      "from": "perceive.out",
+      "to": "workspace.in",
+      "wire_type": "serial",
+      "topic": "features",
+      "delay_ticks": 0
+    },
+    {
+      "from": "workspace.out",
+      "to": "policy.in",
+      "wire_type": "serial",
+      "topic": "belief",
+      "delay_ticks": 0
+    },
+    {
+      "from": "policy.out",
+      "to": "workspace.feedback",
+      "wire_type": "feedback-delay-1",
+      "topic": "action",
+      "delay_ticks": 1
+    }
+  ],
+  "feedback_edges": [
+    {
+      "from": "policy.out",
+      "to": "workspace.feedback",
+      "delay_ticks": 1,
+      "initial_feedback": {
+        "action": "none"
+      }
+    }
+  ],
+  "observation_projection": {
+    "projection_id": "public-safe-action-summary-v0",
+    "mode": "public-safe-operational-trace",
+    "allowed_fields": ["type", "summary", "action", "riskScore", "decision"],
+    "forbidden_fields": ["rawPrivateReasoning", "chainOfThought", "secret", "credential"]
+  },
+  "authority_boundary": {
+    "owner_repo": "SocioProphet/superconscious",
+    "schema_authority": "SourceOS-Linux/sourceos-spec",
+    "policy_authority": "SocioProphet/policy-fabric",
+    "evidence_replay_authority": "SocioProphet/agentplane",
+    "runtime_effect_authority": "SourceOS-Linux/agent-machine",
+    "grant_authority": "SocioProphet/agent-registry",
+    "direct_mutation_allowed": false
+  },
+  "non_claims": [
+    "This fixture does not implement a live consciousness model.",
+    "This fixture does not authorize runtime execution.",
+    "This fixture does not promote memory or schemas.",
+    "This fixture does not bypass AgentPlane, Policy Fabric, Agent Registry, or sourceos-spec."
+  ]
+}

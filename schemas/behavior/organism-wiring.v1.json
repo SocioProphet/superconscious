@@ -1,0 +1,121 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://socioprophet.ai/superconscious/schemas/behavior/organism-wiring.v1.json",
+  "title": "Behavior Organism Wiring v1",
+  "description": "Local draft schema for wiring deterministic Proc modules into a governed organism. Canonical promotion belongs in SourceOS-Linux/sourceos-spec.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "organism_id",
+    "kind",
+    "determinism",
+    "modules",
+    "wires",
+    "observation_projection",
+    "authority_boundary"
+  ],
+  "properties": {
+    "schema_version": { "const": "superconscious.behavior.organism-wiring/v1" },
+    "organism_id": { "type": "string", "minLength": 1 },
+    "kind": { "const": "OrganismWiring" },
+    "determinism": { "const": "deterministic-v0" },
+    "modules": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["module_id", "proc_ref", "input_type", "output_type", "state_type"],
+        "properties": {
+          "module_id": { "type": "string", "minLength": 1 },
+          "proc_ref": { "type": "string", "minLength": 1 },
+          "input_type": { "type": "string", "minLength": 1 },
+          "output_type": { "type": "string", "minLength": 1 },
+          "state_type": { "type": "string", "minLength": 1 },
+          "allowed_topics": {
+            "type": "array",
+            "items": { "type": "string", "minLength": 1 },
+            "uniqueItems": true
+          }
+        }
+      }
+    },
+    "wires": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["from", "to", "wire_type"],
+        "properties": {
+          "from": { "type": "string", "minLength": 1 },
+          "to": { "type": "string", "minLength": 1 },
+          "wire_type": { "enum": ["serial", "parallel", "feedback-delay-1"] },
+          "topic": { "type": ["string", "null"] },
+          "delay_ticks": { "type": "integer", "minimum": 0 }
+        }
+      }
+    },
+    "feedback_edges": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["from", "to", "delay_ticks", "initial_feedback"],
+        "properties": {
+          "from": { "type": "string", "minLength": 1 },
+          "to": { "type": "string", "minLength": 1 },
+          "delay_ticks": { "const": 1 },
+          "initial_feedback": {}
+        }
+      }
+    },
+    "observation_projection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["projection_id", "mode", "allowed_fields", "forbidden_fields"],
+      "properties": {
+        "projection_id": { "type": "string", "minLength": 1 },
+        "mode": { "const": "public-safe-operational-trace" },
+        "allowed_fields": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "forbidden_fields": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 },
+          "uniqueItems": true
+        }
+      }
+    },
+    "authority_boundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "owner_repo",
+        "schema_authority",
+        "policy_authority",
+        "evidence_replay_authority",
+        "runtime_effect_authority",
+        "grant_authority",
+        "direct_mutation_allowed"
+      ],
+      "properties": {
+        "owner_repo": { "type": "string", "minLength": 1 },
+        "schema_authority": { "type": "string", "minLength": 1 },
+        "policy_authority": { "type": "string", "minLength": 1 },
+        "evidence_replay_authority": { "type": "string", "minLength": 1 },
+        "runtime_effect_authority": { "type": "string", "minLength": 1 },
+        "grant_authority": { "type": "string", "minLength": 1 },
+        "direct_mutation_allowed": { "const": false }
+      }
+    },
+    "non_claims": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "minItems": 1
+    }
+  }
+}
