@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://socioprophet.ai/superconscious/schemas/behavior/proc.v1.json",
+  "title": "Behavior Proc v1",
+  "description": "Local draft schema for a deterministic typed subprocess. Canonical promotion belongs in SourceOS-Linux/sourceos-spec.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "proc_id",
+    "kind",
+    "input_type",
+    "output_type",
+    "state_type",
+    "transition_kind",
+    "determinism",
+    "authority_boundary"
+  ],
+  "properties": {
+    "schema_version": { "const": "superconscious.behavior.proc/v1" },
+    "proc_id": { "type": "string", "minLength": 1 },
+    "kind": { "const": "Proc" },
+    "input_type": { "type": "string", "minLength": 1 },
+    "output_type": { "type": "string", "minLength": 1 },
+    "state_type": { "type": "string", "minLength": 1 },
+    "transition_kind": { "enum": ["deterministic", "probabilistic-reserved"] },
+    "determinism": { "const": "deterministic-v0" },
+    "clock": { "type": "string", "enum": ["tick", "event", "manual"], "default": "event" },
+    "rate_hz": { "type": ["number", "null"], "minimum": 0 },
+    "allowed_topics": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "uniqueItems": true
+    },
+    "allowed_effects": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": ["none", "read", "propose", "emit-evidence-ref", "request-policy-review"]
+      },
+      "uniqueItems": true
+    },
+    "authority_boundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "owner_repo",
+        "schema_authority",
+        "policy_authority",
+        "evidence_replay_authority",
+        "runtime_effect_authority",
+        "grant_authority",
+        "direct_mutation_allowed"
+      ],
+      "properties": {
+        "owner_repo": { "type": "string", "minLength": 1 },
+        "schema_authority": { "type": "string", "minLength": 1 },
+        "policy_authority": { "type": "string", "minLength": 1 },
+        "evidence_replay_authority": { "type": "string", "minLength": 1 },
+        "runtime_effect_authority": { "type": "string", "minLength": 1 },
+        "grant_authority": { "type": "string", "minLength": 1 },
+        "direct_mutation_allowed": { "const": false }
+      }
+    },
+    "non_claims": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "minItems": 1
+    }
+  }
+}
