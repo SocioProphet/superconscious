@@ -1,0 +1,16 @@
+{
+  "epistemic_status": "toy_model_confirmed",
+  "event_id": "NF-ATT-001-EV002",
+  "experiment_id": "NF-ATT-001",
+  "intervention_type": "logit_boost",
+  "observed": {
+    "target_prob": 0.711235
+  },
+  "params": {
+    "beta": 1.0,
+    "strength": 2.0,
+    "target_idx": 1
+  },
+  "target_locus": "attention-logits",
+  "weights_updated": false
+}

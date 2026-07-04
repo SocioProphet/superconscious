@@ -1,0 +1,35 @@
+{
+  "claim_invariants": [
+    "weights_updated == false",
+    "intervention is activation-time only",
+    "target probability is monotone non-decreasing in boost strength"
+  ],
+  "epistemic_status": "toy_model_confirmed",
+  "experiment_id": "NF-ATT-001",
+  "metrics": {
+    "argmax_is_target_after_boost": true,
+    "baseline_target_prob": 0.25,
+    "boosted_target_prob": 0.870049,
+    "lift_is_monotone": true,
+    "target_prob_lift": 0.620049
+  },
+  "rows": [
+    {
+      "strength": 0.0,
+      "target_prob": 0.25
+    },
+    {
+      "strength": 1.0,
+      "target_prob": 0.475367
+    },
+    {
+      "strength": 2.0,
+      "target_prob": 0.711235
+    },
+    {
+      "strength": 3.0,
+      "target_prob": 0.870049
+    }
+  ],
+  "weights_updated": false
+}
