@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.socioprophet.ai/neural-fabric/intervention-event.v1.json",
+  "title": "Neural Fabric Intervention Event",
+  "description": "Audit record for a single activation-time intervention. Interventions never update weights.",
+  "type": "object",
+  "required": ["event_id", "experiment_id", "intervention_type", "target_locus", "weights_updated", "params", "epistemic_status"],
+  "additionalProperties": false,
+  "properties": {
+    "event_id": {"type": "string", "pattern": "^NF-ATT-[0-9]{3}-EV[0-9]{3}$"},
+    "experiment_id": {"type": "string", "pattern": "^NF-ATT-[0-9]{3}$"},
+    "intervention_type": {"type": "string", "minLength": 1},
+    "target_locus": {"type": "string", "minLength": 1},
+    "weights_updated": {"type": "boolean", "const": false},
+    "params": {"type": "object", "additionalProperties": {"type": ["number", "integer", "string", "boolean"]}},
+    "observed": {"type": "object", "additionalProperties": {"type": ["number", "integer", "string", "boolean"]}},
+    "epistemic_status": {"enum": ["toy_model_confirmed", "open_weight_validated", "production_validated"]}
+  }
+}

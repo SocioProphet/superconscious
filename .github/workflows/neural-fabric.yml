@@ -43,7 +43,7 @@ jobs:
           python-version: "3.12"
 
       - name: Install numerical stack
-        run: python -m pip install --upgrade pip pytest numpy scipy scikit-learn matplotlib
+        run: python -m pip install --upgrade pip pytest numpy scipy scikit-learn matplotlib jsonschema
 
       - name: Run Neural Fabric CI
         run: make -f mk/neural-fabric.mk neural-fabric-ci

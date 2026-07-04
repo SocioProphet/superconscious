@@ -1,0 +1,15 @@
+{
+  "family_id": "hopfield-associative",
+  "substrate": {
+    "default": "cpu-float64",
+    "allowed": ["cpu-float64", "cpu-float32"]
+  },
+  "structure": {
+    "class": "modern-hopfield",
+    "replay_invariant": "deterministic-given-inputs"
+  },
+  "target_loci": ["query-vector", "attention-logits", "feature-activation-density"],
+  "intervention_types": ["query_injection", "logit_boost", "capacity_monitor"],
+  "may_wigner": {"C": 0.4, "s": 0.1, "boundary": 1.0},
+  "epistemic_status": "toy_model_confirmed"
+}

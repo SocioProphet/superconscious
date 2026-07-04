@@ -1,0 +1,15 @@
+{
+  "experiment_id": "NF-ATT-001",
+  "title": "Hopfield logit-boost steering without weight update",
+  "model_family": "hopfield-associative",
+  "target_locus": "attention-logits",
+  "intervention_type": "logit_boost",
+  "weights_updated": false,
+  "seed_policy": "deterministic-fixed-inputs",
+  "metrics": ["baseline_target_prob", "boosted_target_prob", "target_prob_lift", "lift_is_monotone"],
+  "artifacts": {
+    "results": ["results/NF-ATT-001.result.json"]
+  },
+  "claim_invariants": ["weights_updated == false", "intervention is activation-time only"],
+  "epistemic_status": "toy_model_confirmed"
+}

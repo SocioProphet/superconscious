@@ -1,0 +1,220 @@
+{
+  "claim_invariants": [
+    "weights_updated == false",
+    "control number is s*sqrt(m*C)",
+    "classification is monotone non-decreasing in m"
+  ],
+  "epistemic_status": "toy_model_confirmed",
+  "experiment_id": "NF-ATT-002",
+  "metrics": {
+    "C": 0.4,
+    "m_first_error": 190,
+    "m_first_stop": 230,
+    "m_first_warn": 130,
+    "max_ok_m": 120,
+    "s": 0.1
+  },
+  "rows": [
+    {
+      "classification": "ok",
+      "m": 10,
+      "may_wigner": 0.2
+    },
+    {
+      "classification": "ok",
+      "m": 20,
+      "may_wigner": 0.282843
+    },
+    {
+      "classification": "ok",
+      "m": 30,
+      "may_wigner": 0.34641
+    },
+    {
+      "classification": "ok",
+      "m": 40,
+      "may_wigner": 0.4
+    },
+    {
+      "classification": "ok",
+      "m": 50,
+      "may_wigner": 0.447214
+    },
+    {
+      "classification": "ok",
+      "m": 60,
+      "may_wigner": 0.489898
+    },
+    {
+      "classification": "ok",
+      "m": 70,
+      "may_wigner": 0.52915
+    },
+    {
+      "classification": "ok",
+      "m": 80,
+      "may_wigner": 0.565685
+    },
+    {
+      "classification": "ok",
+      "m": 90,
+      "may_wigner": 0.6
+    },
+    {
+      "classification": "ok",
+      "m": 100,
+      "may_wigner": 0.632456
+    },
+    {
+      "classification": "ok",
+      "m": 110,
+      "may_wigner": 0.663325
+    },
+    {
+      "classification": "ok",
+      "m": 120,
+      "may_wigner": 0.69282
+    },
+    {
+      "classification": "warn",
+      "m": 130,
+      "may_wigner": 0.72111
+    },
+    {
+      "classification": "warn",
+      "m": 140,
+      "may_wigner": 0.748331
+    },
+    {
+      "classification": "warn",
+      "m": 150,
+      "may_wigner": 0.774597
+    },
+    {
+      "classification": "warn",
+      "m": 160,
+      "may_wigner": 0.8
+    },
+    {
+      "classification": "warn",
+      "m": 170,
+      "may_wigner": 0.824621
+    },
+    {
+      "classification": "warn",
+      "m": 180,
+      "may_wigner": 0.848528
+    },
+    {
+      "classification": "error",
+      "m": 190,
+      "may_wigner": 0.87178
+    },
+    {
+      "classification": "error",
+      "m": 200,
+      "may_wigner": 0.894427
+    },
+    {
+      "classification": "error",
+      "m": 210,
+      "may_wigner": 0.916515
+    },
+    {
+      "classification": "error",
+      "m": 220,
+      "may_wigner": 0.938083
+    },
+    {
+      "classification": "stop",
+      "m": 230,
+      "may_wigner": 0.959166
+    },
+    {
+      "classification": "stop",
+      "m": 240,
+      "may_wigner": 0.979796
+    },
+    {
+      "classification": "stop",
+      "m": 250,
+      "may_wigner": 1.0
+    },
+    {
+      "classification": "stop",
+      "m": 260,
+      "may_wigner": 1.019804
+    },
+    {
+      "classification": "stop",
+      "m": 270,
+      "may_wigner": 1.03923
+    },
+    {
+      "classification": "stop",
+      "m": 280,
+      "may_wigner": 1.058301
+    },
+    {
+      "classification": "stop",
+      "m": 290,
+      "may_wigner": 1.077033
+    },
+    {
+      "classification": "stop",
+      "m": 300,
+      "may_wigner": 1.095445
+    },
+    {
+      "classification": "stop",
+      "m": 310,
+      "may_wigner": 1.113553
+    },
+    {
+      "classification": "stop",
+      "m": 320,
+      "may_wigner": 1.131371
+    },
+    {
+      "classification": "stop",
+      "m": 330,
+      "may_wigner": 1.148913
+    },
+    {
+      "classification": "stop",
+      "m": 340,
+      "may_wigner": 1.16619
+    },
+    {
+      "classification": "stop",
+      "m": 350,
+      "may_wigner": 1.183216
+    },
+    {
+      "classification": "stop",
+      "m": 360,
+      "may_wigner": 1.2
+    },
+    {
+      "classification": "stop",
+      "m": 370,
+      "may_wigner": 1.216553
+    },
+    {
+      "classification": "stop",
+      "m": 380,
+      "may_wigner": 1.232883
+    },
+    {
+      "classification": "stop",
+      "m": 390,
+      "may_wigner": 1.249
+    },
+    {
+      "classification": "stop",
+      "m": 400,
+      "may_wigner": 1.264911
+    }
+  ],
+  "weights_updated": false
+}

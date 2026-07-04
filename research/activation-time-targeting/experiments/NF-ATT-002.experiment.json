@@ -1,0 +1,15 @@
+{
+  "experiment_id": "NF-ATT-002",
+  "title": "May-Wigner capacity sweep over active-feature count",
+  "model_family": "hopfield-associative",
+  "target_locus": "feature-activation-density",
+  "intervention_type": "capacity_monitor",
+  "weights_updated": false,
+  "seed_policy": "deterministic-fixed-inputs",
+  "metrics": ["max_ok_m", "m_first_warn", "m_first_error", "m_first_stop"],
+  "artifacts": {
+    "results": ["results/NF-ATT-002.result.json"]
+  },
+  "claim_invariants": ["weights_updated == false", "control number is s*sqrt(m*C)"],
+  "epistemic_status": "toy_model_confirmed"
+}
