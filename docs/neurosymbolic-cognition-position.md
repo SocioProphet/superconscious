@@ -10,6 +10,8 @@ It does not add runtime authority. It does not authorize model calls, network ca
 
 Superconscious is the visible governed cognition loop over neuro-symbolic capabilities.
 
+Superconscious coordinates and records. It does not authorize.
+
 It may coordinate, inspect, classify, request, record, and emit safe operational traces. It must not become the symbolic reasoner, ontology authority, schema authority, policy authority, model-routing authority, memory authority, execution authority, or evidence/replay authority.
 
 The governing sentence is:
@@ -62,6 +64,8 @@ Superconscious must not:
 - persist symbolic memory without governance;
 - call a model provider directly;
 - bypass model router, policy fabric, AgentPlane, Ontogenesis, sourceos-spec, or model-governance-ledger.
+
+The carriers Superconscious observes — a fuzzy score, a neural output, a learned rule, a symbolic derivation — are advisory references only. A neural output is not evidence and a symbolic derivation is not policy admission; final authority stays with AgentPlane, Ontogenesis, and sourceos-spec.
 
 ## Method-family posture
 
