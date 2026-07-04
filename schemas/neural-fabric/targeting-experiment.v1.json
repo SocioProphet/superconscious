@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.socioprophet.ai/neural-fabric/targeting-experiment.v1.json",
+  "title": "Neural Fabric Targeting Experiment",
+  "type": "object",
+  "required": ["experiment_id", "title", "model_family", "target_locus", "intervention_type", "weights_updated", "metrics", "epistemic_status"],
+  "additionalProperties": false,
+  "properties": {
+    "experiment_id": {"type": "string", "pattern": "^NF-ATT-[0-9]{3}$"},
+    "title": {"type": "string", "minLength": 1},
+    "model_family": {"type": "string", "minLength": 1},
+    "target_locus": {"type": "string", "minLength": 1},
+    "intervention_type": {"type": "string", "minLength": 1},
+    "weights_updated": {"type": "boolean", "const": false},
+    "seed_policy": {"type": "string"},
+    "metrics": {"type": "array", "items": {"type": "string"}, "minItems": 1},
+    "artifacts": {
+      "type": "object",
+      "properties": {
+        "results": {"type": "array", "items": {"type": "string"}},
+        "figures_generated_only": {"type": "array", "items": {"type": "string"}}
+      },
+      "additionalProperties": false
+    },
+    "claim_invariants": {"type": "array", "items": {"type": "string"}},
+    "epistemic_status": {"enum": ["toy_model_confirmed", "open_weight_validated", "production_validated"]}
+  }
+}

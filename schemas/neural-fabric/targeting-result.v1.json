@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.socioprophet.ai/neural-fabric/targeting-result.v1.json",
+  "title": "Neural Fabric Targeting Result",
+  "type": "object",
+  "required": ["experiment_id", "weights_updated", "epistemic_status", "claim_invariants", "metrics"],
+  "additionalProperties": true,
+  "properties": {
+    "experiment_id": {"type": "string", "pattern": "^NF-ATT-[0-9]{3}$"},
+    "weights_updated": {"type": "boolean", "const": false},
+    "epistemic_status": {"enum": ["toy_model_confirmed", "open_weight_validated", "production_validated"]},
+    "claim_invariants": {"type": "array", "items": {"type": "string"}},
+    "metrics": {"type": "object", "additionalProperties": {"type": ["number", "integer", "string", "boolean"]}},
+    "rows": {"type": "array", "items": {"type": "object", "additionalProperties": true}}
+  }
+}
