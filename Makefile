@@ -146,6 +146,8 @@ m1-5-schema-fixtures:
 	python3 scripts/check-m15.py tests/fixtures/m1-5/attribution-graph.manifest-diverges.synthetic.json
 	python3 -m src.m1.validate_schema_instance schemas/m1-5/attribution-graph.v1.json tests/fixtures/m1-5/attribution-graph.digest-rule.synthetic.json
 	! python3 scripts/check-m15.py tests/fixtures/m1-5/attribution-graph.digest-rule.synthetic.json
+	python3 -m src.m1.validate_schema_instance schemas/m1-5/attribution-graph.v1.json tests/fixtures/m1-5/attribution-graph.equal-digests.synthetic.json
+	! python3 scripts/check-m15.py tests/fixtures/m1-5/attribution-graph.equal-digests.synthetic.json
 
 m1-5-ci: m1-5-static m1-5-schema-fixtures
 

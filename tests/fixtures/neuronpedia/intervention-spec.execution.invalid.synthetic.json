@@ -1,0 +1,39 @@
+{
+  "schema_version": "0.1",
+  "kind": "intervention_spec",
+  "intervention_id": "neuronpedia.synthetic.intervention.bad",
+  "artifact_source_lock_ref": "neuronpedia.synthetic.feature-pack.v0",
+  "provider_binding_ref": "neuronpedia.synthetic.provider.binding.v0",
+  "intervention_type": "ablation_plan",
+  "target": {
+    "model_ref": "synthetic-model",
+    "feature_ref": "feature-0001",
+    "layer_ref": "layer-0"
+  },
+  "planned_effect": {
+    "effect_kind": "candidate_effect",
+    "effect_description": "Attempt to promote behavior claim directly from intervention plan.",
+    "claim_status": "promoted"
+  },
+  "safety_bounds": {
+    "no_live_model_mutation": false,
+    "no_provider_writeback": true,
+    "requires_policy_admission": true,
+    "requires_human_review": true,
+    "max_scope": "single_feature"
+  },
+  "evidence_requirements": {
+    "requires_artifact_source_lock": true,
+    "requires_provider_binding": true,
+    "requires_result_receipt": true
+  },
+  "execution_status": "approved_for_fixture_only",
+  "non_claims": [
+    "no_execution_authority",
+    "no_live_model_mutation",
+    "no_provider_writeback",
+    "no_behavioral_claim_promotion",
+    "no_safety_claim",
+    "no_artifact_authenticity_claim"
+  ]
+}
