@@ -1,0 +1,96 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:socioprophet:superconscious:schema:decision-emission:draft",
+  "title": "DecisionEmission Draft Schema",
+  "description": "Local draft schema for a per-decision governed-cognition emission (Substrates/Structures/Circuits framework). Every *.decision event carries the substrate/structure/mixture-slot readout, the Hopfield retrieval regime (the governance handle), the head verdict, the four-way approval trigger, and a replay_seal. Canonical ownership belongs in SourceOS-Linux/sourceos-spec.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["adapter", "trunk", "head", "approval", "replay_seal"],
+  "properties": {
+    "adapter": { "type": "string", "minLength": 1 },
+    "trunk": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["substrate", "structure", "retrieval", "slots"],
+      "properties": {
+        "substrate": { "type": "string", "enum": ["R", "C", "H", "O", "S", "gcForest"] },
+        "structure": { "type": "string", "enum": ["hopfield_star", "tl_planar", "braid_ordered", "tensor_network"] },
+        "slots": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "required": ["mode", "weights", "dominant_option"],
+            "properties": {
+              "mode": { "type": "string", "enum": ["soft", "sparse", "hard"] },
+              "weights": { "type": "array", "items": { "type": "number" } },
+              "dominant_option": { "type": "string" },
+              "entropy": { "type": "number" }
+            }
+          }
+        },
+        "retrieval": {
+          "type": "object",
+          "required": ["weights", "regime", "energy_in", "energy_out"],
+          "properties": {
+            "weights": { "type": "array", "items": { "type": "number" } },
+            "regime": { "type": "string", "enum": ["single", "metastable", "global"] },
+            "energy_in": { "type": "number" },
+            "energy_out": { "type": "number" },
+            "top_index": { "type": "integer" },
+            "top_weight": { "type": "number" },
+            "entropy": { "type": "number" }
+          }
+        },
+        "substrate_diagnostics": {
+          "type": "object",
+          "properties": {
+            "operation_sequence": { "type": "array" },
+            "parenthesization": { "type": "string" },
+            "zero_divisor_proximity": { "type": "number" },
+            "hurwitz_residual": { "type": "number" },
+            "energy_descent_holds": { "type": "boolean" }
+          }
+        },
+        "circuit_identification": {
+          "type": "object",
+          "properties": {
+            "matched_circuit": { "type": "string" },
+            "match_confidence": { "type": "number" }
+          }
+        }
+      }
+    },
+    "head": {
+      "type": "object",
+      "required": ["logits", "softmax", "chosen_label", "chosen_prob"],
+      "properties": {
+        "logits": { "type": "array", "items": { "type": "number" } },
+        "softmax": { "type": "array", "items": { "type": "number" } },
+        "chosen_label": { "type": "string" },
+        "chosen_prob": { "type": "number" }
+      }
+    },
+    "approval": {
+      "type": "object",
+      "required": ["required", "triggered_by"],
+      "properties": {
+        "required": { "type": "boolean" },
+        "triggered_by": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "trunk_regime_non_single",
+              "head_confidence_low",
+              "slot_mixture_unconverged",
+              "substrate_anomaly",
+              "forbidden_feature_activated",
+              "alignment_drift_exceeded"
+            ]
+          }
+        }
+      }
+    },
+    "replay_seal": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" }
+  }
+}
