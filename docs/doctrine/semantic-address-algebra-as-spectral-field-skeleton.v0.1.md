@@ -43,7 +43,7 @@ manuscript, and the two tightest are *the same mathematics in two costumes*.
 lattice supermodularity of Topkis and Milgrom–Roberts: on a 2×2 cell, `θ^{t+1,u+1} − θ^{t+1,u} −
 θ^{t,u+1} + θ^{t,u} ≥ 0`, which is exactly `g(a∨b) + g(a∧b) ≥ g(a) + g(b)` with `∨=max`, `∧=min`.
 That `∧` is the operation `meet` implements. The manuscript's headline constraint family and the
-algebra's reconciliation operator live on one lattice. (Proven in code: `tools/spectral_grounding.py`,
+algebra's reconciliation operator live on one lattice. (Proven in code in the kernel repo — `procyber/semantic/spectral_grounding.py` in ProCybernetica,
 where the cross-difference and the lattice supermodularity condition are shown equal, both ways.)
 
 **The gate is the derived grid.** "The model never discovers *which* constraints to use — those are
