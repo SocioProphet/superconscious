@@ -29,6 +29,8 @@ validate: trust-surface test artifact-validate canonicalize inspect validate-svf
 
 validate-decision-emission:
 	python3 -m src.m1.validate_schema_instance schemas/decision-emission.draft.schema.json tests/fixtures/decision-emission.valid.json
+	python3 -m src.m1.validate_schema_instance schemas/decision-emission.draft.schema.json tests/fixtures/decision-emission.chronos-carrier.valid.json
+	! python3 -m src.m1.validate_schema_instance schemas/decision-emission.draft.schema.json tests/fixtures/decision-emission-carrier-missing-non-authority.invalid.json
 
 validate-svf-validation-history:
 	python3 scripts/validate-svf-validation-history.py
@@ -198,6 +200,7 @@ lawful-learning-schema-fixtures:
 	python3 -m src.m1.validate_schema_instance schemas/lawful-learning/claim-ledger-entry.v1.json tests/fixtures/lawful-learning/claim-ledger-entry.valid.json
 	python3 -m src.m1.validate_schema_instance schemas/lawful-learning/evidence-status.v1.json tests/fixtures/lawful-learning/evidence-status.valid.json
 	python3 -m src.m1.validate_schema_instance schemas/lawful-learning/decision-emission.v1.json tests/fixtures/lawful-learning/decision-emission.valid.json
+	python3 -m src.m1.validate_schema_instance schemas/lawful-learning/decision-emission.v1.json tests/fixtures/lawful-learning/decision-emission.chronos-carrier.valid.json
 	python3 -m src.m1.validate_schema_instance schemas/lawful-learning/circuit-registry.v1.json tests/fixtures/lawful-learning/circuit-registry.valid.json
 	python3 -m src.m1.validate_schema_instance schemas/lawful-learning/forbidden-circuits.v1.json tests/fixtures/lawful-learning/forbidden-circuits.valid.json
 	python3 -m src.m1.validate_schema_instance schemas/lawful-learning/alignment-check.v1.json tests/fixtures/lawful-learning/alignment-check.valid.json
@@ -206,6 +209,8 @@ lawful-learning-schema-fixtures:
 	! python3 -m src.m1.validate_schema_instance schemas/lawful-learning/claim-ledger-entry.v1.json tests/fixtures/lawful-learning/speculative-to-empirical.invalid.json
 	! python3 -m src.m1.validate_schema_instance schemas/lawful-learning/claim-ledger-entry.v1.json tests/fixtures/lawful-learning/mixed-tags-without-demarcation.invalid.json
 	! python3 -m src.m1.validate_schema_instance schemas/lawful-learning/forbidden-circuits.v1.json tests/fixtures/lawful-learning/forbidden-circuit-without-enforcement.invalid.json
+	! python3 -m src.m1.validate_schema_instance schemas/lawful-learning/decision-emission.v1.json tests/fixtures/lawful-learning/decision-emission-carrier-missing-non-authority.invalid.json
+	! python3 -m src.m1.validate_schema_instance schemas/lawful-learning/decision-emission.v1.json tests/fixtures/lawful-learning/decision-emission-carrier-overreach-declaration.invalid.json
 
 lawful-learning-schema-ci: lawful-learning-schema-static lawful-learning-schema-fixtures
 
