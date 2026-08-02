@@ -106,7 +106,7 @@
           "minLength": 10,
           "description": "Must state the boundary explicitly, e.g. 'Soft satisfaction score is advisory only.' Must not assert Superconscious authority, truth, or evidence status over the observed carrier.",
           "not": {
-            "pattern": "(?i)(superconscious\\s+(authorizes|owns\\s+(schema|policy|ontology)\\s+authority)|fuzzy score is truth|neural output is evidence|learned rule is (a\\s+)?canonical schema)"
+            "pattern": "([sS][uU][pP][eE][rR][cC][oO][nN][sS][cC][iI][oO][uU][sS]\\s+([aA][uU][tT][hH][oO][rR][iI][zZ][eE][sS]|[oO][wW][nN][sS]\\s+([sS][cC][hH][eE][mM][aA]|[pP][oO][lL][iI][cC][yY]|[oO][nN][tT][oO][lL][oO][gG][yY])\\s+[aA][uU][tT][hH][oO][rR][iI][tT][yY])|[fF][uU][zZ][zZ][yY] [sS][cC][oO][rR][eE] [iI][sS] [tT][rR][uU][tT][hH]|[nN][eE][uU][rR][aA][lL] [oO][uU][tT][pP][uU][tT] [iI][sS] [eE][vV][iI][dD][eE][nN][cC][eE]|[lL][eE][aA][rR][nN][eE][dD] [rR][uU][lL][eE] [iI][sS] ([aA]\\s+)?[cC][aA][nN][oO][nN][iI][cC][aA][lL] [sS][cC][hH][eE][mM][aA])"
           }
         },
         "explanationTraceRef": {"type": "string", "minLength": 1},

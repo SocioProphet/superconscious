@@ -368,6 +368,18 @@ REQUIRED_DECISION_EMISSION_CARRIER_FIELDS = {
     "authorityPlane",
     "nonAuthorityDeclaration",
 }
+# Mirrors the `minLength` constraints declared in schemas/decision-emission.draft.schema.json
+# and schemas/lawful-learning/decision-emission.v1.json for the required
+# neurosymbolic_carrier string fields that are not otherwise enum-constrained
+# (methodFamily and authorityPlane are enums, so any non-empty presence check is
+# already implied by their fixed value sets; nonAuthorityDeclaration has its own
+# minLength=10 check below).
+REQUIRED_DECISION_EMISSION_CARRIER_FIELD_MIN_LENGTHS: dict[str, int] = {
+    "carrierStatus": 1,
+    "claimStatus": 1,
+    "validationState": 1,
+    "groundingStatus": 1,
+}
 FORBIDDEN_NON_AUTHORITY_DECLARATION_PHRASES = re.compile(
     r"(superconscious\s+(authorizes|owns\s+(schema|policy|ontology)\s+authority)"
     r"|fuzzy score is truth"
@@ -398,6 +410,15 @@ def check_decision_emission_carrier(decision: dict[str, Any], result: CheckResul
     if missing:
         result.fail("decision_emission_carrier_required_fields", f"{decision_id}: missing {sorted(missing)}")
         return
+
+    for field, min_length in REQUIRED_DECISION_EMISSION_CARRIER_FIELD_MIN_LENGTHS.items():
+        value = carrier.get(field)
+        if not isinstance(value, str) or len(value.strip()) < min_length:
+            result.fail(
+                "decision_emission_carrier_required_fields",
+                f"{decision_id}: {field} must be a non-empty string (schema requires minLength={min_length})",
+            )
+            return
 
     if not carrier.get("sourceEvidenceRef") and not carrier.get("missingEvidenceRisk"):
         result.fail(
