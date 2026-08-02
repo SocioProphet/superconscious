@@ -91,6 +91,83 @@
         }
       }
     },
-    "replay_seal": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" }
+    "replay_seal": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+    "neurosymbolic_carrier": {
+      "type": "object",
+      "description": "Optional CHRONOS-carrier-compatible safe-trace fields. Additive-only extension (see sociosphere/docs/integration/neurosymbolic-chronos-alignment.md and docs/neurosymbolic-cognition-position.md 'Safe trace requirements'). Present only when this decision observed or recorded a neuro-symbolic candidate carrier crossing into governed/CHRONOS territory. Field names mirror docs/neurosymbolic-capability-role-matrix.md 'Required fields for future NSR traces' verbatim. Recording this object does NOT grant Superconscious carrier, evidence, ontology, or policy authority; final authority for these fields stays with AgentPlane, Ontogenesis, and sourceos-spec per the 'Authority split' table in docs/neurosymbolic-cognition-position.md.",
+      "additionalProperties": false,
+      "required": [
+        "methodFamily",
+        "carrierStatus",
+        "claimStatus",
+        "validationState",
+        "groundingStatus",
+        "authorityPlane",
+        "nonAuthorityDeclaration"
+      ],
+      "properties": {
+        "methodFamily": {
+          "type": "string",
+          "description": "The NSR method family being observed or requested; see docs/neurosymbolic-capability-role-matrix.md.",
+          "enum": [
+            "NSR-FOUNDATION-LOGIC",
+            "NSR-TAXONOMY",
+            "NSR-SOFT-CONSTRAINT",
+            "NSR-TRUTH-BOUND",
+            "NSR-SYMBOLIC-ADJUDICATION",
+            "NSR-DIFFERENTIABLE-CONSTRAINT-LEARNING",
+            "NSR-RULE-LEARNING",
+            "NSR-ONTOLOGY-INFERENCE",
+            "NSR-SYMBOLIC-POLICY"
+          ]
+        },
+        "carrierStatus": { "type": "string", "minLength": 1 },
+        "claimStatus": { "type": "string", "minLength": 1 },
+        "validationState": { "type": "string", "minLength": 1 },
+        "groundingStatus": { "type": "string", "minLength": 1 },
+        "sourceEvidenceRef": { "type": "string", "minLength": 1 },
+        "missingEvidenceRisk": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Explicit missing-evidence risk statement, required when sourceEvidenceRef is not available."
+        },
+        "policyDecisionRef": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Reference to the policy admission decision, or the literal value 'pending'."
+        },
+        "authorityPlane": {
+          "type": "string",
+          "description": "The owning authority plane for this carrier, per the 'Authority split' table.",
+          "enum": [
+            "SocioProphet/superconscious",
+            "SocioProphet/sociosphere",
+            "SocioProphet/agentplane",
+            "SocioProphet/ontogenesis",
+            "SourceOS-Linux/sourceos-spec",
+            "policy-fabric",
+            "SocioProphet/model-router",
+            "SocioProphet/model-governance-ledger",
+            "SourceOS-Linux/agent-machine",
+            "SocioProphet/gaia-world-model",
+            "SocioProphet/alexandrian-academy"
+          ]
+        },
+        "nonAuthorityDeclaration": {
+          "type": "string",
+          "minLength": 10,
+          "description": "Must state the boundary explicitly, e.g. 'Soft satisfaction score is advisory only.' Must not assert Superconscious authority, truth, or evidence status over the observed carrier.",
+          "not": {
+            "pattern": "([sS][uU][pP][eE][rR][cC][oO][nN][sS][cC][iI][oO][uU][sS]\\s+([aA][uU][tT][hH][oO][rR][iI][zZ][eE][sS]|[oO][wW][nN][sS]\\s+([sS][cC][hH][eE][mM][aA]|[pP][oO][lL][iI][cC][yY]|[oO][nN][tT][oO][lL][oO][gG][yY])\\s+[aA][uU][tT][hH][oO][rR][iI][tT][yY])|[fF][uU][zZ][zZ][yY] [sS][cC][oO][rR][eE] [iI][sS] [tT][rR][uU][tT][hH]|[nN][eE][uU][rR][aA][lL] [oO][uU][tT][pP][uU][tT] [iI][sS] [eE][vV][iI][dD][eE][nN][cC][eE]|[lL][eE][aA][rR][nN][eE][dD] [rR][uU][lL][eE] [iI][sS] ([aA]\\s+)?[cC][aA][nN][oO][nN][iI][cC][aA][lL] [sS][cC][hH][eE][mM][aA])"
+          }
+        },
+        "explanationTraceRef": { "type": "string", "minLength": 1 },
+        "replayReference": { "type": "string", "minLength": 1 }
+      },
+      "anyOf": [
+        { "required": ["sourceEvidenceRef"] },
+        { "required": ["missingEvidenceRisk"] }
+      ]
+    }
   }
 }

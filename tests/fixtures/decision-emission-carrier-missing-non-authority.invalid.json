@@ -1,0 +1,40 @@
+{
+  "adapter": "PolicyAdapter",
+  "trunk": {
+    "substrate": "R",
+    "structure": "hopfield_star",
+    "slots": {
+      "activation_pre_softmax": { "mode": "hard", "weights": [1.0], "dominant_option": "asinh", "entropy": 0.0 }
+    },
+    "retrieval": {
+      "weights": [0.92, 0.05, 0.03],
+      "regime": "single",
+      "energy_in": -1.2,
+      "energy_out": -3.4,
+      "top_index": 0,
+      "top_weight": 0.92,
+      "entropy": 0.31
+    }
+  },
+  "head": {
+    "logits": [3.1, -0.2, -1.0],
+    "softmax": [0.93, 0.05, 0.02],
+    "chosen_label": "admit",
+    "chosen_prob": 0.93
+  },
+  "approval": {
+    "required": false,
+    "triggered_by": []
+  },
+  "replay_seal": "sha256:0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+  "neurosymbolic_carrier": {
+    "methodFamily": "NSR-SOFT-CONSTRAINT",
+    "carrierStatus": "candidate",
+    "claimStatus": "advisory",
+    "validationState": "verification_pending",
+    "groundingStatus": "not_applicable_or_pending",
+    "sourceEvidenceRef": "urn:socioprophet:chronos:evidence-anchor:synthetic-002",
+    "policyDecisionRef": "pending",
+    "authorityPlane": "SocioProphet/sociosphere"
+  }
+}

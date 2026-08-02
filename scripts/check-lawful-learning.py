@@ -359,6 +359,100 @@ def check_forbidden_circuit_declaration(decl: dict[str, Any], result: CheckResul
     result.ok("forbidden_circuit_enforcement_mode_required", str(fid))
 
 
+REQUIRED_DECISION_EMISSION_CARRIER_FIELDS = {
+    "methodFamily",
+    "carrierStatus",
+    "claimStatus",
+    "validationState",
+    "groundingStatus",
+    "authorityPlane",
+    "nonAuthorityDeclaration",
+}
+# Mirrors the `minLength` constraints declared in schemas/decision-emission.draft.schema.json
+# and schemas/lawful-learning/decision-emission.v1.json for the required
+# neurosymbolic_carrier string fields that are not otherwise enum-constrained
+# (methodFamily and authorityPlane are enums, so any non-empty presence check is
+# already implied by their fixed value sets; nonAuthorityDeclaration has its own
+# minLength=10 check below).
+REQUIRED_DECISION_EMISSION_CARRIER_FIELD_MIN_LENGTHS: dict[str, int] = {
+    "carrierStatus": 1,
+    "claimStatus": 1,
+    "validationState": 1,
+    "groundingStatus": 1,
+}
+FORBIDDEN_NON_AUTHORITY_DECLARATION_PHRASES = re.compile(
+    r"(superconscious\s+(authorizes|owns\s+(schema|policy|ontology)\s+authority)"
+    r"|fuzzy score is truth"
+    r"|neural output is evidence"
+    r"|learned rule is (a\s+)?canonical schema)",
+    re.IGNORECASE,
+)
+
+
+def check_decision_emission_carrier(decision: dict[str, Any], result: CheckResult) -> None:
+    """Structural check for the additive `neurosymbolic_carrier` field on a decision-emission record.
+
+    This mirrors the JSON Schema constraints in schemas/decision-emission.draft.schema.json and
+    schemas/lawful-learning/decision-emission.v1.json so authority-drift is caught even by callers
+    that only run the structural checker, not the raw JSON Schema validator.
+    """
+    decision_id = decision.get("decision_id", decision.get("adapter", "<unknown>"))
+    carrier = decision.get("neurosymbolic_carrier")
+    if carrier is None:
+        result.skip("decision_emission_carrier", f"{decision_id}: no neurosymbolic_carrier present")
+        return
+
+    if not isinstance(carrier, dict):
+        result.fail("decision_emission_carrier", f"{decision_id}: neurosymbolic_carrier must be an object")
+        return
+
+    missing = REQUIRED_DECISION_EMISSION_CARRIER_FIELDS - set(carrier)
+    if missing:
+        result.fail("decision_emission_carrier_required_fields", f"{decision_id}: missing {sorted(missing)}")
+        return
+
+    for field, min_length in REQUIRED_DECISION_EMISSION_CARRIER_FIELD_MIN_LENGTHS.items():
+        value = carrier.get(field)
+        if not isinstance(value, str) or len(value.strip()) < min_length:
+            result.fail(
+                "decision_emission_carrier_required_fields",
+                f"{decision_id}: {field} must be a non-empty string (schema requires minLength={min_length})",
+            )
+            return
+
+    if not carrier.get("sourceEvidenceRef") and not carrier.get("missingEvidenceRisk"):
+        result.fail(
+            "decision_emission_carrier_evidence_or_risk",
+            f"{decision_id}: neither sourceEvidenceRef nor missingEvidenceRisk declared",
+        )
+        return
+
+    declaration = str(carrier.get("nonAuthorityDeclaration", ""))
+    if len(declaration.strip()) < 10:
+        result.fail("decision_emission_carrier_non_authority_declaration", f"{decision_id}: declaration too short")
+        return
+    if FORBIDDEN_NON_AUTHORITY_DECLARATION_PHRASES.search(declaration):
+        result.fail(
+            "decision_emission_carrier_non_authority_declaration",
+            f"{decision_id}: declaration text claims authority it must disclaim: {declaration!r}",
+        )
+        return
+
+    result.ok("decision_emission_carrier", str(decision_id))
+
+
+def run_decision_emission_checks(data: Any, result: CheckResult) -> None:
+    if isinstance(data, list):
+        entries = data
+    elif isinstance(data, dict):
+        entries = [data]
+    else:
+        result.fail("decision_emission_load", f"unexpected decision-emission format: {type(data)}")
+        return
+    for entry in entries:
+        check_decision_emission_carrier(entry, result)
+
+
 def run_claim_ledger_checks(data: Any, result: CheckResult) -> None:
     if isinstance(data, list):
         entries = data
@@ -438,6 +532,7 @@ FIXTURE_DISPATCH: list[tuple[re.Pattern[str], FixtureRunner]] = [
     (re.compile(r"training.run"), run_training_run_checks),
     (re.compile(r"circuit.registry"), run_circuit_registry_checks),
     (re.compile(r"forbidden.circuit"), run_forbidden_circuit_checks),
+    (re.compile(r"decision.emission"), run_decision_emission_checks),
 ]
 NEGATIVE_FIXTURE_PATTERN = re.compile(r"\.invalid\.")
 
