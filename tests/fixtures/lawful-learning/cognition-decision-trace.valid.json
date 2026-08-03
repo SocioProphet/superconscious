@@ -1,0 +1,44 @@
+{
+  "adapter": "prompt_rewriting",
+  "trunk": {
+    "substrate": "H",
+    "structure": "hopfield_star",
+    "retrieval": {
+      "weights": [0.91, 0.05, 0.04],
+      "regime": "single",
+      "energy_in": -1.20,
+      "energy_out": -3.85,
+      "top_index": 0,
+      "top_weight": 0.91,
+      "entropy": 0.42
+    },
+    "slots": {
+      "activation_pre_softmax": {
+        "mode": "hard",
+        "weights": [1.0, 0.0, 0.0],
+        "dominant_option": "asinh",
+        "active_options": ["asinh"],
+        "entropy": 0.0
+      }
+    },
+    "substrate_diagnostics": {
+      "operation_sequence": [],
+      "energy_descent_holds": true
+    },
+    "circuit_identification": {
+      "matched_circuit": "prompt_rewriting/style_normalize",
+      "match_confidence": 0.97
+    }
+  },
+  "head": {
+    "logits": [4.1, 0.3, -1.2],
+    "softmax": [0.93, 0.05, 0.02],
+    "chosen_label": "rewrite_formal",
+    "chosen_prob": 0.93
+  },
+  "approval": {
+    "required": false,
+    "triggered_by": []
+  },
+  "replay_seal": "sha256:1f3ef60c2a9e9c5de3d2d76d8197cb4ad5a465a45fd85ab1737882e3f3d83c86"
+}

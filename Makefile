@@ -194,6 +194,7 @@ lawful-learning-schema-static:
 	python3 -m json.tool schemas/lawful-learning/circuit-registry.v1.json >/dev/null
 	python3 -m json.tool schemas/lawful-learning/forbidden-circuits.v1.json >/dev/null
 	python3 -m json.tool schemas/lawful-learning/alignment-check.v1.json >/dev/null
+	python3 -m json.tool schemas/lawful-learning/cognition-decision-trace.v1.json >/dev/null
 	python3 -m json.tool schemas/lawful-learning/lawful-learning-invariants.v1.json >/dev/null
 
 lawful-learning-schema-fixtures:
@@ -204,6 +205,7 @@ lawful-learning-schema-fixtures:
 	python3 -m src.m1.validate_schema_instance schemas/lawful-learning/circuit-registry.v1.json tests/fixtures/lawful-learning/circuit-registry.valid.json
 	python3 -m src.m1.validate_schema_instance schemas/lawful-learning/forbidden-circuits.v1.json tests/fixtures/lawful-learning/forbidden-circuits.valid.json
 	python3 -m src.m1.validate_schema_instance schemas/lawful-learning/alignment-check.v1.json tests/fixtures/lawful-learning/alignment-check.valid.json
+	python3 -m src.m1.validate_schema_instance schemas/lawful-learning/cognition-decision-trace.v1.json tests/fixtures/lawful-learning/cognition-decision-trace.valid.json
 	python3 -m src.m1.validate_schema_instance schemas/lawful-learning/lawful-learning-invariants.v1.json tests/fixtures/lawful-learning/lawful-learning-invariants.valid.json
 	! python3 -m src.m1.validate_schema_instance schemas/lawful-learning/claim-ledger-entry.v1.json tests/fixtures/lawful-learning/typological-to-mathematical.invalid.json
 	! python3 -m src.m1.validate_schema_instance schemas/lawful-learning/claim-ledger-entry.v1.json tests/fixtures/lawful-learning/speculative-to-empirical.invalid.json
@@ -211,6 +213,8 @@ lawful-learning-schema-fixtures:
 	! python3 -m src.m1.validate_schema_instance schemas/lawful-learning/forbidden-circuits.v1.json tests/fixtures/lawful-learning/forbidden-circuit-without-enforcement.invalid.json
 	! python3 -m src.m1.validate_schema_instance schemas/lawful-learning/decision-emission.v1.json tests/fixtures/lawful-learning/decision-emission-carrier-missing-non-authority.invalid.json
 	! python3 -m src.m1.validate_schema_instance schemas/lawful-learning/decision-emission.v1.json tests/fixtures/lawful-learning/decision-emission-carrier-overreach-declaration.invalid.json
+	! python3 -m src.m1.validate_schema_instance schemas/lawful-learning/cognition-decision-trace.v1.json tests/fixtures/lawful-learning/cognition-decision-trace.non-single-without-approval.invalid.json
+	! python3 -m src.m1.validate_schema_instance schemas/lawful-learning/cognition-decision-trace.v1.json tests/fixtures/lawful-learning/cognition-decision-trace.weak-replay-seal.invalid.json
 
 lawful-learning-schema-ci: lawful-learning-schema-static lawful-learning-schema-fixtures
 

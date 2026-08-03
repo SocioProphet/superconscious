@@ -1,0 +1,31 @@
+{
+  "adapter": "prompt_rewriting",
+  "trunk": {
+    "substrate": "H",
+    "structure": "hopfield_star",
+    "retrieval": {
+      "weights": [0.91, 0.05, 0.04],
+      "regime": "single",
+      "energy_in": -1.20,
+      "energy_out": -3.85
+    },
+    "slots": {
+      "activation_pre_softmax": {
+        "mode": "hard",
+        "weights": [1.0, 0.0, 0.0],
+        "dominant_option": "asinh"
+      }
+    }
+  },
+  "head": {
+    "logits": [4.1, 0.3, -1.2],
+    "softmax": [0.93, 0.05, 0.02],
+    "chosen_label": "rewrite_formal",
+    "chosen_prob": 0.93
+  },
+  "approval": {
+    "required": false,
+    "triggered_by": []
+  },
+  "replay_seal": "not-a-sha256-seal"
+}
