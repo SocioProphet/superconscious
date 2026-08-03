@@ -1,4 +1,4 @@
-# asa-triune Agent Architecture (v0.1)
+# asa-triune Agent Architecture (v0.1) — the Sumerian Asû-triune (asû · āšipu · bārû)
 
 Status: local draft / grounding spec. Proposes a v0.1 definition for owner
 confirmation. This document adds **no runtime authority**: it does not modify the
@@ -27,10 +27,52 @@ no schema, no invariants, no conformance criteria. An architecture that can be
 label without teeth.
 
 This document grounds `asa-triune` as a real architecture: it names the three
-parts from the estate's actual model, states the invariants each part must
-satisfy, defines how they compose, and maps them onto the superconscious loop
-(which **admits loops** with refusal authority) and the Agentic Stack
-(Pre-Image -> Exodus -> Emergence).
+parts, states the invariants each part must satisfy, defines how they compose,
+and maps them onto the superconscious loop (which **admits loops** with refusal
+authority) and the Agentic Stack (Pre-Image -> Exodus -> Emergence).
+
+### 1.1 Canonical name and derivation (owner-confirmed 2026-08-03)
+
+`asa-triune` is **not** an "Agentic-Stack Agent" acronym (an earlier draft
+proposed that and flagged it for confirmation). Its canonical source is the
+**Ghostspace Modeling Framework**, with the **Sumerian Asû** as the etymological
+root.
+
+**Ghostspace (estate source).** Ghostspace is a symbolic-topological modeling
+language for recursive information systems whose primitives are **trits →
+triadic relation → simplex → ASu unit**, together with S-layer strata and the
+lifecycle **projection / collapse / re-anchoring / accreditation / discrediting**
+under **claim-boundary discipline**. `ASu` is Ghostspace's core unit — a triadic
+construct formed by trit activation, triad closure, and simplex formation. This
+is the SAME trit substrate the estate's TritRPC / quantum-prophet rail carries
+(balanced-ternary, qutrit-projectable), so `asa-triune` is not a loose metaphor:
+the agent's three parts are the runtime realization of the Ghostspace ASu triad,
+and its truth/claim discipline is Ghostspace's accreditation/discrediting made
+governable.
+
+**Sumerian root.** The name descends from the **Mesopotamian healer-seer triad** —
+the three practitioners who between them sensed, diagnosed, and pronounced —
+which is why the ASu triad reads so naturally as three agent roles:
+
+| Sumerian role | Historical practice | Ghostspace / asa-triune part (function) |
+|---|---|---|
+| **Asû** (asû) — the physician | Empirical, materia-medica healer; treats from observed evidence | **Perceive** — read-only empirical inference (trit activation) |
+| **Āšipu** (āšipu) — the exorcist / diagnostician | Reads the *cause*; interprets and proposes the remedy | **Reason** — request/propose (triad closure → diagnose, plan) |
+| **Bārû** (bārû) — the diviner / seer | Reads the omens and pronounces the verdict / prognosis | **Govern** — decision + refusal authority (ASu collapse / re-anchoring) |
+
+The stem **asa-** is **asû** (the empirical, sensing root and Ghostspace's ASu);
+**-triune** is the three-in-one of asû + āšipu + bārû. Throughout this spec the
+Sumerian/Ghostspace names are the **canonical identity** and Perceive / Reason /
+Govern are the **functional descriptors** — synonyms, used interchangeably. The
+*three-ness* is canonical (three historical roles; the ASu triad), which is why
+the architecture is a triune, not the estate's bare two planes; the three map
+cleanly onto the superconscious loop below.
+
+> **Provenance note.** The Ghostspace framework and its artifacts (schema/OWL/
+> SHACL/SPARQL/simulator/runtime/replay bundles) are a separate workstream
+> captured in the "Ghostspace Modeling Framework" doc; landing `ghostspace-spec`
+> as a repo (and mapping ASu-collapse to `asa-triune`'s Govern step formally) is
+> tracked as follow-on, pending those artifacts.
 
 ### Honesty ledger (proposed vs cited)
 
@@ -39,9 +81,10 @@ proposes for confirmation.
 
 | Element | Status | Basis |
 |---|---|---|
-| The name **`asa-triune`** and expansion "**A**gentic-**S**tack **A**gent, triune" | **PROPOSED** | The term is not defined anywhere in the estate; only used as a UI dropdown value. Owner must confirm the expansion. |
-| A **three-part** decomposition | **CITED (two named) + PROPOSED (the split into three)** | `README.md` explicitly names two planes — "Subconscious optimizes recursive inference" and "Superconscious governs recursive agency". The estate names *two*, not three. The middle **Cognition/Reason** plane is proposed here from the M1 vs M1.5 loop separation in `docs/behavior-calculus.md` and the `ARCHITECTURE.md` core loop. **Needs owner confirmation.** |
-| Part names **Perceive / Reason / Govern** | **PROPOSED** | Consistent with the issue's suggested vocabulary (sense/decide/act, perceive/reason/govern) and with the cited loop phases; alternative labels (Subconscious / Cognition / Superconscious) are given as an alias row. |
+| The name **`asa-triune`** — the **Ghostspace ASu** triad (asû · āšipu · bārû) | **CITED (owner canonical, 2026-08-03)** | Canonical source is the **Ghostspace Modeling Framework** (ASu = trit→triad→simplex unit); etymological root is the Sumerian **Asû** (physician). Supersedes the earlier proposed "Agentic-Stack Agent" expansion. See §1.1. |
+| Grounding of ASu in the **estate trit substrate** | **CITED** | Ghostspace's trits are the same balanced-ternary the TritRPC / quantum-prophet rail carries; ASu's collapse/re-anchoring/accreditation map onto Govern's admit/refuse + evidence. Formal `ghostspace-spec` mapping is follow-on (artifacts pending). |
+| A **three-part** decomposition | **CITED (canonical triad)** | The three-ness is canonical to the Sumerian tradition — three distinct historical roles (asû sense, āšipu diagnose, bārû pronounce). The earlier tension ("the estate README names only two planes") is resolved: the triad supplies the third, and the three map onto the superconscious loop (`ARCHITECTURE.md` core loop). |
+| Part names **Asû / Āšipu / Bārû** (functional: Perceive / Reason / Govern) | **CITED (canonical) + functional descriptors** | Sumerian names are the canonical identity; Perceive / Reason / Govern are the functional synonyms used throughout (aliases: Subconscious / Cognition / Superconscious). |
 | Invariants (fail-closed, bounded-convergent loop, provenance carry, safe trace, refusal authority) | **CITED** | Drawn from `AGENTS.md`, `THREAT_MODEL.md`, `docs/safe-operational-traces.md`, `docs/behavior-calculus.md`, `docs/downstream-integration-contracts.md`. |
 | Bounded + convergent + fail-closed **loop doctrine** | **CITED (estate doctrine) + mechanized here** | Estate doctrine: loops must be bounded + convergent + fail-closed and superconscious *admits* loops with refusal authority. Mechanized via `feedback_delay_1` from `docs/behavior-calculus.md`. |
 | Mapping to Agentic Stack **Pre-Image -> Exodus -> Emergence** | **PROPOSED (layer names cited, contracts not)** | The three layer names come from the Agentic Stack integration spec; their precise per-layer contracts are owned by that spec and are **not** reproduced in the estate at a level this doc could cite verbatim. The mapping below is defensible but **needs Agentic-Stack owner confirmation**. |
@@ -71,7 +114,7 @@ importing that framework's runtime obligations.
 
 ### 2.1 The three parts
 
-#### Part 1 — Perceive (alias: Subconscious)
+#### Part 1 — Asû · Perceive (alias: Subconscious)
 
 | Field | Value |
 |---|---|
@@ -79,7 +122,7 @@ importing that framework's runtime obligations.
 | Authority | **Read-only.** Proposes; never authorizes. May *recommend*, may *bias* planning, may *remember-as-proposal*. |
 | Source in repo | `README.md`: "Subconscious optimizes recursive inference"; `docs/SVF_VALIDATION_HISTORY_CONSUMER.md` (read-only validation-history memory consumer); `ARCHITECTURE.md` core-loop `validate` + `MemoryDecision.proposed`. |
 
-#### Part 2 — Reason (alias: Cognition)
+#### Part 2 — Āšipu · Reason (alias: Cognition)
 
 | Field | Value |
 |---|---|
@@ -87,14 +130,15 @@ importing that framework's runtime obligations.
 | Authority | **Request-only.** Emits *requests* and *proposals* (policy request, model-route request, skill selection, memory proposal). It does not itself decide admission. |
 | Source in repo | `ARCHITECTURE.md` "Core loop"; `docs/safe-operational-traces.md`; the "M1 runner" fixed loop in `docs/behavior-calculus.md`. |
 
-> **Proposed split, flagged.** The estate names Subconscious and Superconscious
-> but does not name a distinct middle plane. Reason is proposed here as the
-> `request/propose` phase that sits between read-only inference and
-> admission/effect. If the owner prefers a two-plane model, Reason folds into
-> Govern's pre-decision stage; the conformance checklist still holds because its
-> items are phrased over responsibilities, not part-count dogma.
+> **Canonical middle role.** Āšipu — the diagnostician who reads the cause and
+> proposes the remedy — is the canonical middle of the Sumerian triad, so the
+> three-part split is not an invention: it is the tradition. It also maps to the
+> estate loop's `request/propose` phase between read-only inference (Asû) and
+> admission/effect (Bārû). If an implementation collapses to two planes, Āšipu
+> folds into Bārû's pre-decision stage; the conformance checklist still holds
+> because its items are phrased over responsibilities, not part-count dogma.
 
-#### Part 3 — Govern (alias: Superconscious)
+#### Part 3 — Bārû · Govern (alias: Superconscious)
 
 | Field | Value |
 |---|---|
@@ -106,9 +150,9 @@ importing that framework's runtime obligations.
 
 | asa-triune part | Estate alias | Issue-vocabulary alias | Loop phase (ARCHITECTURE.md) |
 |---|---|---|---|
-| Perceive | Subconscious | sense | validate, MemoryDecision.proposed |
-| Reason | Cognition | decide | plan, PolicyCheck.requested, ModelRoute.requested, SkillActivation.selected |
-| Govern | Superconscious | act (admit/refuse) | PolicyCheck.decided, ToolUse.observed, Evidence.emitted, ReplayPlan.emitted, ReasoningRun.blocked |
+| Asû · Perceive | Subconscious | sense | validate, MemoryDecision.proposed |
+| Āšipu · Reason | Cognition | decide | plan, PolicyCheck.requested, ModelRoute.requested, SkillActivation.selected |
+| Bārû · Govern | Superconscious | act (admit/refuse) | PolicyCheck.decided, ToolUse.observed, Evidence.emitted, ReplayPlan.emitted, ReasoningRun.blocked |
 
 ---
 
