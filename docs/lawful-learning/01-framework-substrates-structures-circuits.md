@@ -352,6 +352,14 @@ empirical validation of composition-superposition allocation
 
 [T] This schema is distinct from `decision-emission.v1.json`, which records a lawful-learning governance decision (claim promotion, circuit admission). The cognition decision trace records the runtime cognition-loop decision itself.
 
+## 12c. Feature-alignment drift checker
+
+[T] The `alignment_drift_exceeded` approval trigger declared by the cognition decision trace (section 12b) is now backed by a checker: `scripts/check-alignment.py`, emitting a `feature-alignment-drift.v1` record (`schemas/lawful-learning/feature-alignment-drift.v1.json`). Given two feature spaces over a shared trunk output basis — e.g. a new model's SAE dictionary `F_A` and the previous model's `F_B` — it solves the orthogonal Procrustes alignment `Q* = argmin_Q ||F_A - F_B Q||_F` (the orthogonal polar factor of `M = F_B^T F_A`; equivalently `U V^T` of `M = U S V^T`) and reports the aligned Frobenius residual as the drift metric. Both matrices are normalized to unit Frobenius norm first, so the residual is scale-free. The linear algebra is pure stdlib (Jacobi eigendecomposition of the small symmetric Gram matrix); no third-party dependency is added.
+
+[G] Drift is judged *after* alignment, so a rotated-but-equivalent space registers as aligned — the checker measures geometry change, not basis choice. The classification follows the framework (section 13.3): `stable` if `residual < 0.05` and no critical feature drifted; `drifted` if `residual < 0.20` or at most one critical feature drifted; `broken` otherwise. The emitted `decision` is `aligned` iff `stable`, else `drift`, and the schema binds the two so a drift record cannot claim alignment. The checker exits non-zero once the classification exceeds the allowed ceiling (`--max-class`, default `drifted`), blocking model promotion on `broken`; malformed inputs (shape mismatch, non-finite values) are rejected. Teeth run in `make feature-alignment-ci` (also folded into `make validate` and `make lawful-learning-ci`): a near-identical and a rotated-but-equivalent space both align, a genuinely drifted space is `broken`, and both malformed cases are rejected. Each record carries a SHA-256 (FIPS 180-4) `replay_seal` over the canonical inputs and verdict.
+
+[S] Runtime calibration of the `0.05` / `0.20` thresholds against live `gemma-2-9b-it` SAE activations, and wiring the emitted record into the cognition loop's approval gate, are deferred follow-ups; the fixtures here are synthetic.
+
 ## 13. Next phases
 
 ```text

@@ -25,7 +25,7 @@ inspect:
 	run_dir="$$(python3 packages/superconscious-core/superconscious_core/runner.py examples/basic-reasoning-run/task.json)"; \
 	python3 packages/superconscious-core/superconscious_core/inspect_artifacts.py "$$run_dir"
 
-validate: trust-surface test artifact-validate canonicalize inspect validate-svf-validation-history validate-decision-emission
+validate: trust-surface test artifact-validate canonicalize inspect validate-svf-validation-history validate-decision-emission feature-alignment-ci
 
 validate-decision-emission:
 	python3 -m src.m1.validate_schema_instance schemas/decision-emission.draft.schema.json tests/fixtures/decision-emission.valid.json
@@ -195,6 +195,7 @@ lawful-learning-schema-static:
 	python3 -m json.tool schemas/lawful-learning/forbidden-circuits.v1.json >/dev/null
 	python3 -m json.tool schemas/lawful-learning/alignment-check.v1.json >/dev/null
 	python3 -m json.tool schemas/lawful-learning/cognition-decision-trace.v1.json >/dev/null
+	python3 -m json.tool schemas/lawful-learning/feature-alignment-drift.v1.json >/dev/null
 	python3 -m json.tool schemas/lawful-learning/lawful-learning-invariants.v1.json >/dev/null
 
 lawful-learning-schema-fixtures:
@@ -206,6 +207,7 @@ lawful-learning-schema-fixtures:
 	python3 -m src.m1.validate_schema_instance schemas/lawful-learning/forbidden-circuits.v1.json tests/fixtures/lawful-learning/forbidden-circuits.valid.json
 	python3 -m src.m1.validate_schema_instance schemas/lawful-learning/alignment-check.v1.json tests/fixtures/lawful-learning/alignment-check.valid.json
 	python3 -m src.m1.validate_schema_instance schemas/lawful-learning/cognition-decision-trace.v1.json tests/fixtures/lawful-learning/cognition-decision-trace.valid.json
+	python3 -m src.m1.validate_schema_instance schemas/lawful-learning/feature-alignment-drift.v1.json tests/fixtures/lawful-learning/feature-alignment-drift.valid.json
 	python3 -m src.m1.validate_schema_instance schemas/lawful-learning/lawful-learning-invariants.v1.json tests/fixtures/lawful-learning/lawful-learning-invariants.valid.json
 	! python3 -m src.m1.validate_schema_instance schemas/lawful-learning/claim-ledger-entry.v1.json tests/fixtures/lawful-learning/typological-to-mathematical.invalid.json
 	! python3 -m src.m1.validate_schema_instance schemas/lawful-learning/claim-ledger-entry.v1.json tests/fixtures/lawful-learning/speculative-to-empirical.invalid.json
@@ -215,6 +217,8 @@ lawful-learning-schema-fixtures:
 	! python3 -m src.m1.validate_schema_instance schemas/lawful-learning/decision-emission.v1.json tests/fixtures/lawful-learning/decision-emission-carrier-overreach-declaration.invalid.json
 	! python3 -m src.m1.validate_schema_instance schemas/lawful-learning/cognition-decision-trace.v1.json tests/fixtures/lawful-learning/cognition-decision-trace.non-single-without-approval.invalid.json
 	! python3 -m src.m1.validate_schema_instance schemas/lawful-learning/cognition-decision-trace.v1.json tests/fixtures/lawful-learning/cognition-decision-trace.weak-replay-seal.invalid.json
+	! python3 -m src.m1.validate_schema_instance schemas/lawful-learning/feature-alignment-drift.v1.json tests/fixtures/lawful-learning/feature-alignment-drift.decision-mismatch.invalid.json
+	! python3 -m src.m1.validate_schema_instance schemas/lawful-learning/feature-alignment-drift.v1.json tests/fixtures/lawful-learning/feature-alignment-drift.weak-replay-seal.invalid.json
 
 lawful-learning-schema-ci: lawful-learning-schema-static lawful-learning-schema-fixtures
 
@@ -227,7 +231,23 @@ lawful-learning-checker-fixtures:
 lawful-learning-checker-trust-surface:
 	python3 scripts/check-lawful-learning.py --trust-surface examples/TRUST_SURFACE.lawful-learning.yaml --skip-fixtures
 
-lawful-learning-ci: lawful-learning-schema-ci lawful-learning-checker-static lawful-learning-checker-fixtures lawful-learning-checker-trust-surface
+feature-alignment-checker-static:
+	python3 -m py_compile scripts/check-alignment.py
+
+# Procrustes feature-alignment / drift checker teeth (framework 11 / 13.3).
+# A near-identical space and a rotated-but-equivalent space both align (stable);
+# a genuinely drifted space is broken (drift, promotion blocked); malformed
+# inputs (shape mismatch, non-finite) are rejected.
+feature-alignment-checker-fixtures:
+	python3 scripts/check-alignment.py tests/fixtures/lawful-learning/feature-alignment/near-identical.valid.json --quiet
+	python3 scripts/check-alignment.py tests/fixtures/lawful-learning/feature-alignment/rotated-equivalent.valid.json --quiet
+	! python3 scripts/check-alignment.py tests/fixtures/lawful-learning/feature-alignment/genuine-drift.invalid.json --quiet
+	! python3 scripts/check-alignment.py tests/fixtures/lawful-learning/feature-alignment/dim-mismatch.invalid.json --quiet
+	! python3 scripts/check-alignment.py tests/fixtures/lawful-learning/feature-alignment/non-finite.invalid.json --quiet
+
+feature-alignment-ci: feature-alignment-checker-static feature-alignment-checker-fixtures
+
+lawful-learning-ci: lawful-learning-schema-ci lawful-learning-checker-static lawful-learning-checker-fixtures lawful-learning-checker-trust-surface feature-alignment-ci
 
 v1-1-static:
 	python3 -m json.tool schemas/pneumachinalis/microbeat-event.v1.1.json >/dev/null

@@ -1,0 +1,43 @@
+{
+  "check_id": "align.non-finite",
+  "feature_space_a_ref": "model-a/dict",
+  "feature_space_b_ref": "model-b/dict",
+  "feature_space_a": [
+    [
+      1.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      1.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "feature_space_b": [
+    [
+      1.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      Infinity,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "thresholds": {
+    "stable_max": 0.05,
+    "drift_max": 0.2
+  }
+}
