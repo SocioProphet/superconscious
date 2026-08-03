@@ -15,6 +15,8 @@ Superconscious is the visible governed cognition loop for recursive agents. It c
 - [`neurosymbolic-cognition-position.md`](neurosymbolic-cognition-position.md) — Superconscious posture for CHRONOS-aligned neuro-symbolic cognition.
 - [`neurosymbolic-capability-role-matrix.md`](neurosymbolic-capability-role-matrix.md) — allowed and forbidden roles for neuro-symbolic method families.
 - [`neurosymbolic-failure-modes.md`](neurosymbolic-failure-modes.md) — authority-drift failure modes that must route to risk or policy review.
+- [`asa-triune-architecture.v0.1.md`](asa-triune-architecture.v0.1.md) — grounds the `asa-triune` agent architecture (Perceive / Reason / Govern) onto the superconscious loop and the Agentic Stack; issue #79.
+- [`asa-triune-conformance-checklist.v0.1.md`](asa-triune-conformance-checklist.v0.1.md) — pass/fail conformance checklist for `architecture: asa-triune`; referenced by `socioprophet-agent-standards`.
 
 ## Review priority
 
