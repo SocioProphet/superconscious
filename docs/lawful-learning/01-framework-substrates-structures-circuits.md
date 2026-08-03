@@ -344,6 +344,14 @@ empirical validation of tail-integral audit
 empirical validation of composition-superposition allocation
 ```
 
+## 12b. Cognition decision trace schema
+
+[T] The per-inference decision trace defined in the "Substrates, Structures, and Circuits" framework (section 13.2) is now carried as a schema-lane artifact: `schemas/lawful-learning/cognition-decision-trace.v1.json`. One record is emitted per `*.decision` event. It declares the trunk substrate and structure, the retrieval regime and energy, the per-slot mixture state (mode, weights, dominant option), the head observation, and a SHA-256 `replay_seal`.
+
+[G] Two invariants have teeth in the schema lane (`make lawful-learning-schema-ci`): the `replay_seal` must be a SHA-256 digest (`^sha256:[a-f0-9]{64}$`), and the two-layer approval gate is enforced — a non-`single` trunk retrieval regime forces `approval.required = true` with the `trunk_regime_non_single` trigger declared. Negative fixtures cover both.
+
+[T] This schema is distinct from `decision-emission.v1.json`, which records a lawful-learning governance decision (claim promotion, circuit admission). The cognition decision trace records the runtime cognition-loop decision itself.
+
 ## 13. Next phases
 
 ```text

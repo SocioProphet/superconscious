@@ -1,0 +1,138 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "schemas/lawful-learning/cognition-decision-trace.v1.json",
+  "title": "CognitionDecisionTrace",
+  "description": "Per-inference decision trace emitted by the governed cognition loop (Substrates, Structures, and Circuits framework, section 13.2). One record per *.decision event. Carries the declared substrate and structure, the trunk retrieval (regime + weights + energy), the per-slot mixture state, the head observation, the two-layer approval gate with its named triggers, and a SHA-256 replay seal. This is the runtime cognition-loop trace; it is distinct from decision-emission.v1 (a lawful-learning governance decision).",
+  "type": "object",
+  "required": ["adapter", "trunk", "head", "approval", "replay_seal"],
+  "additionalProperties": false,
+  "properties": {
+    "adapter": { "type": "string", "minLength": 1 },
+    "trunk": {
+      "type": "object",
+      "required": ["substrate", "structure", "retrieval", "slots"],
+      "additionalProperties": false,
+      "properties": {
+        "substrate": { "type": "string", "enum": ["R", "C", "H", "O", "S", "gcForest"] },
+        "structure": {
+          "type": "string",
+          "enum": ["hopfield_star", "tl_planar", "braid_ordered", "tensor_network", "markov_net"]
+        },
+        "retrieval": {
+          "type": "object",
+          "required": ["weights", "regime", "energy_in", "energy_out"],
+          "additionalProperties": false,
+          "properties": {
+            "weights": { "type": "array", "items": { "type": "number" } },
+            "regime": { "type": "string", "enum": ["single", "metastable", "global"] },
+            "energy_in": { "type": "number" },
+            "energy_out": { "type": "number" },
+            "top_index": { "type": "integer" },
+            "top_weight": { "type": "number" },
+            "entropy": { "type": "number" }
+          }
+        },
+        "slots": {
+          "type": "object",
+          "patternProperties": {
+            "^.*$": {
+              "type": "object",
+              "required": ["mode", "weights", "dominant_option"],
+              "additionalProperties": false,
+              "properties": {
+                "mode": { "type": "string", "enum": ["soft", "sparse", "hard"] },
+                "weights": { "type": "array", "items": { "type": "number" } },
+                "dominant_option": { "type": "string" },
+                "active_options": { "type": "array", "items": { "type": "string" } },
+                "entropy": { "type": "number" }
+              }
+            }
+          }
+        },
+        "substrate_diagnostics": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "operation_sequence": { "type": "array" },
+            "parenthesization": { "type": "string" },
+            "zero_divisor_proximity": { "type": "number" },
+            "hurwitz_residual": { "type": "number" },
+            "energy_descent_holds": { "type": "boolean" }
+          }
+        },
+        "circuit_identification": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "matched_circuit": { "type": "string" },
+            "match_confidence": { "type": "number" }
+          }
+        }
+      }
+    },
+    "head": {
+      "type": "object",
+      "required": ["logits", "softmax", "chosen_label", "chosen_prob"],
+      "additionalProperties": false,
+      "properties": {
+        "logits": { "type": "array", "items": { "type": "number" } },
+        "softmax": { "type": "array", "items": { "type": "number" } },
+        "chosen_label": { "type": "string" },
+        "chosen_prob": { "type": "number" }
+      }
+    },
+    "approval": {
+      "type": "object",
+      "required": ["required", "triggered_by"],
+      "additionalProperties": false,
+      "properties": {
+        "required": { "type": "boolean" },
+        "triggered_by": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "trunk_regime_non_single",
+              "head_confidence_low",
+              "slot_mixture_unconverged",
+              "substrate_anomaly",
+              "forbidden_feature_activated",
+              "alignment_drift_exceeded"
+            ]
+          }
+        }
+      }
+    },
+    "replay_seal": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" }
+  },
+  "allOf": [
+    {
+      "$comment": "Two-layer approval gate: a non-single trunk retrieval regime forces approval.required=true with the matching trigger declared.",
+      "if": {
+        "required": ["trunk"],
+        "properties": {
+          "trunk": {
+            "required": ["retrieval"],
+            "properties": {
+              "retrieval": {
+                "required": ["regime"],
+                "properties": { "regime": { "enum": ["metastable", "global"] } }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "approval": {
+            "required": ["required", "triggered_by"],
+            "properties": {
+              "required": { "const": true },
+              "triggered_by": { "contains": { "const": "trunk_regime_non_single" } }
+            }
+          }
+        }
+      }
+    }
+  ]
+}
