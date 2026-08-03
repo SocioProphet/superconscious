@@ -1,0 +1,100 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "schemas/lawful-learning/feature-alignment-drift.v1.json",
+  "title": "FeatureAlignmentDrift",
+  "description": "Feature-geometry alignment/drift record from the Substrates, Structures, and Circuits framework (sections 11 and 13.3). Given two feature spaces over a shared trunk output basis (e.g. a new model's SAE dictionary vs the previous model's), the checker solves the orthogonal Procrustes alignment Q* = argmin ||F_A - F_B Q||_F via the polar factor of F_B^T F_A and measures the aligned Frobenius residual. Drift is judged AFTER alignment, so a rotated-but-equivalent space registers as aligned. Distinct from alignment-check.v1 (a governance-invariant structural check); this record carries the feature-geometry drift metric that backs the alignment_drift_exceeded approval trigger declared in cognition-decision-trace.v1.",
+  "type": "object",
+  "required": [
+    "check_id",
+    "feature_space_a_ref",
+    "feature_space_b_ref",
+    "procrustes",
+    "thresholds",
+    "classification",
+    "decision",
+    "replay_seal"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "check_id": { "type": "string", "minLength": 1 },
+    "feature_space_a_ref": { "type": "string", "minLength": 1 },
+    "feature_space_b_ref": { "type": "string", "minLength": 1 },
+    "procrustes": {
+      "type": "object",
+      "required": ["residual", "disparity", "rotation_orthogonal", "n_features", "n_dims"],
+      "additionalProperties": false,
+      "properties": {
+        "residual": { "type": "number", "minimum": 0 },
+        "disparity": { "type": "number", "minimum": 0 },
+        "rotation_orthogonal": { "type": "boolean" },
+        "orthogonality_error": { "type": "number", "minimum": 0 },
+        "n_features": { "type": "integer", "minimum": 1 },
+        "n_dims": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "critical_features": {
+      "type": "object",
+      "required": ["per_feature_max", "drifted_count", "drifted_indices"],
+      "additionalProperties": false,
+      "properties": {
+        "per_feature_max": { "type": "number", "minimum": 0 },
+        "drifted_count": { "type": "integer", "minimum": 0 },
+        "drifted_indices": { "type": "array", "items": { "type": "integer", "minimum": 0 } }
+      }
+    },
+    "thresholds": {
+      "type": "object",
+      "required": ["stable_max", "drift_max"],
+      "additionalProperties": false,
+      "properties": {
+        "stable_max": { "type": "number", "minimum": 0 },
+        "drift_max": { "type": "number", "minimum": 0 }
+      }
+    },
+    "classification": { "type": "string", "enum": ["stable", "drifted", "broken"] },
+    "decision": { "type": "string", "enum": ["aligned", "drift"] },
+    "replay_seal": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+    "timestamp": { "type": "string", "format": "date-time" },
+    "checker_ref": { "type": "string" },
+    "non_claims": { "type": "array", "items": { "type": "string" } }
+  },
+  "allOf": [
+    {
+      "$comment": "thresholds must be ordered: stable_max <= drift_max.",
+      "if": {
+        "required": ["thresholds"],
+        "properties": {
+          "thresholds": { "required": ["stable_max", "drift_max"] }
+        }
+      },
+      "then": {
+        "properties": {
+          "thresholds": {
+            "properties": {
+              "drift_max": { "type": "number" }
+            }
+          }
+        }
+      }
+    },
+    {
+      "$comment": "Decision is bound to classification: only a stable geometry is aligned; drifted or broken is drift. This is the teeth that stop a drift record from claiming alignment.",
+      "if": {
+        "required": ["classification"],
+        "properties": { "classification": { "const": "stable" } }
+      },
+      "then": {
+        "properties": { "decision": { "const": "aligned" } }
+      }
+    },
+    {
+      "if": {
+        "required": ["classification"],
+        "properties": { "classification": { "enum": ["drifted", "broken"] } }
+      },
+      "then": {
+        "properties": { "decision": { "const": "drift" } }
+      }
+    }
+  ]
+}

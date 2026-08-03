@@ -1,0 +1,25 @@
+{
+  "check_id": "align.weak-replay-seal",
+  "feature_space_a_ref": "gemma-2-9b-it@r1/sae-dict-L20",
+  "feature_space_b_ref": "gemma-2-9b-it@r3-retrain/sae-dict-L20",
+  "procrustes": {
+    "residual": 0.274398,
+    "disparity": 0.075294,
+    "rotation_orthogonal": true,
+    "orthogonality_error": 0.0,
+    "n_features": 4,
+    "n_dims": 3
+  },
+  "critical_features": {
+    "per_feature_max": 0.1,
+    "drifted_count": 3,
+    "drifted_indices": [0, 1, 2]
+  },
+  "thresholds": {
+    "stable_max": 0.05,
+    "drift_max": 0.2
+  },
+  "classification": "broken",
+  "decision": "drift",
+  "replay_seal": "md5:deadbeef"
+}

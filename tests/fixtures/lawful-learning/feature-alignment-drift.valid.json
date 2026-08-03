@@ -1,0 +1,29 @@
+{
+  "check_id": "align.near-identical",
+  "checker_ref": "scripts/check-alignment.py",
+  "classification": "stable",
+  "critical_features": {
+    "drifted_count": 0,
+    "drifted_indices": [],
+    "per_feature_max": 0.05
+  },
+  "decision": "aligned",
+  "feature_space_a_ref": "gemma-2-9b-it@r1/sae-dict-L20",
+  "feature_space_b_ref": "gemma-2-9b-it@r1-hotfix/sae-dict-L20",
+  "non_claims": [
+    "synthetic_fixture_not_runtime_calibration"
+  ],
+  "procrustes": {
+    "disparity": 2.7021e-05,
+    "n_dims": 3,
+    "n_features": 4,
+    "orthogonality_error": 0.0,
+    "residual": 0.005198178,
+    "rotation_orthogonal": true
+  },
+  "replay_seal": "sha256:a6129c1f23994fc18a25d2f3c7deff0088629d6ca796181d67076e91de8623f7",
+  "thresholds": {
+    "drift_max": 0.2,
+    "stable_max": 0.05
+  }
+}

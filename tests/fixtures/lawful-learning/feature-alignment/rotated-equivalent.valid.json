@@ -1,0 +1,65 @@
+{
+  "check_id": "align.rotated-equivalent",
+  "feature_space_a_ref": "gemma-2-9b-it@r1/sae-dict-L20",
+  "feature_space_b_ref": "gemma-2-9b-it@r2-rebasis/sae-dict-L20",
+  "feature_space_a": [
+    [
+      1.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      1.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      1.0
+    ],
+    [
+      0.6,
+      0.6,
+      0.52915
+    ]
+  ],
+  "feature_space_b": [
+    [
+      0.7648421872844885,
+      -0.644217687237691,
+      0.0
+    ],
+    [
+      0.644217687237691,
+      0.7648421872844885,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      1.0
+    ],
+    [
+      0.8454359247133076,
+      0.0723747000280785,
+      0.52915
+    ]
+  ],
+  "thresholds": {
+    "stable_max": 0.05,
+    "drift_max": 0.2
+  },
+  "critical_features": {
+    "indices": [
+      0,
+      1,
+      2
+    ],
+    "per_feature_max": 0.05
+  },
+  "checker_ref": "scripts/check-alignment.py",
+  "non_claims": [
+    "synthetic_fixture_not_runtime_calibration"
+  ]
+}
