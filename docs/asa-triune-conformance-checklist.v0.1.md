@@ -9,6 +9,8 @@ claim.
 
 Tracking issue: `SocioProphet/superconscious#79`.
 
+> **Canonical names.** The three parts are the Ghostspace/Sumerian ASu triad — **Asû** (Perceive), **Āšipu** (Reason), **Bārû** (Govern). This checklist uses the functional names Perceive/Reason/Govern; they are synonyms for the canonical ones (see the architecture spec §1.1).
+
 ## How to use
 
 An agent claiming `architecture: asa-triune` is **conformant** only if every
